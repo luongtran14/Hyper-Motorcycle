@@ -32,8 +32,8 @@ public class DBConnection {
  // Trường hợp sử dụng SQLServer.
  // Và thư viện SQLJDBC.
  public static Connection getSQLServerConnection(String hostName,
-         String sqlInstanceName, String database, String userName,
-         String password) throws ClassNotFoundException, SQLException {
+    String sqlInstanceName, String database, String userName,
+    String password) throws ClassNotFoundException, SQLException {
      // Khai báo class Driver cho DB SQLServer
      // Việc này cần thiết với Java 5
      // Java6 tự động tìm kiếm Driver thích hợp.

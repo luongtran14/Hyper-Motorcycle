@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,23 +20,35 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
  * @author Admin
  */
 public class AuthenticationFilter implements Filter {
-    
+
     private static final boolean debug = true;
+
+    private static final List<String> ADMIN_PAGE = Arrays.asList(""
+            + "/admin/user/list");
+
+    private static final List<String> UNAUTHENTICATION_PAGE = Arrays.asList(
+            "/login",
+            "/css",
+            "/images",
+            "/js",
+            "/lib"
+    );
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public AuthenticationFilter() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -61,8 +75,8 @@ public class AuthenticationFilter implements Filter {
 	    log(buf.toString());
 	}
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -88,6 +102,11 @@ public class AuthenticationFilter implements Filter {
          */
     }
 
+    private boolean acceptPage(String requestUrl){
+        return requestUrl.startsWith("/css/") || requestUrl.startsWith("/libs/") 
+                || requestUrl.startsWith("/js/") || requestUrl.startsWith("/images/") 
+                || UNAUTHENTICATION_PAGE.contains(requestUrl);
+    }
     /**
      *
      * @param request The servlet request we are processing
@@ -102,18 +121,32 @@ public class AuthenticationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        if(req.getRequestURI().contains("login") || req.getRequestURI().contains("css") || req.getRequestURI().contains("images") 
-                || req.getRequestURI().contains("js") || req.getRequestURI().contains("libs")){
+        String requestUri = req.getRequestURI();
+        String servletPath = requestUri.replaceFirst(req.getContextPath(), "");
+        System.out.println(servletPath);
+
+        if (acceptPage(servletPath)) {
             chain.doFilter(request, response);
             return;
         }
-        if(req.getSession().getAttribute("login_user") == null){
-            res.sendRedirect("login");
-        }else{
-            chain.doFilter(request, response);
+
+        User user = (User) req.getSession().getAttribute("login_user");
+        if (user == null) {
+            res.sendRedirect(req.getContextPath()+"/login");
+        } else {
+            //check xem co dang request vao trang admin k
+            if (ADMIN_PAGE.contains(servletPath)) {
+                //neu request vao trang admin thi phai co quen admin
+                if (user.isIsAdmin()) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect(req.getContextPath() + "/login");
+                }
+            }else{
+                 chain.doFilter(request, response);
+            }
         }
-        
-        
+
     }
 
     /**
@@ -135,16 +168,16 @@ public class AuthenticationFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("AuthenticationFilter:Initializing filter");
             }
         }
@@ -163,20 +196,20 @@ public class AuthenticationFilter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -193,7 +226,7 @@ public class AuthenticationFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -207,9 +240,9 @@ public class AuthenticationFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }

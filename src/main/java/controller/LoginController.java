@@ -75,12 +75,10 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password= request.getParameter("password");
-        boolean login =  new UserDao().login(email, password);
-        if(login){
-            User user = new User();
-            user.setEmail(email);
-            user.setPassword(password);
-           request.getSession().setAttribute("login_user", user);
+        User login =  new UserDao().login(email, password);
+ 
+        if(login != null){
+           request.getSession().setAttribute("login_user", login);
           response.sendRedirect("home.jsp");
           return;
         }
