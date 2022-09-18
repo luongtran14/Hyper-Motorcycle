@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  *
+
  * @author Admin
  */
 public class DBContext {
@@ -18,7 +19,7 @@ public class DBContext {
     public DBContext() throws SQLException {
        try {
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-           String connectionUrl = "jdbc:sqlserver://DESKTOP-A254IP8\\SQLEXPRESS:1433;database=motobike;";
+           String connectionUrl = "jdbc:sqlserver://localhost:1433;database=motobike;";
            String username = "sa";
            String password = "123456";
            connection = DriverManager.getConnection(connectionUrl, username, password);

@@ -32,9 +32,11 @@
             <version>8.2.2.jre8</version>
         </dependency>
     </dependencies>
+	
 
     <build>
         <plugins>
+		
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
