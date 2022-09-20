@@ -7,66 +7,60 @@ package model;
 
 import java.sql.Date;
 
-/**
- *
- * @author Admin
- */
 public class User {
-    private int userId;
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
+    private int userID;
+    private String firstname,lastname;
     private String phone;
+    private String email;
     private boolean isAdmin;
     private String intro;
+    private Date dob;
+    private String gender;
     private boolean isActive;
+    private String password;
     private String avatar;
 
-    private String gender;
-    private Date dob;
-
-    public String getGender() {
-        return gender;
+    public User() {
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
+    public User(int userID, String firstname, String lastname, String phone, String email, boolean isAdmin, String intro, Date dob, String gender, boolean isActive, String password, String avatar) {
+        this.userID = userID;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.phone = phone;
+        this.email = email;
+        this.isAdmin = isAdmin;
+        this.intro = intro;
         this.dob = dob;
-    }
-    
-    
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+        this.gender = gender;
+        this.isActive = isActive;
+        this.password = password;
+        this.avatar = avatar;
     }
 
-    
-    public String getFirstName() {
-        return firstName;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     }
 
     public String getPhone() {
@@ -77,6 +71,17 @@ public class User {
         this.phone = phone;
     }
 
+<<<<<<< HEAD
+=======
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     public boolean isIsAdmin() {
         return isAdmin;
     }
@@ -93,6 +98,25 @@ public class User {
         this.intro = intro;
     }
 
+<<<<<<< HEAD
+=======
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     public boolean isIsActive() {
         return isActive;
     }
@@ -101,6 +125,7 @@ public class User {
         this.isActive = isActive;
     }
 
+<<<<<<< HEAD
     public String getAvatar() {
         return avatar;
     }
@@ -119,6 +144,8 @@ public class User {
         this.email = email;
     }
 
+=======
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     public String getPassword() {
         return password;
     }
@@ -126,6 +153,28 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+<<<<<<< HEAD
             
 }
 
+=======
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userID=" + userID + ", firstname=" + firstname + ", lastname=" + lastname + ", phone=" + phone + ", email=" + email + ", isAdmin=" + isAdmin + ", intro=" + intro + ", dob=" + dob + ", gender=" + gender + ", isActive=" + isActive + ", password=" + password + ", avatar=" + avatar + '}';
+    }
+    
+    
+    
+    
+    
+}
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
