@@ -7,10 +7,6 @@ package model;
 
 import java.sql.Date;
 
-/**
- *
- * @author huyen
- */
 public class User {
     private int userID;
     private String firstname,lastname;
@@ -64,6 +60,7 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     }
 
     public String getPhone() {
@@ -74,6 +71,8 @@ public class User {
         this.phone = phone;
     }
 
+<<<<<<< HEAD
+=======
     public String getEmail() {
         return email;
     }
@@ -82,6 +81,7 @@ public class User {
         this.email = email;
     }
 
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     public boolean isIsAdmin() {
         return isAdmin;
     }
@@ -98,6 +98,8 @@ public class User {
         this.intro = intro;
     }
 
+<<<<<<< HEAD
+=======
     public Date getDob() {
         return dob;
     }
@@ -114,6 +116,7 @@ public class User {
         this.gender = gender;
     }
 
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     public boolean isIsActive() {
         return isActive;
     }
@@ -122,6 +125,27 @@ public class User {
         this.isActive = isActive;
     }
 
+<<<<<<< HEAD
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    
+    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+=======
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
     public String getPassword() {
         return password;
     }
@@ -129,6 +153,11 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+<<<<<<< HEAD
+            
+}
+
+=======
 
     public String getAvatar() {
         return avatar;
@@ -148,3 +177,4 @@ public class User {
     
     
 }
+>>>>>>> 82b9480a6731d94b0ec5668e49d89edad82110cc
