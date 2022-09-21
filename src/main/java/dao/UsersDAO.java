@@ -20,6 +20,10 @@ import model.User;
  */
 public class UsersDAO extends DBContext{
     
+    public UsersDAO() throws SQLException, ClassNotFoundException {
+        super();
+    }
+    
      Connection conn = null; //ket noi sql server
     PreparedStatement ps = null; //nem cau lenh query sang sql server
     ResultSet rs = null;// nhan ket qua tra ve
@@ -101,7 +105,7 @@ public class UsersDAO extends DBContext{
         return list;
     }
         
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         UsersDAO dao = new UsersDAO();
         //dao.register("rtyuioi", "yirw", "1234567890", "13u3u@", "male", "1232455");
        //dao.checkAccountExist("huyenphuong628@gmail.com");

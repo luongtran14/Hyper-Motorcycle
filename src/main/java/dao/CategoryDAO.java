@@ -19,6 +19,10 @@ public class CategoryDAO extends DBContext{
     final String id = "category_id";
     final String name = "category_name";
     
+    public CategoryDAO() throws SQLException, ClassNotFoundException {
+        super();
+    }
+    
     public ArrayList<Category> getAllCategories() {
         ArrayList<Category> allCategories = new ArrayList<>();
         try {
@@ -41,7 +45,7 @@ public class CategoryDAO extends DBContext{
     public Category getCategoryById(int categoryId) {
         Category category = new Category();
         try {
-            String query = "SELECT * FROM " + CATEGORY_TABLE + "WHERE " + id + "=" + categoryId;
+            String query = "SELECT * FROM " + CATEGORY_TABLE + " WHERE " + id + " = " + categoryId;
             PreparedStatement stm = connection.prepareStatement(query);
             ResultSet rs = stm.executeQuery();
             
@@ -53,5 +57,10 @@ public class CategoryDAO extends DBContext{
             System.out.println(e);
         }
         return category;
+    }
+    
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        CategoryDAO dao = new CategoryDAO();
+        System.out.println(dao.getCategoryById(1).getCategoryName());
     }
 }

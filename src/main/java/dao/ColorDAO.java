@@ -15,6 +15,10 @@ import model.Color;
  * @author Admin
  */
 public class ColorDAO extends DBContext{
+    public ColorDAO() throws SQLException, ClassNotFoundException {
+        super();
+    }
+    
     public ArrayList<Color> getAllColors() {
         ArrayList<Color> colors = new ArrayList<>();
         try {

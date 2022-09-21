@@ -30,7 +30,11 @@ public class ProductDAO extends DBContext{
     final String date_in = "date_in";
     final String is_deleted = "is_deleted";
     
-    public ArrayList<Motor> getAllMotors() {
+    public ProductDAO() throws SQLException, ClassNotFoundException {
+        super();
+    }
+    
+    public ArrayList<Motor> getAllMotors() throws ClassNotFoundException {
         ArrayList<Motor> allMotors = new ArrayList<>();
         try {
             String query = "SELECT * FROM " + PRODUCT_TABLE;
@@ -39,7 +43,6 @@ public class ProductDAO extends DBContext{
             
             while(rs.next()) {
                 CategoryDAO categoryDAO = new CategoryDAO();
-                Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
                 
                 Motor motor = new Motor();
                 motor.setProductId(rs.getInt(id));
@@ -49,6 +52,7 @@ public class ProductDAO extends DBContext{
                 motor.setImageUrl(rs.getString(image));
                 motor.setDescription(rs.getString(description));
                 motor.setMotorCC(rs.getInt(motor_cc));
+                Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
                 motor.setCategory(category);
 //                motor.setColors(colors);
                 motor.setUnitPrice(rs.getFloat(unit_price));
@@ -65,10 +69,44 @@ public class ProductDAO extends DBContext{
         return allMotors;
     }
     
-    public static void main(String[] args) {
+    public Motor getSpecificMotorById(int motorId) throws ClassNotFoundException {
+       Motor motor = new Motor();
+       try {
+            String query = "SELECT * FROM " + PRODUCT_TABLE + " WHERE " + id + " = " + motorId;
+            PreparedStatement stm = connection.prepareStatement(query);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next()) {
+                CategoryDAO categoryDAO = new CategoryDAO();
+                
+                motor.setProductId(rs.getInt(id));
+                motor.setProductName(rs.getString(name));
+                motor.setBrand(rs.getString(brand));
+                motor.setSerialNumber(rs.getString(serial_number));
+                motor.setImageUrl(rs.getString(image));
+                motor.setDescription(rs.getString(description));
+                motor.setMotorCC(rs.getInt(motor_cc));
+                Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
+                motor.setCategory(category);
+//                motor.setColors(colors);
+                motor.setUnitPrice(rs.getFloat(unit_price));
+                motor.setUnitInStock(rs.getInt(unit_in_stock));
+                motor.setDateIn(rs.getDate(date_in));
+                motor.setIsDeleted(rs.getBoolean(is_deleted));
+                
+                return motor;
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+       return null;
+    }
+    
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         ArrayList<Motor> list = new ProductDAO().getAllMotors();
         for (Motor s : list) {
-            System.out.println(s.getProductId());
+            System.out.println(s.getCategory().getCategoryName());
         }
     }
 }
