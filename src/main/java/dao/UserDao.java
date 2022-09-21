@@ -34,9 +34,9 @@ public class UserDao {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 result = new User();
-                result.setUserId(rs.getInt("user_id"));
-                result.setFirstName(rs.getString("first_name"));
-                result.setLastName(rs.getString("last_name"));
+                result.setUserID(rs.getInt("user_id"));
+                result.setFirstname(rs.getString("first_name"));
+                result.setLastname(rs.getString("last_name"));
                 result.setPhone(rs.getString("phone"));
                 result.setEmail(rs.getString("email"));
 
@@ -100,9 +100,9 @@ public class UserDao {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 User result = new User();
-                result.setUserId(rs.getInt("user_id"));
-                result.setFirstName(rs.getString("first_name"));
-                result.setLastName(rs.getString("last_name"));
+                result.setUserID(rs.getInt("user_id"));
+                result.setFirstname(rs.getString("first_name"));
+                result.setLastname(rs.getString("last_name"));
                 result.setPhone(rs.getString("phone"));
                 result.setEmail(rs.getString("email"));
 

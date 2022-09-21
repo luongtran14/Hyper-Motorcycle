@@ -42,7 +42,7 @@ public class ProductAdminController extends HttpServlet {
         ArrayList<Category> allCategories = cDao.getAllCategories();
         request.setAttribute("allMotors", allMotors);
         request.setAttribute("allCategories", allCategories);
-        request.getRequestDispatcher("../../JSP/Admin/Product/ProductAdmin.jsp").forward(request, response);
+        request.getRequestDispatcher("/JSP/Admin/Product/ProductAdmin.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

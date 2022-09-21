@@ -72,8 +72,9 @@ public class ProductDAO extends DBContext{
     public Motor getSpecificMotorById(int motorId) throws ClassNotFoundException {
        Motor motor = new Motor();
        try {
-            String query = "SELECT * FROM " + PRODUCT_TABLE + " WHERE " + id + " = " + motorId;
+            String query = "SELECT * FROM " + PRODUCT_TABLE + " WHERE " + id + " = ?";
             PreparedStatement stm = connection.prepareStatement(query);
+            stm.setInt(1, motorId);
             ResultSet rs = stm.executeQuery();
             
             while(rs.next()) {
