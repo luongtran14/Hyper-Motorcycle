@@ -9,6 +9,8 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <servlet>
+        <servlet-name>ProductAdminController</servlet-name>
+        <servlet-class>controller.product.ProductAdminController</servlet-class>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
