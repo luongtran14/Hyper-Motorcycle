@@ -20,7 +20,7 @@ public class DBConnection {
  public static Connection getSQLServerConnection()
          throws SQLException, ClassNotFoundException {
      String hostName = "localhost";
-     String sqlInstanceName = "ADMIN\\TUNGBEO";
+     String sqlInstanceName = "ADMIN";
      String database = "motobike";
      String userName = "sa";
      String password = "123";

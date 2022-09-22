@@ -5,9 +5,12 @@
  */
 package controller;
 
-import dao.UserDao;
+import dao.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -73,16 +76,20 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password= request.getParameter("password");
-        User login =  new UserDao().login(email, password);
- 
-        if(login != null){
-           request.getSession().setAttribute("login_user", login);
-          response.sendRedirect("home.jsp");
-          return;
+        try {
+            String email = request.getParameter("email");
+            String password= request.getParameter("password");
+            User login =  new UsersDAO().login(email, password);
+            
+            if(login != null){
+                request.getSession().setAttribute("login_user", login);
+                response.sendRedirect("home.jsp");
+                return;
+            }
+            response.sendRedirect("login");
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         response.sendRedirect("login");
     }
 
     /**
