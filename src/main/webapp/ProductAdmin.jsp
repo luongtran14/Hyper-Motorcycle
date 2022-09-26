@@ -14,9 +14,20 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        
+        <!-- Vendor CSS-->
+        <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/superfish-menu/css/superfish.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/swiper-sider/dist/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/magnific-popup/dist/magnific-popup.min.css">
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <a href="../index.html" style="margin: 2rem;">Back to home page</a>
+        <h1>Product List Admin</h1>
         <select>
             <option>All Categories</option>
             <c:forEach items="${requestScope.allCategories}" var="category">
@@ -25,7 +36,7 @@
                 </option>
             </c:forEach>
         </select>
-        <form id="formProduct" action="/admin/products" method="POST">
+        <!--<form id="formProduct" action="/admin/products" method="POST">-->
             <table class="table table-responsive table-bordered table-striped">
                 <thead>
                     <th>ID</th>
@@ -73,7 +84,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-        </form>
+        <!--</form>-->
         <script>
             editProduct(id) {
                 

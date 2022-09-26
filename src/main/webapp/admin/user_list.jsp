@@ -34,10 +34,10 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/magnific-popup/dist/magnific-popup.min.css">
 
     <!-- Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/shortcodes.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style-selector.css">
-    <link id="style-main-color" rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/color/color1.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/main.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/shortcodes.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style-selector.css">
+    <link id="style-main-color" rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/color/color1.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
@@ -953,7 +953,7 @@
     <script type="text/javascript" src="libs/jquery-cookie/jquery.cookie.min.js"></script>
 
     <!-- Theme Script-->
-    <script type="text/javascript" src="js/style.selector.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="JS/style.selector.js"></script>
+    <script type="text/javascript" src="JS/main.js"></script>
   </body>
 </html>

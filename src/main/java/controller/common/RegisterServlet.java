@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.common;
 
 import dao.UsersDAO;
 import java.io.IOException;
@@ -58,7 +58,7 @@ public class RegisterServlet extends HttpServlet {
 //                a = (User) dao.login(email, pass);//phân login cua Phuong
 //                HttpSession session = request.getSession();
 //                session.setAttribute("acc", a);
-                    request.getRequestDispatcher("home").forward(request, response);
+                    request.getRequestDispatcher("index.html").forward(request, response);
                 } else {
                     request.setAttribute("mess2", "Email already exists, please use another email!");
                     request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -81,13 +81,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        request.getRequestDispatcher("register.jsp").forward(request, response);
     }
 
     /**
