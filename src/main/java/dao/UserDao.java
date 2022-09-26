@@ -19,16 +19,18 @@ import model.User;
  *
  * @author Admin
  */
-public class UserDao {
+public class UserDao extends DBContext{
+    
+    public UserDao() throws SQLException, ClassNotFoundException {
+        super();
+    }
 
     public User login(String email, String password) {
         User result = null;
         try {
             String sql = "SELECT * FROM [User]  WHERE email = ? and password = ?";
 
-            Connection con = DBConnection.getSQLServerConnection();
-
-            PreparedStatement stm = con.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
@@ -53,8 +55,6 @@ public class UserDao {
                 return result;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -161,5 +161,11 @@ public class UserDao {
             e.printStackTrace();
         }
         return 0;
+    }
+    
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        UserDao dao = new UserDao();
+        User login = dao.login("admin@gmail.com", "123");
+        System.out.println(login.getFirstname());
     }
 }
