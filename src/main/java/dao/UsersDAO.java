@@ -26,11 +26,11 @@ public class UsersDAO extends DBContext{
     PreparedStatement ps = null; //nem cau lenh query sang sql server
     ResultSet rs = null;// nhan ket qua tra ve
     
-    public UsersDAO() throws SQLException{
+    public UsersDAO() throws SQLException, ClassNotFoundException{
         super();
     }
 
-    public void register(String fname, String lname, String phone, String email,String gender, String password) {
+    public void register(String fname, String lname, String phone, String email,String gender, String password) throws ClassNotFoundException {
         String query = "insert into [User] "
                 + "values (?, ?, ?, ?, 0, '', '', ?, 1, ?, '')";
         try {
@@ -43,14 +43,12 @@ public class UsersDAO extends DBContext{
             ps.setString(5, gender);
             ps.setString(6, password);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             System.out.println(e);
         }
-
     }
     
-    public User checkAccountExist(String email) {
+    public User checkAccountExist(String email) throws ClassNotFoundException {
       String query = "select * from [User] where [email] = ?";
         try {
             conn = new DBContext().connection;
@@ -71,7 +69,6 @@ public class UsersDAO extends DBContext{
                         rs.getString(11),
                         rs.getString(12)
                 );
-                 
             }
         } catch (SQLException e) {
         }
@@ -105,6 +102,7 @@ public class UsersDAO extends DBContext{
         }
         return list;
     }
+
     
     public User login(String email, String password) {
         User result = null;
@@ -143,6 +141,47 @@ public class UsersDAO extends DBContext{
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+        
+        public User getUsertByID(String id) {
+
+        String query = "select*from [User] where user_id = ?";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+              return new User(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getBoolean(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getString(12)
+                );
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+        
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        UsersDAO dao = new UsersDAO();
+        //dao.register("rtyuioi", "yirw", "1234567890", "13u3u@", "male", "1232455");
+       //dao.checkAccountExist("huyenphuong628@gmail.com");
+      List<User> list = dao.checkAccount();
+        for (User account : list) {
+            System.out.println(account);
+        }
     }
 
     public List<User> getUserList(int pageIndex, int pageSize, String searchKeyword, String status, String gender) {

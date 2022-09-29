@@ -7,6 +7,10 @@ package model;
 
 import java.sql.Date;
 
+/**
+ *
+ * @author huyen
+ */
 public class User {
     private int userID;
     private String firstname,lastname;

@@ -3,25 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.common;
 
-import dao.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
+import controller.service.SendMail;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Admin
  */
-public class LoginController extends HttpServlet {
+@WebServlet(name = "ResetPasswordController", urlPatterns = {"/reset_password"})
+public class ResetPasswordController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +35,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,8 +50,8 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
-        request.getRequestDispatcher("login.jsp").forward(request , response);
+        String page = "reset_password.jsp";
+        request.getRequestDispatcher(page).forward(request, response);
     }
 
     /**
@@ -77,18 +66,33 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String email = request.getParameter("email");
-            String password= request.getParameter("password");
-            User login =  new UsersDAO().login(email, password);
-            
-            if(login != null){
-                request.getSession().setAttribute("login_user", login);
-                response.sendRedirect("home.jsp");
-                return;
+            String recipient = request.getParameter("email");
+            String subject = "Your Password has been reset";
+            CustomerServices customerServices = new CustomerServices();
+            String newPassword = customerServices.resetCustomerPassword(recipient);
+            String content = "Hi, this is your new password: " + newPassword;
+            content += "\nNote: for security reason, "
+                    + "you must change your password after logging in.";
+
+            String message = "";
+            if (newPassword.equalsIgnoreCase("EmailNotFound")) {
+                request.setAttribute("message", "Email not exist in system!");
+                request.getRequestDispatcher("message.jsp").forward(request, response);
+            } else {
+                try {
+                    SendMail sendmail = new SendMail();
+                    sendmail.send(recipient, subject, content);
+                    message = "Your password has been reset. Please check your e-mail.";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    message = "There were an error: " + ex.getMessage();
+                } finally {
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("message.jsp").forward(request, response);
+                }
             }
-            response.sendRedirect("login");
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger("").log(Level.SEVERE, null, ex);
         }
     }
 

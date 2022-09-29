@@ -31,14 +31,16 @@ public class AuthenticationFilter implements Filter {
     private static final boolean debug = true;
 
     private static final List<String> ADMIN_PAGE = Arrays.asList(""
-            + "/admin/user/list");
+            + "/admin/user/list"
+            + "/admin/products");
 
     private static final List<String> UNAUTHENTICATION_PAGE = Arrays.asList(
             "/login",
             "/css",
             "/images",
             "/js",
-            "/lib"
+            "/lib",
+            "/register"
     );
 
     // The filter configuration object we are associated with.  If
@@ -131,7 +133,7 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        User user = (User) req.getSession().getAttribute("login_user");
+        User user = (User) req.getSession().getAttribute("acc");
         if (user == null) {
             res.sendRedirect(req.getContextPath()+"/login");
         } else {

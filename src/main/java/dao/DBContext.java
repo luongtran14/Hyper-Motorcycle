@@ -16,14 +16,14 @@ import java.sql.SQLException;
 public class DBContext {
     public Connection connection;
     
-    public DBContext() {
+    public DBContext() throws SQLException, ClassNotFoundException {
        try {
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-           String connectionUrl = "jdbc:sqlserver://localhost:1433;database=motobike;";
+           String connectionUrl = "jdbc:sqlserver://localhost:1433;database=motobike;encrypt=true;trustServerCertificate=true;";
            String username = "sa";
            String password = "123";
            connection = DriverManager.getConnection(connectionUrl, username, password);
-       } catch(ClassNotFoundException | SQLException ex) {
+       } catch(SQLException ex) {
            ex.printStackTrace();
        }
    }

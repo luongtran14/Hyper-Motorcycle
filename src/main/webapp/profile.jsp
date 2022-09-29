@@ -1,41 +1,48 @@
 <%-- 
-    Document   : login
-    Created on : Sep 15, 2022, 10:21:06 PM
-    Author     : Admin
+    Document   : profile
+    Created on : Sep 17, 2022, 5:52:48 PM
+    Author     : huyen
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+  
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>User Profile - Motor Vehikal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- Favicon-->
-    <link rel="shortcut icon" href="images/icon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="Assets/images/icon/favicon.ico" type="image/x-icon">
 
     <!-- Web Fonts-->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Varela+Round">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
 
     <!-- Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/superfish-menu/css/superfish.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/swiper-sider/dist/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/magnific-popup/dist/magnific-popup.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/superfish-menu/css/superfish.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/slick-sider/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/slick-sider/slick-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/swiper-sider/dist/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="Assets/libs/magnific-popup/dist/magnific-popup.min.css">
 
     <!-- Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/main.css">
-    <link rel="stylesheet" type="text/css" href="CSS/shortcodes.css">
-    <link rel="stylesheet" type="text/css" href="CSS/style-selector.css">
-    <link id="style-main-color" rel="stylesheet" type="text/css" href="CSS/color/color1.css">
+    <link rel="stylesheet" type="text/css" href="Assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="Assets/css/shortcodes.css">
+    <link rel="stylesheet" type="text/css" href="Assets/css/style-selector.css">
+    <link id="style-main-color" rel="stylesheet" type="text/css" href="Assets/css/color/color1.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
@@ -105,7 +112,7 @@
                               <ul>
                                 <li><a href="login.html"><i class="fa fa-sign-in mv-color-primary"></i>&nbsp;
                                     Login</a></li>
-                                <li><a href="login.html"><i class="fa fa-pencil-square-o mv-color-primary"></i>&nbsp;
+                                <li><a href="profile?uid=${sessionScope.acc.userID}"><i class="fa fa-pencil-square-o mv-color-primary"></i>&nbsp;
                                     Register</a></li>
                                 <li><a href="wishlist.html">My Wishlist</a></li>
                                 <li><a href="compare.html">Compare</a></li>
@@ -353,114 +360,95 @@
         <div data-image-src="images/background/demo_bg_1920x1680.png" class="mv-banner-style-1 mv-bg-overlay-dark overlay-0-85 mv-parallax">
           <div class="page-name mv-caption-style-6">
             <div class="container">
-              <div class="mv-title-style-9"><span class="main">Login - Register</span><img src="images/icon/icon_line_polygon_line.png" alt="icon" class="line"/></div>
+              <div class="mv-title-style-9"><span class="main">User Profile</span><img src="images/icon/icon_line_polygon_line.png" alt="icon" class="line"/></div>
             </div>
           </div>
         </div>
       </section>
       <!-- .main-banner-->
+		<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
 
-      <section class="main-breadcrumb mv-wrap">
-        <div class="mv-breadcrumb-style-1">
-          <div class="container">
-            <ul class="breadcrumb-1-list">
-              <li><a href="home.html"><i class="fa fa-home"></i></a></li>
-              <li><a>Login/Register</a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- .main-breadcrumb-->
-
-      <section class="mv-main-body login-main mv-bg-gray mv-wrap">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6 col-login">
-              <div class="mv-form-style-1 mv-box-shadow-gray-1">
-                  <form method="POST" action="login" class="form-login">
-                  <div class="form-header">
-                    <div class="mv-title-style-13">
-                      <div class="text-main">sign in</div>
-                    </div>
-                  </div>
-                  <!-- .form-header-->
-
-                  <div class="form-body">
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Email</strong></div>
-                      <div class="mv-field">
-                          <input type="email" name="email" class="mv-inputbox mv-inputbox-style-1" style="border: 1px solid black"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Password</strong></div>
-                      <div class="mv-field">
-                        <input type="password" name="password" class="mv-inputbox mv-inputbox-style-1"  style="border: 1px solid black"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group submit-button mv-mt-30">
-                      <button type="submit" class="mv-btn mv-btn-style-5 btn-login">Login</button>
-<!--                      <label class="mv-checkbox mv-checkbox-style-1 checkbox-remember">
-                        <input type="checkbox" name="test138" class="hidden"/><span class="checkbox-after-input"><span class="checkbox-visual-box"><span class="icon-checked fa fa-check"></span></span><span class="checkbox-text">Remember me</span></span>
-                      </label>-->
-                    </div>
-
-                    <div class="mv-form-group"><a href="forgot-password.html" class="btn-forgot-pass">Forgot your password?</a></div>
-                  </div>
-                  <!-- .form-body-->
-                </form>
-                <!-- .form-login-->
-              </div>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="${profile.avatar}" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <button class="btn btn-primary" type="button">Upload new image</button>
+                </div>
             </div>
-<!--
-            <div class="col-sm-6 col-register">
-              <div class="mv-form-style-1 mv-box-shadow-gray-1">
-                <form method="GET" class="form-register">
-                  <div class="form-header">
-                    <div class="mv-title-style-13">
-                      <div class="text-main">create a new account</div>
-                      <div class="text-sub">Create an account to track your orders, create a wishlist and more</div>
-                    </div>
-                  </div>
-                   .form-header
-
-                  <div class="form-body">
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Email</strong></div>
-                      <div class="mv-field">
-                        <input type="email" name="test127" class="mv-inputbox mv-inputbox-style-1"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Password</strong></div>
-                      <div class="mv-field">
-                        <input type="password" name="test127" class="mv-inputbox mv-inputbox-style-1"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Confirm Password</strong></div>
-                      <div class="mv-field">
-                        <input type="password" name="test127" class="mv-inputbox mv-inputbox-style-1"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group submit-button mv-mt-30">
-                      <button type="submit" class="mv-btn mv-btn-style-5 btn-signup">sign up</button>
-                    </div>
-                  </div>
-                   .form-body
-                </form>
-                 .form-register
-              </div>
-            </div>-->
-          </div>
         </div>
-      </section>
-      <!-- .mv-main-body-->
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form> 
+					<!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">First name</label>
+                                <input class="form-control" name="fname" value="${profile.firstname}"  type="text">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Last name</label>
+                                <input class="form-control" id="inputLastName" type="text" value="${profile.lastname}">
+                            </div>
+                        </div>
+                        <!-- Form Group (intro)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Introduction</label>
+                            <input class="form-control" id="inputUsername" type="text" value="${profile.intro}">
+                        </div>
+                       
+                        <!-- Form Row        -->
+                        <div class="mb-3">
+                            <!-- Form Group (gender)-->
+                            <div>
+                                <label class="small mb-1" for="inputOrgName">Gender</label>
+                                <input class="form-control" id="inputOrgName" type="text"  value="${profile.gender}">
+                            </div>
+                            
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                            <input class="form-control" id="inputEmailAddress" type="email"  value="${profile.email}">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Phone number</label>
+                                <input class="form-control" id="inputPhone" type="tel" value="${profile.phone}">
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                <input class="form-control" id="inputBirthday" type="text" name="birthday" value="${profile.dob}">
+                            </div>
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="button">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      
+      
+     
+      <!-- .product-detail-related-->
 
       <section class="main-newsletter mv-newsletter-style-1 mv-wrap">
         <div style="background-image: url(images/background/demo_bg_1920x1680.png)" class="newsletter-bg">
@@ -926,30 +914,97 @@
     <!-- .popup-wrapper-->
 
     <!-- Vendor jQuery-->
-    <script type="text/javascript" src="libs/jquery/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="libs/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="libs/smoothscroll/SmoothScroll.min.js"></script>
-    <script type="text/javascript" src="libs/superfish-menu/js/superfish.min.js"></script>
-    <script type="text/javascript" src="libs/jquery-ui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="libs/jquery-ui/external/touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="libs/jquery-ui/external/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="libs/parallax/parallax.min.js"></script>
-    <script type="text/javascript" src="libs/jquery-countto/jquery.countTo.min.js"></script>
-    <script type="text/javascript" src="libs/jquery-appear/jquery.appear.min.js"></script>
-    <script type="text/javascript" src="libs/as-pie-progress/jquery-asPieProgress.min.js"></script>
-    <script type="text/javascript" src="libs/caroufredsel/helper-plugins/jquery.touchSwipe.min.js"></script>
-    <script type="text/javascript" src="libs/caroufredsel/jquery.carouFredSel-6.2.1-packed.js"></script>
-    <script type="text/javascript" src="libs/isotope/isotope.pkgd.min.js"></script>
-    <script type="text/javascript" src="libs/isotope/fit-columns.min.js"></script>
-    <script type="text/javascript" src="libs/slick-sider/slick.min.js"></script>
-    <script type="text/javascript" src="libs/lwt-countdown/jquery.lwtCountdown-1.0.min.js"></script>
-    <script type="text/javascript" src="libs/swiper-sider/dist/js/swiper.min.js"></script>
-    <script type="text/javascript" src="libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-    <script type="text/javascript" src="libs/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="libs/jquery-cookie/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jquery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/smoothscroll/SmoothScroll.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/superfish-menu/js/superfish.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jquery-ui/external/touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jquery-ui/external/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/parallax/parallax.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jquery-countto/jquery.countTo.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jquery-appear/jquery.appear.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/as-pie-progress/jquery-asPieProgress.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/caroufredsel/helper-plugins/jquery.touchSwipe.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/caroufredsel/jquery.carouFredSel-6.2.1-packed.js"></script>
+    <script type="text/javascript" src="Assets/libs/isotope/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/isotope/fit-columns.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/slick-sider/slick.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/lwt-countdown/jquery.lwtCountdown-1.0.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/swiper-sider/dist/js/swiper.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="Assets/libs/jquery-cookie/jquery.cookie.min.js"></script>
 
     <!-- Theme Script-->
-    <script type="text/javascript" src="JS/style.selector.js"></script>
-    <script type="text/javascript" src="JS/main.js"></script>
+    <script type="text/javascript" src="Assets/js/style.selector.js"></script>
+    <script type="text/javascript" src="Assets/js/main.js"></script>
+	
+	
+<style type="text/css">
+body{margin-top:20px;
+background-color:#f2f6fc;
+color:#69707a;
+}
+.img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+</style>
+
+<script type="text/javascript">
+
+</script>
   </body>
 </html>

@@ -1,21 +1,14 @@
-<%-- 
-    Document   : login
-    Created on : Sep 15, 2022, 10:21:06 PM
-    Author     : Admin
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Forgot Password - Motor Vehikal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- Favicon-->
-    <link rel="shortcut icon" href="images/icon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../Assets/images/icon/favicon.ico" type="image/x-icon">
 
     <!-- Web Fonts-->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Varela+Round">
@@ -76,15 +69,16 @@
                       </div>
                     </li>
                     <li class="item-button dropdown mv-dropdown-style-1 item-language">
-                      <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="mv-btn mv-btn-style-24"> <img src="images/icon/icon_flag_england.png" alt="icon"/><span class="btn-text hidden-xs hidden-sm">&nbsp; English</span><i class="icon fa fa-angle-down"></i></button>
+                      <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="mv-btn mv-btn-style-24"> <img src="../Assets/
+                                                                                                                                                   images/icon/icon_flag_england.png" alt="icon"/><span class="btn-text hidden-xs hidden-sm">&nbsp; English</span><i class="icon fa fa-angle-down"></i></button>
                       <div class="dropdown-menu pull-right">
                         <div class="dropdown-menu-inner">
                           <nav class="mv-menu-style-3">
                             <ul>
-                              <li><a href="#"><img src="images/icon/icon_flag_france.png" alt="icon"/>&nbsp; France</a></li>
-                              <li><a href="#"><img src="images/icon/icon_flag_italy.png" alt="icon"/>&nbsp; Italy</a></li>
-                              <li><a href="#"><img src="images/icon/icon_flag_germany.png" alt="icon"/>&nbsp; Germany</a></li>
-                              <li><a href="#"><img src="images/icon/icon_flag_spain.png" alt="icon"/>&nbsp; Spain</a></li>
+                              <li><a href="#"><img src="../Assets/images/icon/icon_flag_france.png" alt="icon"/>&nbsp; France</a></li>
+                              <li><a href="#"><img src="../Assets/images/icon/icon_flag_italy.png" alt="icon"/>&nbsp; Italy</a></li>
+                              <li><a href="#"><img src="../Assets/images/icon/icon_flag_germany.png" alt="icon"/>&nbsp; Germany</a></li>
+                              <li><a href="#"><img src="../Assets/images/icon/icon_flag_spain.png" alt="icon"/>&nbsp; Spain</a></li>
                             </ul>
                           </nav>
                         </div>
@@ -133,7 +127,7 @@
               </div>
               <!-- .header-toggle-off-canvas-->
 
-              <div class="header-logo"><a href="home.html" title="Motor Vehikal"><img src="images/logo/logo_2.png" alt="logo" class="logo-img img-default image-live-view"/><img src="images/logo/logo_2.png" alt="logo" class="logo-img img-scroll image-live-view"/></a></div>
+              <div class="header-logo"><a href="home.html" title="Motor Vehikal"><img src="../Assets/images/logo/logo_2.png" alt="logo" class="logo-img img-default image-live-view"/><img src="../Assets/images/logo/logo_2.png" alt="logo" class="logo-img img-scroll image-live-view"/></a></div>
               <!-- .header-logo-->
 
               <div class="main-nav-wrapper hidden-xs hidden-sm">
@@ -257,7 +251,7 @@
                               <div class="item-inner">
                                 <div class="mv-dp-table align-top">
                                   <div class="mv-dp-table-cell block-39-thumb">
-                                    <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Rock Glove"><img src="images/demo/demo_80x100.png" alt="demo" class="block-39-thumb-img"/></a></div>
+                                    <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Rock Glove"><img src="../Assets/images/demo/demo_80x100.png" alt="demo" class="block-39-thumb-img"/></a></div>
                                   </div>
                                   <div class="mv-dp-table-cell block-39-main">
                                     <div class="block-39-main-inner">
@@ -280,7 +274,7 @@
                               <div class="item-inner">
                                 <div class="mv-dp-table align-top">
                                   <div class="mv-dp-table-cell block-39-thumb">
-                                    <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Rock Glove"><img src="images/demo/demo_80x100.png" alt="demo" class="block-39-thumb-img"/></a></div>
+                                    <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Rock Glove"><img src="../Assets/images/demo/demo_80x100.png" alt="demo" class="block-39-thumb-img"/></a></div>
                                   </div>
                                   <div class="mv-dp-table-cell block-39-main">
                                     <div class="block-39-main-inner">
@@ -303,7 +297,7 @@
                               <div class="item-inner">
                                 <div class="mv-dp-table align-top">
                                   <div class="mv-dp-table-cell block-39-thumb">
-                                    <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Rock Glove"><img src="images/demo/demo_80x100.png" alt="demo" class="block-39-thumb-img"/></a></div>
+                                    <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Rock Glove"><img src="../Assets/images/demo/demo_80x100.png" alt="demo" class="block-39-thumb-img"/></a></div>
                                   </div>
                                   <div class="mv-dp-table-cell block-39-main">
                                     <div class="block-39-main-inner">
@@ -353,7 +347,7 @@
         <div data-image-src="images/background/demo_bg_1920x1680.png" class="mv-banner-style-1 mv-bg-overlay-dark overlay-0-85 mv-parallax">
           <div class="page-name mv-caption-style-6">
             <div class="container">
-              <div class="mv-title-style-9"><span class="main">Login - Register</span><img src="images/icon/icon_line_polygon_line.png" alt="icon" class="line"/></div>
+              <div class="mv-title-style-9"><span class="main">Forgot Password</span><img src="../Assets/images/icon/icon_line_polygon_line.png" alt="icon" class="line"/></div>
             </div>
           </div>
         </div>
@@ -365,98 +359,44 @@
           <div class="container">
             <ul class="breadcrumb-1-list">
               <li><a href="home.html"><i class="fa fa-home"></i></a></li>
-              <li><a>Login/Register</a></li>
+              <li><a>Forgot Password</a></li>
             </ul>
           </div>
         </div>
       </section>
       <!-- .main-breadcrumb-->
 
-      <section class="mv-main-body login-main mv-bg-gray mv-wrap">
+      <section class="mv-main-body forgot-password-main mv-bg-gray mv-wrap">
         <div class="container">
           <div class="row">
-            <div class="col-sm-6 col-login">
+            <div class="col-sm-6 col-sm-offset-3">
               <div class="mv-form-style-1 mv-box-shadow-gray-1">
-                  <form method="POST" action="login" class="form-login">
+                  <form method="post" action="reset_password" class="form-forgot-password">
                   <div class="form-header">
                     <div class="mv-title-style-13">
-                      <div class="text-main">sign in</div>
+                      <div class="text-main">Forgot your password?</div>
+                      <div class="text-sub">Enter your email address to reset your password. You may need to check your spam folder.</div>
                     </div>
                   </div>
                   <!-- .form-header-->
 
                   <div class="form-body">
                     <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Email</strong></div>
+                      <div class="mv-label"> <strong class="text-uppercase">email</strong></div>
                       <div class="mv-field">
-                          <input type="email" name="email" class="mv-inputbox mv-inputbox-style-1" style="border: 1px solid black"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Password</strong></div>
-                      <div class="mv-field">
-                        <input type="password" name="password" class="mv-inputbox mv-inputbox-style-1"  style="border: 1px solid black"/>
+                        <input type="email" name="email" class="mv-inputbox mv-inputbox-style-1"/>
                       </div>
                     </div>
 
                     <div class="mv-form-group submit-button mv-mt-30">
-                      <button type="submit" class="mv-btn mv-btn-style-5 btn-login">Login</button>
-<!--                      <label class="mv-checkbox mv-checkbox-style-1 checkbox-remember">
-                        <input type="checkbox" name="test138" class="hidden"/><span class="checkbox-after-input"><span class="checkbox-visual-box"><span class="icon-checked fa fa-check"></span></span><span class="checkbox-text">Remember me</span></span>
-                      </label>-->
+                      <button type="submit" class="mv-btn mv-btn-style-5 btn-submit">Submit</button>
                     </div>
-
-                    <div class="mv-form-group"><a href="forgot-password.html" class="btn-forgot-pass">Forgot your password?</a></div>
                   </div>
                   <!-- .form-body-->
                 </form>
                 <!-- .form-login-->
               </div>
             </div>
-<!--
-            <div class="col-sm-6 col-register">
-              <div class="mv-form-style-1 mv-box-shadow-gray-1">
-                <form method="GET" class="form-register">
-                  <div class="form-header">
-                    <div class="mv-title-style-13">
-                      <div class="text-main">create a new account</div>
-                      <div class="text-sub">Create an account to track your orders, create a wishlist and more</div>
-                    </div>
-                  </div>
-                   .form-header
-
-                  <div class="form-body">
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Email</strong></div>
-                      <div class="mv-field">
-                        <input type="email" name="test127" class="mv-inputbox mv-inputbox-style-1"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Password</strong></div>
-                      <div class="mv-field">
-                        <input type="password" name="test127" class="mv-inputbox mv-inputbox-style-1"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group">
-                      <div class="mv-label"> <strong class="text-uppercase">Confirm Password</strong></div>
-                      <div class="mv-field">
-                        <input type="password" name="test127" class="mv-inputbox mv-inputbox-style-1"/>
-                      </div>
-                    </div>
-
-                    <div class="mv-form-group submit-button mv-mt-30">
-                      <button type="submit" class="mv-btn mv-btn-style-5 btn-signup">sign up</button>
-                    </div>
-                  </div>
-                   .form-body
-                </form>
-                 .form-register
-              </div>
-            </div>-->
           </div>
         </div>
       </section>
@@ -552,10 +492,10 @@
 
               <div class="footer-payment">
                 <ul class="mv-ul list">
-                  <li class="item"><a href="#"><img src="images/icon/icon_paypal.png" alt="icon"/></a></li>
-                  <li class="item"><a href="#"><img src="images/icon/icon_master_card.png" alt="icon"/></a></li>
-                  <li class="item"><a href="#"><img src="images/icon/icon_american_express.png" alt="icon"/></a></li>
-                  <li class="item"><a href="#"><img src="images/icon/icon_visa.png" alt="icon"/></a></li>
+                  <li class="item"><a href="#"><img src="../Assets/images/icon/icon_paypal.png" alt="icon"/></a></li>
+                  <li class="item"><a href="#"><img src="../Assets/images/icon/icon_master_card.png" alt="icon"/></a></li>
+                  <li class="item"><a href="#"><img src="../Assets/images/icon/icon_american_express.png" alt="icon"/></a></li>
+                  <li class="item"><a href="#"><img src="../Assets/images/icon/icon_visa.png" alt="icon"/></a></li>
                 </ul>
               </div>
               <!-- .footer-payment-->
@@ -815,7 +755,7 @@
                         <div class="item-inner">
                           <div class="mv-dp-table">
                             <div class="mv-dp-table-cell block-24-thumb">
-                              <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Open Face Helmets"><img src="images/demo/demo_300x400.png" alt="demo"/></a><a href="images/demo/demo_300x400.png" title="Open Face Helmets" data-lightbox-href="product-detail.html" class="mv-btn mv-btn-style-20 mv-lightbox-item"><i class="icon fa fa-search"></i></a></div>
+                              <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Open Face Helmets"><img src="../Assets/images/demo/demo_300x400.png" alt="demo"/></a><a href="images/demo/demo_300x400.png" title="Open Face Helmets" data-lightbox-href="product-detail.html" class="mv-btn mv-btn-style-20 mv-lightbox-item"><i class="icon fa fa-search"></i></a></div>
                             </div>
                             <div class="mv-dp-table-cell block-24-main">
                               <div class="block-24-title"><a href="product-detail.html" title="Open Face Helmets" class="mv-overflow-ellipsis">Open Face Helmets</a></div>
@@ -839,7 +779,7 @@
                         <div class="item-inner">
                           <div class="mv-dp-table">
                             <div class="mv-dp-table-cell block-24-thumb">
-                              <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Spada Enforcer WP"><img src="images/demo/demo_300x400.png" alt="demo"/></a><a href="images/demo/demo_300x400.png" title="Spada Enforcer WP" data-lightbox-href="product-detail.html" class="mv-btn mv-btn-style-20 mv-lightbox-item"><i class="icon fa fa-search"></i></a></div>
+                              <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Spada Enforcer WP"><img src="../Assets/images/demo/demo_300x400.png" alt="demo"/></a><a href="images/demo/demo_300x400.png" title="Spada Enforcer WP" data-lightbox-href="product-detail.html" class="mv-btn mv-btn-style-20 mv-lightbox-item"><i class="icon fa fa-search"></i></a></div>
                             </div>
                             <div class="mv-dp-table-cell block-24-main">
                               <div class="block-24-title"><a href="product-detail.html" title="Spada Enforcer WP" class="mv-overflow-ellipsis">Spada Enforcer WP Spada Enforcer WP</a></div>
@@ -863,7 +803,7 @@
                         <div class="item-inner">
                           <div class="mv-dp-table">
                             <div class="mv-dp-table-cell block-24-thumb">
-                              <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Drift Water"><img src="images/demo/demo_300x400.png" alt="demo"/></a><a href="images/demo/demo_300x400.png" title="Richa Drift Water" data-lightbox-href="product-detail.html" class="mv-btn mv-btn-style-20 mv-lightbox-item"><i class="icon fa fa-search"></i></a></div>
+                              <div class="thumb-inner mv-lightbox-style-1"><a href="product-detail.html" title="Richa Drift Water"><img src="../Assets/images/demo/demo_300x400.png" alt="demo"/></a><a href="images/demo/demo_300x400.png" title="Richa Drift Water" data-lightbox-href="product-detail.html" class="mv-btn mv-btn-style-20 mv-lightbox-item"><i class="icon fa fa-search"></i></a></div>
                             </div>
                             <div class="mv-dp-table-cell block-24-main">
                               <div class="block-24-title"><a href="product-detail.html" title="Richa Drift Water" class="mv-overflow-ellipsis">Richa Drift Water</a></div>

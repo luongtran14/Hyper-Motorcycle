@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Authorize OK</h1>
+        <a href="/admin/products">Admin Products</a>
     </body>
 </html>
