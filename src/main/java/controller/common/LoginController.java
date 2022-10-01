@@ -81,7 +81,7 @@ public class LoginController extends HttpServlet {
                 if (user.isIsAdmin()) {
                     response.sendRedirect("admin.jsp");
                 } else {
-                    response.sendRedirect("home.jsp");
+                    response.sendRedirect("index.html");
                 }
             }
         } catch(Exception e) {

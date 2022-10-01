@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import model.Category;
 import model.Color;
 import model.Motor;
@@ -30,6 +31,7 @@ public class ProductDAO extends DBContext{
     final String unit_price = "unit_price";
     final String unit_in_stock = "unit_in_stock";
     final String date_in = "date_in";
+    final String date_out = "date_out";
     final String is_deleted = "is_deleted";
     
     public ProductDAO() throws SQLException, ClassNotFoundException {
@@ -38,8 +40,8 @@ public class ProductDAO extends DBContext{
     
     
     // Get Section
-    public ArrayList<Motor> getAllProducts() throws ClassNotFoundException {
-        ArrayList<Motor> allProducts = new ArrayList<>();
+    public ArrayList<Product> getAllProducts() throws ClassNotFoundException {
+        ArrayList<Product> allProducts = new ArrayList<>();
         try {
             String query = "SELECT * FROM " + PRODUCT_TABLE;
             PreparedStatement stm = connection.prepareStatement(query);
@@ -49,7 +51,7 @@ public class ProductDAO extends DBContext{
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
                 
-                Motor product = new Motor();
+                Product product = new Motor();
                 product.setProductId(rs.getInt(id));
                 product.setProductName(rs.getString(name));
                 product.setBrand(rs.getString(brand));
@@ -57,11 +59,6 @@ public class ProductDAO extends DBContext{
                 product.setDescription(rs.getString(description));
                 Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
                 product.setCategory(category);
-                
-                if (product.getCategory().getCategoryId() == 0) {
-                    product.setSerialNumber(rs.getString(serial_number));
-                    product.setMotorCC(rs.getInt(motor_cc));
-                }
                 
                 ArrayList<Color> colors = colorDAO.getColorByProductId(product.getProductId());
                 product.setColors(colors);
@@ -152,7 +149,7 @@ public class ProductDAO extends DBContext{
                 motor.setDateIn(rs.getDate(date_in));
                 motor.setIsDeleted(rs.getBoolean(is_deleted));
                 
-                return motor.isIsDeleted() ? motor : null;
+                return !motor.isIsDeleted() ? motor : null;
             }
             
         } catch (SQLException e) {
@@ -163,9 +160,8 @@ public class ProductDAO extends DBContext{
     
     public Product getSpecificProductById(int id) throws ClassNotFoundException {
        Product product = new Product();
-       if (id == 0) return null;
        try {
-            String query = "SELECT * FROM " + PRODUCT_TABLE + " WHERE " + id + " = ?";
+            String query = "SELECT * FROM " + PRODUCT_TABLE + " WHERE " + this.id + " = ?";
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
@@ -174,7 +170,7 @@ public class ProductDAO extends DBContext{
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
                 
-                product.setProductId(rs.getInt(id));
+                product.setProductId(rs.getInt(this.id));
                 product.setProductName(rs.getString(name));
                 product.setBrand(rs.getString(brand));
                 product.setImageUrl(rs.getString(image));
@@ -190,7 +186,7 @@ public class ProductDAO extends DBContext{
                 product.setDateIn(rs.getDate(date_in));
                 product.setIsDeleted(rs.getBoolean(is_deleted));
                 
-                return product.isIsDeleted() ? product : null;
+                return product;
             }
             
         } catch (SQLException e) {
@@ -201,9 +197,6 @@ public class ProductDAO extends DBContext{
     
     public ArrayList<Product> getProductsByCategoryId(int id) throws ClassNotFoundException {
         ArrayList<Product> products = new ArrayList<>();
-        if (id == 0) {
-            return null;
-        } 
         try {
             String query = "SELECT * FROM " + PRODUCT_TABLE + " WHERE " + category_id + " = ?";
             PreparedStatement stm = connection.prepareStatement(query);
@@ -215,7 +208,7 @@ public class ProductDAO extends DBContext{
                 ColorDAO colorDAO = new ColorDAO();
                 
                 Product product = new Product();
-                product.setProductId(rs.getInt(id));
+                product.setProductId(rs.getInt(this.id));
                 product.setProductName(rs.getString(name));
                 product.setBrand(rs.getString(brand));
                 product.setImageUrl(rs.getString(image));
@@ -231,8 +224,7 @@ public class ProductDAO extends DBContext{
                 product.setDateIn(rs.getDate(date_in));
                 product.setIsDeleted(rs.getBoolean(is_deleted));
                 
-                if (!product.isIsDeleted()) 
-                    products.add(product);
+                products.add(product);
             }
             
         } catch (SQLException e) {
@@ -248,7 +240,7 @@ public class ProductDAO extends DBContext{
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setBoolean(1, activation);
             stm.setInt(2, productId);
-            ResultSet rs = stm.executeQuery();
+            stm.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -260,16 +252,73 @@ public class ProductDAO extends DBContext{
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setInt(1, categoryId);
             stm.setInt(2, productId);
-            ResultSet rs = stm.executeQuery();
+            stm.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void editProduct(Product product, int id) {
+        try {
+            String query = 
+                    "UPDATE " + PRODUCT_TABLE + 
+                    " SET " + name + "=?," + brand + "=?," + image + "=?," + description + "=?," + category_id + "=?," +
+                    unit_price + "=?," + unit_in_stock + "=?," + date_in + "=?," + is_deleted + "=?," + date_out + "=? " +
+                    "WHERE " + this.id + " =?";
+            PreparedStatement stm = connection.prepareStatement(query);
+            
+            java.sql.Date date = new java.sql.Date(0);
+            
+            stm.setString(1, product.getProductName());
+            stm.setString(2, product.getBrand());
+            stm.setString(3, product.getImageUrl());
+            stm.setString(4, product.getDescription());
+            stm.setInt(5, product.getCategory().getCategoryId());
+            stm.setFloat(6, product.getUnitPrice());
+            stm.setInt(7, product.getUnitInStock());
+            stm.setDate(8, new java.sql.Date(product.getDateIn().getTime()));
+            stm.setBoolean(9, false);
+            stm.setDate(10, date);
+            stm.setInt(11, id);
+            
+            stm.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    // Create Section
+    public void createProduct(Product product) {
+        try {
+            String query = 
+                    "INSERT INTO " + PRODUCT_TABLE + 
+                    "(" + name + "," + brand + "," + image + "," + description + "," + category_id + "," +
+                    unit_price + "," + unit_in_stock + "," + date_in + "," + is_deleted + "," + date_out + ") " +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(query);
+            
+            java.sql.Date date = new java.sql.Date(0);
+            
+            stm.setString(1, product.getProductName());
+            stm.setString(2, product.getBrand());
+            stm.setString(3, product.getImageUrl());
+            stm.setString(4, product.getDescription());
+            stm.setInt(5, product.getCategory().getCategoryId());
+            stm.setFloat(6, product.getUnitPrice());
+            stm.setInt(7, product.getUnitInStock());
+            stm.setDate(8, new java.sql.Date(product.getDateIn().getTime()));
+            stm.setBoolean(9, false);
+            stm.setDate(10, date);
+            
+            stm.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
     
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        ArrayList<Motor> list = new ProductDAO().getAllMotors();
-        for (Motor s : list) {
-            System.out.println(s.getCategory().getCategoryName());
-        }
+        System.out.println(new ProductDAO().getSpecificProductById(3));
+
+        
     }
 }

@@ -70,7 +70,7 @@ public class ColorDAO extends DBContext{
     public ArrayList<Color> getColorByProductId(int id) {
         ArrayList<Color> colors = new ArrayList<>();
         try {
-            String query = "SELECT * FROM" + PRODUCT_COLOR_TABLE + " WHERE " + p_id + " = ?";
+            String query = "SELECT * FROM " + PRODUCT_COLOR_TABLE + " WHERE " + p_id + " = ?";
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
@@ -90,7 +90,7 @@ public class ColorDAO extends DBContext{
     public ArrayList<Product> getAllProductsByColorId(int id) throws ClassNotFoundException {
         ArrayList<Product> products = new ArrayList<>();
         try {
-            String query = "SELECT * FROM" + PRODUCT_COLOR_TABLE + " WHERE " + c_id + " = ?";
+            String query = "SELECT * FROM " + PRODUCT_COLOR_TABLE + " WHERE " + c_id + " = ?";
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();

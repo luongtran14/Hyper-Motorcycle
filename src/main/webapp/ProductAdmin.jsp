@@ -27,30 +27,56 @@
     </head>
     <body>
         <a href="../index.html" style="margin: 2rem;">Back to home page</a>
-        <h1>Product List Admin</h1>
-        <select>
-            <option>All Categories</option>
-            <c:forEach items="${requestScope.allCategories}" var="category">
-                <option value="${category.categoryId}">
-                    ${category.categoryName}
+        <div style='display: flex; align-items: center; justify-content: space-between'>
+            <h1 class='col-6 col-sm-6 col-md-5 col-lg-3 col-xl-3'>Product List Admin</h1>
+            <div
+                style='display: flex; justify-content: flex-end'
+                class='col-6 col-sm-6 col-md-5 col-lg-3 col-xl-3'>
+                <button 
+                    class="btn btn-primary">
+                    <a 
+                       style='color: white' 
+                       href="${pageContext.request.contextPath}/admin/products/create">
+                        Create a new Product
+                    </a>
+                </button>
+            </div>
+        </div>
+        <pre>${pageContext.request.contextPath}</pre>
+        <form
+            id="selectBoxCategoryForm"
+            method="GET"
+            action="${pageContext.request.contextPath}/admin/products"
+        >
+            <select 
+                id='selectBoxCategory'
+                onchange="getProductByCategoryId('selectBoxCategoryForm')"
+                name="categoryId">
+                <option value="0">
+                    All Categories
                 </option>
-            </c:forEach>
-        </select>
-        <!--<form id="formProduct" action="/admin/products" method="POST">-->
-            <table class="table table-responsive table-bordered table-striped">
+                <c:forEach items="${requestScope.allCategories}" var="category">
+                    <option 
+                        value="${category.categoryId}">
+                        ${category.categoryName}
+                    </option>
+                </c:forEach>
+            </select>
+        </form>
+        <!--<form id="formProduct" action="${pageContext.request.contextPath}/admin/products" method="POST">-->
+            <table
+                class="table table-responsive table-bordered table-striped">
                 <thead>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Brand</th>
-                    <th>Serial Number</th>
                     <th>Image</th>
                     <th>Description</th>
-                    <th>Motor CC</th>
                     <th>Category</th>
                     <th>Unit Price</th>
                     <th>Unit In Stock</th>
                     <th>Date in</th>
-                    <th>Is deleted</th>
+                    <th>Disabled</th>
                     <th>Action
                 </thead>
                 <tbody>
@@ -59,10 +85,8 @@
                             <td>${motor.productId}</td>
                             <td>${motor.productName}</td>
                             <td>${motor.brand}</td>
-                            <td>${motor.serialNumber}</td>
                             <td>${motor.imageUrl}</td>
                             <td>${motor.description}</td>
-                            <td>${motor.motorCC}</td>
                             <td>${motor.category.categoryName}</td>
                             <td>${motor.unitPrice}</td>
                             <td>${motor.unitInStock}</td>
@@ -70,14 +94,21 @@
                             <td>${motor.isDeleted}</td>
                             <td>
                                 <button 
-                                    click="editProduct(${motor.productId})"
+                                    onclick="editProduct(${motor.productId})"
                                     class="btn btn-primary mx-2">
                                     Edit
                                 </button>
                                 <button 
-                                    click="deleteProduct(${motor.productId})"
+                                    id="disable${motor.productId}"
+                                    onclick="disableProduct(${motor.productId})"
                                     class="btn btn-danger mx-2">
-                                    Delete
+                                    Disable
+                                </button>
+                                <button 
+                                    id="enable${motor.productId}"
+                                    onclick="enableProduct(${motor.productId})"
+                                    class="btn btn-secondary mx-2">
+                                    Enable
                                 </button>
                             </td>
                         </tr>
@@ -86,12 +117,44 @@
             </table>
         <!--</form>-->
         <script>
-            editProduct(id) {
+            (() => {
+                var selectBox = document.getElementById('selectBoxCategory');
+                for (var item of selectBox.options) {
+                    if (item.value == ${requestScope.currentCategory}) {
+                        item.selected = true;
+                        break;
+                    }
+                }
                 
+                <c:forEach items="${requestScope.allMotors}" var="motor" varStatus="loop">
+                    console.log('alo');
+                    document.getElementById('disable${motor.productId}').disabled = ${motor.isDeleted ? true : false};
+                    document.getElementById('enable${motor.productId}').disabled = ${!motor.isDeleted ? true : false};
+                </c:forEach>
+            })();
+            
+            function editProduct(id) {
+                window.location.href='http://localhost:8080${pageContext.request.contextPath}/admin/products/edit?id='+ id;
             }
             
-            deleteProduct(id) {
-                
+            function disableProduct(id) {
+                if (confirm("Are you sure you want to disable this product?")) {
+                    window.location.href='http://localhost:8080${pageContext.request.contextPath}/admin/products/disable?id=' + id
+                    + "&disable=true";
+                }
+            }
+            
+            function enableProduct(id) {
+                window.location.href='http://localhost:8080${pageContext.request.contextPath}/admin/products/disable?id=' + id
+                + "&disable=false";
+            }
+            
+            function viewDetailsProduct(id) {
+                window.location.href='http://localhost:8080${pageContext.request.contextPath}/admin/products/details?id='+ id;
+            }
+            
+            function getProductByCategoryId(formId) {
+                document.getElementById(formId).submit();
             }
         </script>
     </body>

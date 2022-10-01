@@ -18,15 +18,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
-import model.Motor;
 import model.Product;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="ProductAdmin", urlPatterns="{/admin/products}")
-public class ProductAdminController extends HttpServlet {
+@WebServlet(name = "ProductAdminDisableController", urlPatterns = {"/admin/products/disable"})
+public class ProductAdminDisableController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,27 +36,37 @@ public class ProductAdminController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProductAdminDisableController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProductAdminDisableController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+    
     protected void processRequestGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException, NullPointerException {
 
-        String id = !request.getParameter("categoryId").isEmpty() ? request.getParameter("categoryId") : "1";
-        int currentCategoryId = Integer.parseInt(id);
-        
-        ProductDAO pDao = new ProductDAO();
-        CategoryDAO cDao = new CategoryDAO();
-        
-        ArrayList<Product> allProducts;
-        ArrayList<Category> allCategories = cDao.getAllCategories();
-        if (currentCategoryId == 0) {
-            allProducts = pDao.getAllProducts();
-        } else {
-            allProducts = pDao.getProductsByCategoryId(currentCategoryId);
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Boolean disable = Boolean.parseBoolean(request.getParameter("disable"));
+            ProductDAO pDao = new ProductDAO();
+            Product product = pDao.getSpecificProductById(id);
+            pDao.changeProductActivationWithProductId(id, disable);
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            response.sendRedirect("../../admin/products?categoryId=0");
         }
-        
-        request.setAttribute("currentCategory", currentCategoryId);
-        request.setAttribute("allMotors", allProducts);
-        request.setAttribute("allCategories", allCategories);
-        request.getRequestDispatcher("/ProductAdmin.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,9 +84,11 @@ public class ProductAdminController extends HttpServlet {
         try {
             processRequestGet(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger("SQL").log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductAdminDisableController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger("ClassNotFound").log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductAdminDisableController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex) {
+            Logger.getLogger(ProductAdminDisableController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -92,6 +103,7 @@ public class ProductAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
