@@ -38,6 +38,10 @@
     </servlet>
     <!--mapping-->
     <servlet>
+        <servlet-name>CategoryListController</servlet-name>
+        <servlet-class>controller.category.CategoryListController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditQuantityCartItem</servlet-name>
         <servlet-class>controller.common.EditQuantityCartItem</servlet-class>
     </servlet>
@@ -92,6 +96,10 @@
     <servlet-mapping>
         <servlet-name>ProductAdmin</servlet-name>
         <url-pattern>/admin/products</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryListController</servlet-name>
+        <url-pattern>/categorylist</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditQuantityCartItem</servlet-name>
