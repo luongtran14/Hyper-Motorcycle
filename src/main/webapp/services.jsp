@@ -35,11 +35,11 @@
 
         <!-- Theme CSS-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
-        <link rel="stylesheet" type="text/css" href="css/shortcodes.css">
-        <link rel="stylesheet" type="text/css" href="css/home.css">
-        <link rel="stylesheet" type="text/css" href="css/style-selector.css">
-        <link id="style-main-color" rel="stylesheet" type="text/css" href="css/color/color1.css">
+        <link rel="stylesheet" type="text/css" href="CSS/main.css">
+        <link rel="stylesheet" type="text/css" href="CSS/shortcodes.css">
+        <link rel="stylesheet" type="text/css" href="CSS/home.css">
+        <link rel="stylesheet" type="text/css" href="CSS/style-selector.css">
+        <link id="style-main-color" rel="stylesheet" type="text/css" href="CSS/color/color1.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
         <!-- CSS only -->
@@ -795,8 +795,8 @@
         <script type="text/javascript" src="libs/jquery-cookie/jquery.cookie.min.js"></script>
 
         <!-- Theme Script-->
-        <script type="text/javascript" src="js/style.selector.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="JS/style.selector.js"></script>
+        <script type="text/javascript" src="JS/main.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
