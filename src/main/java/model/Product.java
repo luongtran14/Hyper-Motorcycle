@@ -20,7 +20,7 @@ public class Product {
     private Category category;
     private ArrayList<Color> colors;
     private float unitPrice;
-    private float unitInStock;
+    private int unitInStock;
     private Date dateIn;
     private boolean isDeleted;
     
@@ -29,12 +29,13 @@ public class Product {
     public Product(
             int productId, 
             String productName, 
-            String brand, String imageUrl, 
+            String brand, 
+            String imageUrl, 
             String description, 
             Category category, 
             ArrayList<Color> colors, 
             float unitPrice, 
-            float unitInStock, 
+            int unitInStock, 
             Date dateIn, 
             boolean isDeleted) {
         this.productId = productId;
@@ -98,11 +99,11 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
-    public float getUnitInStock() {
+    public int getUnitInStock() {
         return unitInStock;
     }
 
-    public void setUnitInStock(float unitInStock) {
+    public void setUnitInStock(int unitInStock) {
         this.unitInStock = unitInStock;
     }
 

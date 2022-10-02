@@ -192,7 +192,7 @@
                     </li>
                     <li><a href="#"><span class="menu-text">Blog <i class="menu-icon fa fa-angle-down"></i></span></a>
                       <ul>
-                        <li><a href="blog-list.html">Blog List</a></li>
+                        <li><a href="blog.jsp">Blog List</a></li>
                         <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
                         <li><a href="blog-grid-3-no-sb.html">Blog Grid 3 No Sidebar</a></li>
                         <li><a href="blog-grid-3-mansory-no-sb.html">Blog Grid 3 Mansory No Sidebar</a></li>

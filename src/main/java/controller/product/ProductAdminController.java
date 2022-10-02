@@ -7,7 +7,6 @@ package controller.product;
 import dao.CategoryDAO;
 import dao.ProductDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
 import model.Motor;
+import model.Product;
 
 /**
  *
@@ -38,11 +38,23 @@ public class ProductAdminController extends HttpServlet {
      */
     protected void processRequestGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException, NullPointerException {
+
+        String id = !request.getParameter("categoryId").isEmpty() ? request.getParameter("categoryId") : "1";
+        int currentCategoryId = Integer.parseInt(id);
+        
         ProductDAO pDao = new ProductDAO();
         CategoryDAO cDao = new CategoryDAO();
-        ArrayList<Motor> allMotors = pDao.getAllMotors();
+        
+        ArrayList<Product> allProducts;
         ArrayList<Category> allCategories = cDao.getAllCategories();
-        request.setAttribute("allMotors", allMotors);
+        if (currentCategoryId == 0) {
+            allProducts = pDao.getAllProducts();
+        } else {
+            allProducts = pDao.getProductsByCategoryId(currentCategoryId);
+        }
+        
+        request.setAttribute("currentCategory", currentCategoryId);
+        request.setAttribute("allMotors", allProducts);
         request.setAttribute("allCategories", allCategories);
         request.getRequestDispatcher("/ProductAdmin.jsp").forward(request, response);
     }

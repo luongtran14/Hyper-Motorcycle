@@ -78,9 +78,25 @@ public class ProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequest(request, response);
+            String email = request.getParameter("email");
+            String password= request.getParameter("password");
+            User login =  new UsersDAO().login(email, password);
+            
+            if(login != null){
+                request.getSession().setAttribute("login_user", login);
+                response.sendRedirect("home.jsp");
+                return;
+            }
+            response.sendRedirect("login");
         } catch (SQLException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                processRequest(request, response);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
+            } catch (ClassNotFoundException ex1) {
+                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

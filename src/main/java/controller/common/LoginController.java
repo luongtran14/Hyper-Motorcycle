@@ -66,7 +66,6 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            
             HttpSession session = request.getSession();
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -81,7 +80,7 @@ public class LoginController extends HttpServlet {
                 if (user.isIsAdmin()) {
                     response.sendRedirect("admin.jsp");
                 } else {
-                    response.sendRedirect("home.jsp");
+                    response.sendRedirect("index.html");
                 }
             }
         } catch(Exception e) {
@@ -98,5 +97,4 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
