@@ -26,6 +26,10 @@
         <servlet-class>controller.product.ProductAdminController</servlet-class>
     </servlet>
     <!--mapping-->
+    <servlet>
+        <servlet-name>CategoryListController</servlet-name>
+        <servlet-class>controller.category.CategoryListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -41,6 +45,10 @@
     <servlet-mapping>
         <servlet-name>ProductAdmin</servlet-name>
         <url-pattern>/admin/products</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryListController</servlet-name>
+        <url-pattern>/categorylist</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
