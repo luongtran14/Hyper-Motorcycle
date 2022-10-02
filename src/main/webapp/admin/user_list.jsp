@@ -11,7 +11,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Product List - Motor Vehikal</title>
+    <title>User List - Motor Vehikal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -336,7 +336,7 @@
                           <div class="content-main-inner">
                             <div class="content-detail">
                               <div class="content-title"><a href="product-detail.html" class="mv-overflow-ellipsis">
-                                      ${item.getFirstName()} ${item.getLastName()}</a></div>
+                                      ${item.getFirstname()} ${item.getLastname()}</a></div>
 
 <!--                              <div data-rate="true" data-score="5.0" class="content-rate mv-rate text-left">
                                 <div class="rate-inner mv-f-14">

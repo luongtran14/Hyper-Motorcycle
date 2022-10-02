@@ -27,12 +27,12 @@ public class DBContext {
            ex.printStackTrace();
        }
    }
-       public static void main(String[] args) throws SQLException, ClassNotFoundException {
+   public static void main(String[] args) throws SQLException, ClassNotFoundException {
         DBContext dBContext = new DBContext();
         if (dBContext.connection != null) {
             System.out.println("Successful");
         } else {
             System.out.println("Fail");
         }
-    }
+   }
 }
