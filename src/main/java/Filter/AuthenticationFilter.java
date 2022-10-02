@@ -40,7 +40,8 @@ public class AuthenticationFilter implements Filter {
             "/images",
             "/js",
             "/lib",
-            "/register"
+            "/register",
+            "/index"
     );
 
     // The filter configuration object we are associated with.  If

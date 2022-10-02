@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.common;
+package controller.blog;
 
-import dao.UsersDAO;
-import dao.UserDao;
+import dao.BlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,15 +17,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
+import model.Blog;
+import model.Comment;
 
 /**
  *
  * @author huyen
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "CommentManagerController", urlPatterns = {"/comment"})
+public class CommentManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,37 +37,23 @@ public class RegisterServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String fname = request.getParameter("fname");
-            String lname = request.getParameter("lname");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
-            String gender = request.getParameter("gender");
-            String pass = request.getParameter("password");
-            String cfpass = request.getParameter("cfpassword");
-            if (!pass.equals(cfpass)) {
-                request.setAttribute("mess1", "The re-entered password does not match the entered password!");
-                request.getRequestDispatcher("register.jsp").forward(request, response);
-            } else {
-                UsersDAO dao = new UsersDAO();
-                UserDao d = new UserDao();
-                User  user = dao.checkAccountExist(email);
-                if ( user == null) {
-                    dao.register(fname, lname, phone, email, gender, pass);
-                     user = d.login(email, pass);
-                    HttpSession session = request.getSession();
-                    session.setAttribute("acc",  user);
-                    request.getRequestDispatcher("index.html").forward(request, response);
-                } else {
-                    request.setAttribute("mess2", "Email already exists, please use another email!");
-                    request.getRequestDispatcher("register.jsp").forward(request, response);
-                }
-            }
-
-        }
-
+//            String id = request.getParameter("bid");
+//            BlogDAO dao = new BlogDAO();
+//            Blog b = dao.getBlogByID(id);
+//
+//            List<Comment> list = dao.getCommentByBID(id);
+//            request.setAttribute("Detail", b);
+//            request.setAttribute("Comment", list);
+//            //out.print(list);
+//            request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,7 +68,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("register.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -96,13 +82,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
