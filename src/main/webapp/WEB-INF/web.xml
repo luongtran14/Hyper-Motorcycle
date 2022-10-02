@@ -8,10 +8,21 @@
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!--name-->
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.common.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddToCart</servlet-name>
+        <servlet-class>controller.common.AddToCart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewCart</servlet-name>
+        <servlet-class>controller.common.ViewCart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCartItem</servlet-name>
+        <servlet-class>controller.common.DeleteCartItem</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
@@ -26,9 +37,25 @@
         <servlet-class>controller.product.ProductAdminController</servlet-class>
     </servlet>
     <!--mapping-->
+    <servlet>
+        <servlet-name>EditQuantityCartItem</servlet-name>
+        <servlet-class>controller.common.EditQuantityCartItem</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToCart</servlet-name>
+        <url-pattern>/AddToCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewCart</servlet-name>
+        <url-pattern>/ViewCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCartItem</servlet-name>
+        <url-pattern>/DeleteCartItem</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
@@ -41,6 +68,10 @@
     <servlet-mapping>
         <servlet-name>ProductAdmin</servlet-name>
         <url-pattern>/admin/products</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditQuantityCartItem</servlet-name>
+        <url-pattern>/EditQuantityCartItem</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
