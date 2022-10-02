@@ -662,7 +662,7 @@
                                       </div>
                                     </div>
 									<!--<a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>-->
-                                    <pre>${requestScope.user.userID}</pre>
+        
 									<c:if test="${requestScope.user.userID == a.userID}">
                                       <a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>
 									  
@@ -791,7 +791,7 @@
                             <div class="comment-respond-form">
                               <form method="post" class="form-respond mv-form-horizontal" action="addcomment">
                                 <input type="text" name="blogID" value="${Detail.blogID}" hidden="Hidden" />
-                                <input type="email" name="userID" value="${sessionScope.acc.userID}" hidden="Hidden">
+                                <input type="text" name="userID" value="${requestScope.user.userID}" hidden="Hidden">
                                 <!-- <div class="mv-form-group">
                                 <div class="col-xs-2 mv-label"> <strong class="text-uppercase">Email</strong></div>
                                 <div class="col-xs-10 mv-field">

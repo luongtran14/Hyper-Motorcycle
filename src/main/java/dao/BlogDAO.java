@@ -34,7 +34,7 @@ public class BlogDAO extends DBContext {
         List<Blog> list = new ArrayList<>();
         String query = "select a.*, b.first_name, b.last_name from  Blog  a\n"
                 + "LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
-                + "order by created_date desc";
+                + "order by blog_id asc";
         try {
             conn = new DBContext().connection;//mo ket noi vs sql
             ps = conn.prepareStatement(query);
@@ -291,13 +291,13 @@ public class BlogDAO extends DBContext {
         BlogDAO dao = new BlogDAO();
         //   dao.BC();
 //
-//        List<Comment> list = dao.getCommentByBID("1");
-//        for (Comment account : list) {
-//            System.out.println(account);
-//
-//        }
+        List<Blog> list = dao.getAllBlog();
+        for (Blog account : list) {
+            System.out.println(account);
+
+        }
 //         System.out.println(dao.getBlogBefore("2022-02-03").toString());
-        dao.getBlogBefore("2022-02-03");
+   //     dao.getBlogBefore("2022-02-03");
 
     }
 }

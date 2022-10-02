@@ -116,33 +116,34 @@ public class BlogDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try (PrintWriter out = response.getWriter()) {
-            String blogID = request.getParameter("blogID");
-            String userID = request.getParameter("userID");
-            String opinion = request.getParameter("opinion");
-            String commentContent = request.getParameter("commentContent");
-
-            int likeNum, dislikeNum;
-            if (opinion.valueOf(opinion).equals("Like")) {
-                likeNum = 1;
-                dislikeNum = 0;
-            } else {
-                likeNum = 0;
-                dislikeNum = 1;
-            }
-            CommentDAO dao = new CommentDAO();
-            out.print(blogID);
-            out.println(userID);
-            out.print(opinion);
-            out.print(commentContent);
-            //dao.AddComment(blogID, userID, commentContent, likeNum, dislikeNum);
-
-            //request.getRequestDispatcher("blogdetail").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
+//        try (PrintWriter out = response.getWriter()) {
+//            String blogID = request.getParameter("blogID");
+//            String userID = request.getParameter("userID");
+//            String opinion = request.getParameter("opinion");
+//            String commentContent = request.getParameter("commentContent");
+//
+//            int likeNum, dislikeNum;
+//            if (opinion.valueOf(opinion).equals("Like")) {
+//                likeNum = 1;
+//                dislikeNum = 0;
+//            } else {
+//                likeNum = 0;
+//                dislikeNum = 1;
+//            }
+//            CommentDAO dao = new CommentDAO();
+//            out.print(blogID);
+//            out.println(userID);
+//            out.print(opinion);
+//            out.print(commentContent);
+//            //dao.AddComment(blogID, userID, commentContent, likeNum, dislikeNum);
+//
+//            //request.getRequestDispatcher("blogdetail").forward(request, response);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**
