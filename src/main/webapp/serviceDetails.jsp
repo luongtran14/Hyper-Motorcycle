@@ -375,432 +375,63 @@
             <section class="home-1-featured-products mv-wrap mt-5">
                 <div class="container">
                     <div class="featured-title mv-title-style-2">
-                        <div class="title-2-inner"><img src="images/icon/icon_m.png" alt="icon" class="icon image-live-view"/><span class="main">Services</span>
+                        <div class="title-2-inner"><img src="images/icon/icon_m.png" alt="icon" class="icon image-live-view"/><span class="main">Service Details</span>
                         </div>
                     </div>
 
-                    <div class="container px-5">
-                        <c:if test="${role == 'true'}">
-                            <div class="row justify-content-end px-5">
-                                <div>
-                                    <button type="button" class="btn btn-lg  shadow shadow-md addBtn">
-                                        ADD
-                                    </button>
-                                </div>
-                            </div>
-                        </c:if>
-
-                        <div class="row mt-5 justify-content-end">
-                            <!--                            <div class="col-8"> 
-                                                            <div class="d-flex px-5">
-                                                                <div ><h3 class="pe-5">Filter: </h3></div>
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-outline-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                                                        <span>Filter By:</span>
-                                                                        <i class="fa fa-caret-down"></i>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <li><a class="dropdown-item" href="sortServices?sort=name&page=${page}">Sort By Name</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Sort By Name</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Sort By Name</a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                            
-                                                        </div>-->
-
-                            <!--                            <style>
-                                                            .dropdown-toggle{
-                                                                width: 200px;
-                                                                display: flex;
-                                                                justify-content: space-between;
-                                                                align-items: center;
-                                                                height: 30px;
-                                                                border: 2px solid #dc3545;
-                                                                font-weight: 600;
-                                                            }
-                                                            .dropdown-toggle:focus{
-                            
-                                                                box-shadow: none !important;
-                            
-                                                            }
-                            
-                            
-                                                            .dropdown-toggle::after {
-                            
-                                                                display: none;
-                            
-                                                            }
-                            
-                                                            .dropdown-menu{
-                            
-                                                                width: 200px;
-                                                                border: 2px solid #F44336;
-                                                                padding: 0rem 0;
-                                                                transform: translate3d(0px, 10px, 0px) !important;
-                            
-                                                            }
-                            
-                                                            .dropdown-item:focus, .dropdown-item:hover {
-                                                                color: #ffffff;
-                                                                background-color: #dc3545;
-                                                                padding: 12px;
-                                                            }
-                            
-                                                            .dropdown-item {
-                                                                display: block;
-                                                                width: 100%;
-                                                                padding: 12px;
-                            
-                                                            }
-                                                        </style>-->
-                            <div class="col-4 justify-content-start "> 
-                                <form action="searchService" class="input-group">
-                                    <input class="form-control fs-3 px-3" id="floatingTextarea" placeholder="search" name="search">
-                                    <button class="form-control-btn btn bg-primary btn-md fs-3" type="submit" >Search</button>
-                                </form>
-                            </div>
-
-                        </div>
 
 
-                    </div>
-                </div>
+                    <div class=" text-center container px-5 card shadow shadow-md p-5 border border-0">
 
-                <div class="container mt-3 p-3" >
-                    <div class="row">
-                        <c:forEach var="o" items="${list}">
-                            <div class="col-md-4 mt-4">
-                                <div class="card mb-4 border border-0 shadow-md shadow">
-                                    <a href="serviceDetails?serviceId=${o.serviceID}">
-                                        <img
-                                            class="card-img-top"
-                                            alt="Card image cap"
-                                            src="https://picsum.photos/200/70"
-                                            />
-                                        <div class="card-body">
-                                            <h3>${o.serviceName}</h3>
-                                            <p class="card-text">${o.serviceDesc}</p>
-                                            <span>Price : </span>
-                                            <span class="fw-bold">${o.price} $</span>
-                                            <div
-                                                class="d-flex justify-content-between align-items-center"
-                                                data-id="${o.serviceID}"
-                                                >
-                                                <c:choose>
-                                                    <c:when test="${role == 'true'}">
-                                                        <div clas="row justify-content-center ">
-                                                            <a 
-                                                                class="btn btn-md px-4 py-2 btn-outline-primary mt-2 btn edit-btn me-md-3"
-                                                                data-id="${o.serviceID}"
-                                                                data-userid="${o.userId}"
-                                                                data-name="${o.serviceName}"
-                                                                data-desc="${o.serviceDesc}"
-                                                                data-price="${o.price}"
-                                                                data-time="${o.time} "
-                                                                >
-                                                                Edit
-                                                            </a>
-                                                            <a
-                                                                class="btn btn-md px-4 py-2 btn-outline-danger mt-2"
-                                                                href="DeleteService?id=${o.serviceID}"
-                                                                >
-                                                                Delete
-                                                            </a>
-                                                        </div>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <a
-                                                            class="btn btn-md px-4 py-2 btn-outline-primary mt-2 order-btn"
-                                                            >
-                                                            Order
-                                                        </a>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
+                        <img
+                            class="card-img-top"
+                            alt="Card image cap"
+                            src="https://picsum.photos/300/50"
+                            />
+                        <h3 class="fw-bold fs-1">${service.serviceName}</h3>
+                        <p style="color : gray ;"> <em>
+                                ${service.serviceDesc} 
+                                <em>
+                                    </p>
+                                    <h3 class="fw-bold">Price : <span class="text-danger">${service.price} $</span></h3>
+                                    <button class="btn btn-md shadow shadow-sm mt-3 bg-info">Order</button>
 
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
+                                    </div>
 
-                <style>
-                    .active-paging {
-                        background: blue !important;
-                        color: white !important;
-                    }
-                </style>
-
-                <c:if test="${numOfPage > 1}">
-                    <!--Page Pagination Start--> 
-                    <div class="page-pagination mt-2">
-                        <ul class="pagination justify-content-center">
-                            <c:forEach var = "i" begin = "1" end = "${numOfPage}">
-                                <c:choose>
-                                    <c:when test="${i==page}">
-                                        <li>
-                                            <a  class='active-paging' href="${currentPage}?page=${i}${sort != null ? "&sort=" : ""}${sort}">${i}</a>
-                                        </li>
-                                    </c:when>    
-                                    <c:otherwise>
-                                        <li>
-                                            <a   href="Services?page=${i}">${i}</a>
-                                        </li>
-                                    </c:otherwise>
-                                </c:choose>
-
-                            </c:forEach>
-                        </ul>
-                    </div>
-                    <!--Page Pagination End--> 
-                </c:if>                     
-            </section>
-        </div>
+                                    </div>
+                                    </section>
 
 
-        <div class="modal-add rounded card p-3 ">
-            <div class="closeBtn "></div>
-            <h3 class="card-title">Add New Service</h3>
-            <div class="card-body px-3 py-3">
-                <form method="get" action="addService">
-                    <div class="form-group">
-                        <label for="name">Name Service : </label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter name of service ..." name="serviceName">
-                    </div>
-                    <div class="form-group">
-                        <label for="desc">Description :</label>
-                        <input type="text" class="form-control" id="desc" placeholder="Ennter Description .... " name="desc">
-                    </div>
-                    <div class="form-group">
-                        <label for="userID">User ID :</label>
-                        <input type="text" class="form-control" id="userID" placeholder="Ennter userID .... " name="userID">
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price :</label>
-                        <input type="number " class="form-control" id="price" placeholder="Ennter price .... " name="price">
-                    </div>
-                    <div class="form-group">
-                        <label for="time">Time :</label>
-                        <input type="date" class="form-control" id="time" name="time">
-                    </div>
+                                    <!-- Vendor jQuery-->
+                                    <script type="text/javascript" src="libs/jquery/jquery-2.1.4.min.js"></script>
+                                    <script type="text/javascript" src="libs/bootstrap/js/bootstrap.min.js"></script>
+                                    <script type="text/javascript" src="libs/smoothscroll/SmoothScroll.min.js"></script>
+                                    <script type="text/javascript" src="libs/superfish-menu/js/superfish.min.js"></script>
+                                    <script type="text/javascript" src="libs/jquery-ui/jquery-ui.min.js"></script>
+                                    <script type="text/javascript" src="libs/jquery-ui/external/touch-punch/jquery.ui.touch-punch.min.js"></script>
+                                    <script type="text/javascript" src="libs/jquery-ui/external/jquery.mousewheel.min.js"></script>
+                                    <script type="text/javascript" src="libs/parallax/parallax.min.js"></script>
+                                    <script type="text/javascript" src="libs/jquery-countto/jquery.countTo.min.js"></script>
+                                    <script type="text/javascript" src="libs/jquery-appear/jquery.appear.min.js"></script>
+                                    <script type="text/javascript" src="libs/as-pie-progress/jquery-asPieProgress.min.js"></script>
+                                    <script type="text/javascript" src="libs/caroufredsel/helper-plugins/jquery.touchSwipe.min.js"></script>
+                                    <script type="text/javascript" src="libs/caroufredsel/jquery.carouFredSel-6.2.1-packed.js"></script>
+                                    <script type="text/javascript" src="libs/isotope/isotope.pkgd.min.js"></script>
+                                    <script type="text/javascript" src="libs/isotope/fit-columns.min.js"></script>
+                                    <script type="text/javascript" src="libs/slick-sider/slick.min.js"></script>
+                                    <script type="text/javascript" src="libs/lwt-countdown/jquery.lwtCountdown-1.0.min.js"></script>
+                                    <script type="text/javascript" src="libs/swiper-sider/dist/js/swiper.min.js"></script>
+                                    <script type="text/javascript" src="libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+                                    <script type="text/javascript" src="libs/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>
+                                    <script type="text/javascript" src="libs/jquery-cookie/jquery.cookie.min.js"></script>
 
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-
-        </div>
-
-
-
-        <div class="modal-edit rounded card p-3 ">
-            <div class="closeEdit closeBtn"></div>
-            <h3 class="card-title">Edit Service</h3>
-            <div class="card-body px-3 py-3">
-                <form method="get" action="editService">
-                    <input name="seviceId" class="edit-serviceId d-none" >
-                    <div class="form-group">
-                        <label for="name">Name Service : </label>
-                        <input type="text" class="form-control  edit-name" id="name" placeholder="Enter name of service ..." name="serviceName">
-                    </div>
-                    <div class="form-group">
-                        <label for="desc">Description :</label>
-                        <input type="text" class="form-control edit-desc" id="desc" placeholder="Ennter Description .... " name="desc">
-                    </div>
-                    <div class="form-group">
-                        <label for="userID">User ID :</label>
-                        <input type="text" class="form-control edit-userID" id="userID" placeholder="Ennter userID .... " name="userID">
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price :</label>
-                        <input type="number " class="form-control edit-price" id="price" placeholder="Ennter price .... " name="price">
-                    </div>
-                    <div class="form-group">
-                        <label for="time">Time :</label>
-                        <input type="date" class="form-control edit-time" id="time" name="time">
-                    </div>
-
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-
-        </div>
-        <div class="overlay  "> </div>
-
-
-        <div class="modal-order rounded card  ">
-            <div class="closeBtn close-order"></div>
-            <img
-                class="card-img-top"
-                alt="Card image cap"
-                src="https://picsum.photos/200/70"
-                />
-            <div class="card-body px-3 py-3">
-                <form method="get" action="orderService">
-                    <input type="number" name="serviceID"  class="d-none" id="serviceID">
-                    <h3 class="fw-bold">Order Time :  <select class="px-4 ms-4 border ">
-                            <option>2-4</option>
-                            <option>4-6</option>
-                            <option>6-10</option>
-                        </select>
-                    </h3>
-                    <div class="d-flex justify-content-between align-items-center  order-btn" data-id="${o.serviceID}"  >
-                        <a class="btn btn-md px-4 py-2 btn-outline-primary mt-2">
-                            Order
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <style>
-            .modal-order , .modal-add , .modal-edit {
-                background: white;
-                position: fixed ; 
-                top:20vh;
-                width: 500px ;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 999999;
-                display: none;
-            }
-
-            .overlay {
-                background: #ccc;
-                position: fixed ; 
-                top:0;
-                left: 0;
-                right: 0 ;
-                bottom:  0 ; 
-                z-index: 99999;
-                display: none;
-            }
-            .closeBtn , closeEdit{
-                position: absolute;
-                right: 15px;
-                top: 15px;
-                width: 25px;
-                height: 25px;
-                background: red;
-
-                opacity: 1;
-            }
-
-            .closeBtn:before, .closeBtn:after {
-                position: absolute;
-                left: 50%;
-                top:0;
-                content: '';
-                height: 25px;
-                width: 2px;
-                background-color: #333;
-                pointer-events: none;
-            }
-            .closeBtn:before {
-                transform: rotate(45deg);
-            }
-            .closeBtn:after {
-                transform: rotate(-45deg);
-            }
-        </style>
-        <script type="text/javascript">
-            let close = document.querySelector('.closeBtn');
-            let closeOrder = document.querySelector('.close-order');
-            let addBtn = document.querySelector('.addBtn');
-
-            let overlay = document.querySelector('.overlay')
-            let modalOrder = document.querySelector('.modal-order');
-            let modalAdd = document.querySelector('.modal-add');
-            let modalEdit = document.querySelector('.modal-edit');
-            let editBtns = document.querySelectorAll('.edit-btn')
-            let closeEdit = document.querySelector('.closeEdit');
-            console.log(editBtns, 'editbtn')
-            editBtns.forEach(btn =>
-                btn.addEventListener('click', () => {
-                    console.log(btn.dataset)
-                    document.querySelector('.edit-name').value = btn.dataset.name
-                    document.querySelector('.edit-desc').value = btn.dataset.desc
-                    document.querySelector('.edit-price').value = btn.dataset.price
-                    document.querySelector('.edit-userID').value = btn.dataset.userid
-                    document.querySelector('.edit-time').value = new Date(btn.dataset.time).toISOString().slice(0, 10);
-                    document.querySelector('.edit-serviceId').value = btn.dataset.id
-                    modalEdit.classList.add('d-block');
-                    overlay.classList.add('d-block')
-
-                })
-            )
-            closeEdit.addEventListener('click', () => {
-                modalEdit.classList.toggle('d-block')
-                overlay.classList.toggle('d-block')
-            })
-
-
-            let orderBtns = document.querySelectorAll('.order-btn');
-            console.log(orderBtns, "bean")
-            let serviceID = document.querySelector('#serviceID');
-            orderBtns.forEach(order => {
-                order.addEventListener('click', () => {
-                    console.log('bean')
-                    modalOrder.classList.add('d-block');
-                    overlay.classList.add('d-block');
-                    serviceID.value = order.dataset.id;
-                })
-            })
-
-
-            closeOrder.addEventListener('click', () => {
-                modalOrder.classList.toggle('d-block')
-                overlay.classList.toggle('d-block')
-            })
-
-
-            addBtn.addEventListener('click', () => {
-                modalAdd.classList.add('d-block')
-                overlay.classList.add('d-block')
-            })
-//            console.log(modalOrder)
-            close.addEventListener('click', () => {
-                modalAdd.classList.toggle('d-block')
-                overlay.classList.toggle('d-block')
-            })
-
-        </script>
-
-
-
-        <!-- Vendor jQuery-->
-        <script type="text/javascript" src="libs/jquery/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="libs/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="libs/smoothscroll/SmoothScroll.min.js"></script>
-        <script type="text/javascript" src="libs/superfish-menu/js/superfish.min.js"></script>
-        <script type="text/javascript" src="libs/jquery-ui/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="libs/jquery-ui/external/touch-punch/jquery.ui.touch-punch.min.js"></script>
-        <script type="text/javascript" src="libs/jquery-ui/external/jquery.mousewheel.min.js"></script>
-        <script type="text/javascript" src="libs/parallax/parallax.min.js"></script>
-        <script type="text/javascript" src="libs/jquery-countto/jquery.countTo.min.js"></script>
-        <script type="text/javascript" src="libs/jquery-appear/jquery.appear.min.js"></script>
-        <script type="text/javascript" src="libs/as-pie-progress/jquery-asPieProgress.min.js"></script>
-        <script type="text/javascript" src="libs/caroufredsel/helper-plugins/jquery.touchSwipe.min.js"></script>
-        <script type="text/javascript" src="libs/caroufredsel/jquery.carouFredSel-6.2.1-packed.js"></script>
-        <script type="text/javascript" src="libs/isotope/isotope.pkgd.min.js"></script>
-        <script type="text/javascript" src="libs/isotope/fit-columns.min.js"></script>
-        <script type="text/javascript" src="libs/slick-sider/slick.min.js"></script>
-        <script type="text/javascript" src="libs/lwt-countdown/jquery.lwtCountdown-1.0.min.js"></script>
-        <script type="text/javascript" src="libs/swiper-sider/dist/js/swiper.min.js"></script>
-        <script type="text/javascript" src="libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-        <script type="text/javascript" src="libs/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>
-        <script type="text/javascript" src="libs/jquery-cookie/jquery.cookie.min.js"></script>
-
-        <!-- Theme Script-->
-        <script type="text/javascript" src="JS/style.selector.js"></script>
-        <script type="text/javascript" src="JS/main.js"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-            crossorigin="anonymous"
-        ></script>
-    </body>
-</html>
+                                    <!-- Theme Script-->
+                                    <script type="text/javascript" src="JS/style.selector.js"></script>
+                                    <script type="text/javascript" src="JS/main.js"></script>
+                                    <script
+                                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+                                        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+                                        crossorigin="anonymous"
+                                    ></script>
+                                    </body>
+                                    </html>
