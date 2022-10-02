@@ -3,27 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.common;
+package controller.service;
 
-import dao.UsersDAO;
+import dao.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
  *
- * @author huyen
+ * @author Admin
  */
-@WebServlet(name = "ProfileServlet", urlPatterns = {"/profile"})
-public class ProfileServlet extends HttpServlet {
+@WebServlet(name = "DeleteService", urlPatterns = {"/DeleteService"})
+public class DeleteService extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,14 +33,20 @@ public class ProfileServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        UsersDAO dao = new UsersDAO();
-        String uid = request.getParameter("uid");
-        User a = dao.getUsertByID(uid);
-        request.setAttribute("profile", a);
-
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeleteService</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeleteService at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,12 +61,20 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+            ServiceDAO sdao = new ServiceDAO();
+            // check role
+            User user = (User) session.getAttribute("acc");
+            int serviceId = Integer.parseInt(request.getParameter("id"));
+
+            //DETELE 
+            // if user is Admin => can delete 
+            if (user.getIsAdmin()) {
+                sdao.deleteService(serviceId);
+                request.getRequestDispatcher("Services").forward(request, response);
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -77,29 +89,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String email = request.getParameter("email");
-            String password= request.getParameter("password");
-            User login =  new UsersDAO().login(email, password);
-            
-            if(login != null){
-                request.getSession().setAttribute("login_user", login);
-                response.sendRedirect("home.jsp");
-                return;
-            }
-            response.sendRedirect("login");
-        } catch (SQLException ex) {
-            try {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                processRequest(request, response);
-            } catch (SQLException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (ClassNotFoundException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

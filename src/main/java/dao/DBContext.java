@@ -21,10 +21,18 @@ public class DBContext {
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
            String connectionUrl = "jdbc:sqlserver://localhost:1433;database=motobike;encrypt=true;trustServerCertificate=true;";
            String username = "sa";
-           String password = "1234567890";
+           String password = "123";
            connection = DriverManager.getConnection(connectionUrl, username, password);
        } catch(SQLException ex) {
            ex.printStackTrace();
        }
+   }
+   public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        DBContext dBContext = new DBContext();
+        if (dBContext.connection != null) {
+            System.out.println("Successful");
+        } else {
+            System.out.println("Fail");
+        }
    }
 }

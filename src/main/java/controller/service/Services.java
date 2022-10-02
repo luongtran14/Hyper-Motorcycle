@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.admin;
+package controller.service;
 
-import dao.UsersDAO;
+import dao.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Service;
 import model.User;
 
 /**
  *
  * @author Admin
  */
-public class UserListController extends HttpServlet {
-private static final String VIEW = "user_list.jsp";
+@WebServlet(name = "Services", urlPatterns = {"/Services"})
+public class Services extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,10 +42,10 @@ private static final String VIEW = "user_list.jsp";
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserListController</title>");            
+            out.println("<title>Servlet Services</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserListController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Services at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,52 +63,38 @@ private static final String VIEW = "user_list.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            int pageSize = 2;
-            String keyword = request.getParameter("keyword");
-            String pageIndexRaw = request.getParameter("page");
-            
-            String status = request.getParameter("status");
-            
-            String gender = request.getParameter("gender");
-            
-            
-            int pageIndex = 1;
-            try{
-                pageIndex = Integer.parseInt(pageIndexRaw);
-            }catch(Exception e){
-                
+        try {
+            User user = null;
+            int page;
+            boolean role = false;
+            HttpSession session = request.getSession();
+            try {
+                page = Integer.parseInt(request.getParameter("page"));
+            } catch (Exception e) {
+                page = 1;
             }
-            UsersDAO dao = new UsersDAO();
-            List<User> data = dao.getUserList(pageIndex, pageSize, keyword,status,gender);
-            
-            int total = dao.countUser(keyword, gender, status);
-            
-            request.setAttribute("status", status);
-            
-            request.setAttribute("gender", gender);
-            request.setAttribute("totalPage", getPages(total, pageSize));
-            request.setAttribute("keyword", keyword);
-            request.setAttribute("page", pageIndex);
-            request.setAttribute("data", data);
-            request.getRequestDispatcher("../"+ VIEW).forward(request, response);
-        }catch(SQLException ex){
-        Logger.getLogger(UserListController.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } catch (ClassNotFoundException ex) {
-        Logger.getLogger(UserListController.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    }
-    
-    private List<Integer> getPages(int total, int pageSize){
-         List<Integer> page = new ArrayList<>();
-        for(int i = 1; i<= total / pageSize ; i++){
-            page.add(i);
+            try {
+                user = (User) session.getAttribute("acc");
+                role = user.getIsAdmin();
+            } catch (Exception e) {
+                role = false;
+            }
+            ServiceDAO sdao = new ServiceDAO();
+            //element want to display in page 
+            int elements = 5;
+            ArrayList<Service> list = sdao.getServicesByPage(page, elements);
+            // number of page ( lấy tổng số ser chia cho số ele trong 1 trang nếu hết thì = thương còn không hết thì = phần nguyên + 1 )
+            int numOfPage = sdao.getAllServices().size() % elements == 0 ? sdao.getAllServices().size() / elements : sdao.getAllServices().size() / elements + 1;
+
+            request.setAttribute("list", list);
+            request.setAttribute("page", page);
+            request.setAttribute("numOfPage", numOfPage);
+            request.setAttribute("role", role);
+            request.setAttribute("currentPage", request.getServletPath().split("/")[1]);
+            request.getRequestDispatcher("services.jsp").forward(request, response);
+
+        } catch (Exception e) {
         }
-        if(total % pageSize != 0){
-            page.add(page.size() + 1);
-        }
-        return page;
     }
 
     /**

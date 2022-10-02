@@ -28,9 +28,15 @@
             <div class="row">
                 <div class="col-md-2" style="height:90vh; background-color: #222222">
                     <div style="border-bottom: 1px lightgray solid; width: 100%; text-align: center;padding: 5px;" >
-                        <a href="EmployeeList" style="text-decoration: none; color: white; ">Dashboard</a>
+                        <a href="chartproduct" style="text-decoration: none; color: white; ">Dashboard</a>
+                  
+                    </div> 
+                     <div style="border-bottom: 1px lightgray solid; width: 100%; text-align: center;padding: 5px;" >
+                        <a href="categorylist" style="text-decoration: none; color: white; ">CategoryList</a>
+                  
                     </div> 
                 </div>
+                
                 <!-- Page content-->
                 <div class="col-md-10">
                     <h1>Content of admin</h1>

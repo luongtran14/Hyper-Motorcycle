@@ -5,25 +5,27 @@
  */
 package controller.common;
 
-import dao.UsersDAO;
+
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
+import javax.servlet.http.HttpSession;
+import model.Cart;
+import model.CartItem;
+import model.Motor;
+import model.Product;
 
 /**
  *
- * @author huyen
+ * @author Admin
  */
-@WebServlet(name = "ProfileServlet", urlPatterns = {"/profile"})
-public class ProfileServlet extends HttpServlet {
+public class AddToCart extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,14 +37,35 @@ public class ProfileServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        UsersDAO dao = new UsersDAO();
-        String uid = request.getParameter("uid");
-        User a = dao.getUsertByID(uid);
-        request.setAttribute("profile", a);
+        try {
+            HttpSession session = request.getSession();
+            Object object = session.getAttribute("cart");
+            ProductDAO productDao = new ProductDAO();
+            Cart cart = null;
+            List<CartItem> items = new ArrayList<>();
+            response.getWriter().println("||-|| \n");
+            // Check the variable object is not null or not
+            if (object != null) {
+                cart = (Cart) object;
+            } else {
+                cart = new Cart(items);
+            }
+            int productId = Integer.parseInt(request.getParameter("pid"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+            Motor product = productDao.getSpecificMotorById(productId);
+            CartItem item = new CartItem(product, quantity);
+
+            cart.addItem(item);
+            session.setAttribute("cart", cart);
+            response.sendRedirect("./getAllProduct");
+
+        } catch (Exception e) {
+            response.sendRedirect("./404.html");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,13 +80,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -77,29 +94,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String email = request.getParameter("email");
-            String password= request.getParameter("password");
-            User login =  new UsersDAO().login(email, password);
-            
-            if(login != null){
-                request.getSession().setAttribute("login_user", login);
-                response.sendRedirect("home.jsp");
-                return;
-            }
-            response.sendRedirect("login");
-        } catch (SQLException ex) {
-            try {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                processRequest(request, response);
-            } catch (SQLException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (ClassNotFoundException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -113,3 +108,4 @@ public class ProfileServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+
