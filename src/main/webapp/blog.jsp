@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="Assets/libs/magnific-popup/dist/magnific-popup.min.css">
 
     <!-- Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="Assets/css/main.css">
-    <link rel="stylesheet" type="text/css" href="Assets/css/shortcodes.css">
-    <link rel="stylesheet" type="text/css" href="Assets/css/style-selector.css">
-    <link id="style-main-color" rel="stylesheet" type="text/css" href="Assets/css/color/color1.css">
+    <link rel="stylesheet" type="text/css" href="CSS/main.css">
+    <link rel="stylesheet" type="text/css" href="CSS/shortcodes.css">
+    <link rel="stylesheet" type="text/css" href="CSS/style-selector.css">
+    <link id="style-main-color" rel="stylesheet" type="text/css" href="CSS/color/color1.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
@@ -1168,8 +1168,8 @@
     <script type="text/javascript" src="Assets/libs/jquery-cookie/jquery.cookie.min.js"></script>
 
     <!-- Theme Script-->
-    <script type="text/javascript" src="Assets/js/style.selector.js"></script>
-    <script type="text/javascript" src="Assets/js/main.js"></script>
+    <script type="text/javascript" src="JS/style.selector.js"></script>
+    <script type="text/javascript" src="JS/main.js"></script>
   </body>
 </html>
 
