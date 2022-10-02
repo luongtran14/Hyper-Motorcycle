@@ -105,8 +105,8 @@ public class AuthenticationFilter implements Filter {
     }
 
     private boolean acceptPage(String requestUrl){
-        return requestUrl.startsWith("/css/") || requestUrl.startsWith("/libs/") 
-                || requestUrl.startsWith("/js/") || requestUrl.startsWith("/images/") 
+        return requestUrl.startsWith("/CSS/") || requestUrl.startsWith("/libs/") 
+                || requestUrl.startsWith("/JS/") || requestUrl.startsWith("/images/") 
                 || UNAUTHENTICATION_PAGE.contains(requestUrl);
     }
     /**
@@ -118,6 +118,7 @@ public class AuthenticationFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
