@@ -75,7 +75,7 @@ public class UsersDAO extends DBContext{
         return null;
     }
         
-        public List<User> checkAccount() {
+        public List<User> getAllUser() {
           List<User> list = new ArrayList<>();
         String query = "select*from [User]";
         try {
@@ -83,6 +83,7 @@ public class UsersDAO extends DBContext{
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
+             //   System.out.println("1");
                 list.add(new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -178,7 +179,7 @@ public class UsersDAO extends DBContext{
         UsersDAO dao = new UsersDAO();
         //dao.register("rtyuioi", "yirw", "1234567890", "13u3u@", "male", "1232455");
        //dao.checkAccountExist("huyenphuong628@gmail.com");
-      List<User> list = dao.checkAccount();
+      List<User> list = dao.getAllUser();
         for (User account : list) {
             System.out.println(account);
         }

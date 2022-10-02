@@ -6,6 +6,7 @@
 package controller.common;
 
 import dao.UsersDAO;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.User;
-
 
 /**
  *
@@ -52,12 +52,13 @@ public class RegisterServlet extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
                 UsersDAO dao = new UsersDAO();
-                User a = dao.checkAccountExist(email);
-                if (a == null) {
+                UserDao d = new UserDao();
+                User  user = dao.checkAccountExist(email);
+                if ( user == null) {
                     dao.register(fname, lname, phone, email, gender, pass);
-//                a = (User) dao.login(email, pass);//phân login cua Phuong
-//                HttpSession session = request.getSession();
-//                session.setAttribute("acc", a);
+                     user = d.login(email, pass);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("acc",  user);
                     request.getRequestDispatcher("index.html").forward(request, response);
                 } else {
                     request.setAttribute("mess2", "Email already exists, please use another email!");
