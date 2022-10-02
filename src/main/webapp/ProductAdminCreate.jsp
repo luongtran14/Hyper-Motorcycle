@@ -15,14 +15,14 @@
         <title>JSP Page</title>
         
         <!-- Vendor CSS-->
-        <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/superfish-menu/css/superfish.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/swiper-sider/dist/css/swiper.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/magnific-popup/dist/magnific-popup.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/jquery-ui/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/superfish-menu/css/superfish.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/slick-sider/slick.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/slick-sider/slick-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/swiper-sider/dist/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="../libs/magnific-popup/dist/magnific-popup.min.css">
     </head>
     <body>
         <h1>Create a new Product</h1>
@@ -87,6 +87,21 @@
                 </select>
             </div>
             <div>
+                <label>Colors:</label>
+                <select
+                    id="productColors"
+                    name="color"
+                    value=""
+                    multiple>
+                    <c:forEach items="${requestScope.allColors}" var="color">
+                        <option 
+                            value="${color.colorId}">
+                            ${color.colorName}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div>
                 <label>Unit Price(VND):</label>
                 <input 
                     id="productUnitPrice"
@@ -125,13 +140,32 @@
                 class="btn btn-primary"
                 style=""
                 name="submit"
+                onsubmit="getSelectedValues()"
                 type="submit">
                 Submit
             </button>
         </form>
             
         <script>
+            function getMultipleSelectValue(select) {
+                var result = '';
+                var options = select && select.options;
+                var opt;
 
+                for (var i=0, iLen=options.length; i<iLen; i++) {
+                  opt = options[i];
+
+                  if (opt.selected) {
+                    result.concat(opt.value);
+                  }
+                }
+                return result;
+            }
+            
+            function getSelectedValues() {
+                var select = document.getElementById('productColors');
+                select.value = getMultipleSelectValue(select);
+            }
         </script>
     </body>
 </html>

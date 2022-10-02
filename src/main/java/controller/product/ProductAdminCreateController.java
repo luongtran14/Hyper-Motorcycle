@@ -5,6 +5,7 @@
 package controller.product;
 
 import dao.CategoryDAO;
+import dao.ColorDAO;
 import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -61,14 +63,14 @@ public class ProductAdminCreateController extends HttpServlet {
     protected void processRequestGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException, NullPointerException {
         
-//        ProductDAO pDao = new ProductDAO();
+        ColorDAO colorDao = new ColorDAO();
         CategoryDAO cDao = new CategoryDAO();
         
-//        ArrayList<Product> allProducts;
         ArrayList<Category> allCategories = cDao.getAllCategories();
+        ArrayList<Color> allColors = colorDao.getAllColors();
         
-//        request.setAttribute("allMotors", allProducts);
         request.setAttribute("allCategories", allCategories);
+        request.setAttribute("allColors", allColors);
         request.getRequestDispatcher("/ProductAdminCreate.jsp").forward(request, response);
     }
     
@@ -83,20 +85,28 @@ public class ProductAdminCreateController extends HttpServlet {
         String unitPrice = !request.getParameter("unitPrice").isEmpty() ? request.getParameter("unitPrice") : "0";
         String unitInStock = !request.getParameter("unitInStock").isEmpty() ? request.getParameter("unitInStock") : "0";
         String dateIn = !request.getParameter("dateIn").isEmpty() ? request.getParameter("dateIn") : "0";
+        String[] color = request.getParameterValues("color");
         
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(dateIn);
 
+        ColorDAO colorDao = new ColorDAO();
         CategoryDAO cDao = new CategoryDAO();
         ProductDAO pDao = new ProductDAO();
         Category category = cDao.getCategoryById(Integer.parseInt(categoryId));
         ArrayList<Color> colors = new ArrayList<>();
+        for (int i = 0; i < color.length; i++) {
+            colors.add(colorDao.getColorByColorId(Integer.parseInt(color[i])));
+        }
         Product product = new Product(
                 1000, name, brand, image, description, category, colors, 
                 Float.parseFloat(unitPrice), Integer.parseInt(unitInStock), date, false
         );
         try {
             pDao.createProduct(product);
+            for (Color c: colors) {
+                colorDao.addColorToAProduct(product.getProductId(), c.getColorId());
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

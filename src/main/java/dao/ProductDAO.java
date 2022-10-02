@@ -185,14 +185,12 @@ public class ProductDAO extends DBContext{
                 product.setUnitInStock(rs.getInt(unit_in_stock));
                 product.setDateIn(rs.getDate(date_in));
                 product.setIsDeleted(rs.getBoolean(is_deleted));
-                
-                return product;
             }
             
         } catch (SQLException e) {
             System.out.println(e);
         }
-       return new Product();
+       return product;
     }
     
     public ArrayList<Product> getProductsByCategoryId(int id) throws ClassNotFoundException {
@@ -231,6 +229,39 @@ public class ProductDAO extends DBContext{
             System.out.println(e);
         }
         return products;
+    }
+    
+    public Product getLastProduct() throws ClassNotFoundException {
+        Product product = new Product();
+        try {
+            String query = "SELECT TOP 1 * FROM " + PRODUCT_TABLE + " ORDER BY " + this.id + " DESC ";
+            PreparedStatement stm = connection.prepareStatement(query);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next()) {
+                CategoryDAO categoryDAO = new CategoryDAO();
+                ColorDAO colorDAO = new ColorDAO();
+                
+                product.setProductId(rs.getInt(this.id));
+                product.setProductName(rs.getString(name));
+                product.setBrand(rs.getString(brand));
+                product.setImageUrl(rs.getString(image));
+                product.setDescription(rs.getString(description));
+                Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
+                product.setCategory(category);
+                
+                ArrayList<Color> colors = colorDAO.getColorByProductId(product.getProductId());
+                product.setColors(colors);
+
+                product.setUnitPrice(rs.getFloat(unit_price));
+                product.setUnitInStock(rs.getInt(unit_in_stock));
+                product.setDateIn(rs.getDate(date_in));
+                product.setIsDeleted(rs.getBoolean(is_deleted));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return product;
     }
     
     // Update Section
@@ -281,7 +312,7 @@ public class ProductDAO extends DBContext{
             stm.setDate(10, date);
             stm.setInt(11, id);
             
-            stm.executeQuery();
+            ResultSet rs = stm.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -310,7 +341,7 @@ public class ProductDAO extends DBContext{
             stm.setBoolean(9, false);
             stm.setDate(10, date);
             
-            stm.executeQuery();
+            ResultSet rs = stm.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         }

@@ -119,4 +119,53 @@ public class ColorDAO extends DBContext{
             System.out.println(e);
         }
     }
+    
+    public void deleteColorTagsOfAProduct(int pId) {
+        try {
+            String query = "DELETE FROM " + PRODUCT_COLOR_TABLE + " WHERE " + p_id + " =? ";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setInt(1, pId);
+            ResultSet rs = stm.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    // create section
+    public void addColorToAProduct(int pId, int cId) {
+        try {
+            String query = 
+                    " INSERT INTO " + PRODUCT_COLOR_TABLE + 
+                    " (" + p_id + "," + c_id + ") " +
+                    " VALUES(?,?)";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setInt(1, pId);
+            stm.setInt(2, cId);
+            System.out.println(query + " " + pId + " " + cId);
+            ResultSet rs = stm.executeQuery();
+        } catch(SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    // update section
+    public void updateColorOfAProduct(int pId, ArrayList<Color> colors) {
+        try {
+            deleteColorTagsOfAProduct(pId);
+            for (Color c: colors) {
+                addColorToAProduct(pId, c.getColorId());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        ColorDAO cDao = new ColorDAO();
+        cDao.addColorToAProduct(3, 1);
+        System.out.println(cDao.getColorByProductId(3).size());
+        for (Color c: cDao.getColorByProductId(3)) {
+            System.out.println(c.getColorName());
+        }
+    }
 }

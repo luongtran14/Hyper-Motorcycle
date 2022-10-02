@@ -42,7 +42,6 @@
                 </button>
             </div>
         </div>
-        <pre>${pageContext.request.contextPath}</pre>
         <form
             id="selectBoxCategoryForm"
             method="GET"

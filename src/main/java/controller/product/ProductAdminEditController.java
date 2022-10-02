@@ -5,6 +5,7 @@
 package controller.product;
 
 import dao.CategoryDAO;
+import dao.ColorDAO;
 import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -63,13 +65,22 @@ public class ProductAdminEditController extends HttpServlet {
 
         String id = !request.getParameter("id").isEmpty() ? request.getParameter("id") : "3";
         
+        ColorDAO colorDao = new ColorDAO();
         ProductDAO pDao = new ProductDAO();
         CategoryDAO cDao = new CategoryDAO();
         
         Product product = pDao.getSpecificProductById(Integer.parseInt(id));
         ArrayList<Category> allCategories = cDao.getAllCategories();
+        ArrayList<Color> allColors = colorDao.getAllColors();
+        ArrayList<Color> colors = colorDao.getColorByProductId(product.getProductId());
+        List<Integer> currentColorIds = new ArrayList<Integer>();
+        for (Color c : colors) {
+            currentColorIds.add(c.getColorId());
+        }
         
         request.setAttribute("product", product);
+        request.setAttribute("currentColors", currentColorIds);
+        request.setAttribute("allColors", allColors);
         request.setAttribute("allCategories", allCategories);
         request.getRequestDispatcher("/ProductAdminEdit.jsp").forward(request, response);
     }
@@ -87,20 +98,26 @@ public class ProductAdminEditController extends HttpServlet {
         String unitPrice = !request.getParameter("unitPrice").isEmpty() ? request.getParameter("unitPrice") : "0";
         String unitInStock = !request.getParameter("unitInStock").isEmpty() ? request.getParameter("unitInStock") : "0";
         String dateIn = !request.getParameter("dateIn").isEmpty() ? request.getParameter("dateIn") : "0";
+        String[] color = request.getParameterValues("color");
         
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(dateIn);
 
+        ColorDAO colorDao = new ColorDAO();
         CategoryDAO cDao = new CategoryDAO();
         ProductDAO pDao = new ProductDAO();
         Category category = cDao.getCategoryById(Integer.parseInt(categoryId));
         ArrayList<Color> colors = new ArrayList<>();
+        for (int i = 0; i < color.length; i++) {
+            colors.add(colorDao.getColorByColorId(Integer.parseInt(color[i])));
+        }
         Product product = new Product(
-                1000, name, brand, image, description, category, colors, 
+                Integer.parseInt(id), name, brand, image, description, category, colors, 
                 Float.parseFloat(unitPrice), Integer.parseInt(unitInStock), date, false
         );
         try {
             pDao.editProduct(product, Integer.parseInt(id));
+            colorDao.updateColorOfAProduct(product.getProductId(), colors);
         } catch (Exception e) {
             System.out.println(e);
         }
