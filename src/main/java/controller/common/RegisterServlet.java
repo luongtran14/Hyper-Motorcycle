@@ -6,7 +6,6 @@
 package controller.common;
 
 import dao.UsersDAO;
-import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -52,11 +51,10 @@ public class RegisterServlet extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
                 UsersDAO dao = new UsersDAO();
-                UserDao d = new UserDao();
                 User  user = dao.checkAccountExist(email);
                 if ( user == null) {
                     dao.register(fname, lname, phone, email, gender, pass);
-                     user = d.login(email, pass);
+                    user = dao.login(email, pass);
                     HttpSession session = request.getSession();
                     session.setAttribute("acc",  user);
                     request.getRequestDispatcher("index.html").forward(request, response);
