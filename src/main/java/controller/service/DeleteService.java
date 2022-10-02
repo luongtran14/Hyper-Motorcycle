@@ -1,14 +1,13 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package controller.common;
+package controller.service;
 
-import dao.AccoutDao;
+import dao.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,10 +18,10 @@ import model.User;
 
 /**
  *
- * @author nguye
+ * @author Admin
  */
-@WebServlet(name="LoginController", urlPatterns={"/login"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "DeleteService", urlPatterns = {"/DeleteService"})
+public class DeleteService extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +35,18 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeleteService</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeleteService at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,7 +61,21 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        try {
+            ServiceDAO sdao = new ServiceDAO();
+            // check role
+            User user = (User) session.getAttribute("acc");
+            int serviceId = Integer.parseInt(request.getParameter("id"));
+
+            //DETELE 
+            // if user is Admin => can delete 
+            if (user.getIsAdmin()) {
+                sdao.deleteService(serviceId);
+                request.getRequestDispatcher("Services").forward(request, response);
+            }
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -65,23 +89,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            AccoutDao acc = new AccoutDao();
-            User user = acc.login(email, password);
-            if (user == null) {
-                request.setAttribute("mess", "Wrong email or password");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-
-            } else {
-                session.setAttribute("acc", user);
-                response.sendRedirect("home.jsp");
-            }
-        } catch(Exception e) {
-            Logger.getLogger("").log(Level.SEVERE, null, e);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -93,4 +101,5 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <filter>
+<!--    <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>Filter.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <!--name-->
     <servlet>
         <servlet-name>LoginController</servlet-name>
@@ -26,6 +26,30 @@
         <servlet-class>controller.product.ProductAdminController</servlet-class>
     </servlet>
     <!--mapping-->
+    <servlet>
+        <servlet-name>addService</servlet-name>
+        <servlet-class>controller.service.addService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Services</servlet-name>
+        <servlet-class>controller.service.Services</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editService</servlet-name>
+        <servlet-class>controller.service.editService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchService</servlet-name>
+        <servlet-class>controller.service.searchService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteService</servlet-name>
+        <servlet-class>controller.service.DeleteService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sortServices</servlet-name>
+        <servlet-class>controller.service.sortServices</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -41,6 +65,30 @@
     <servlet-mapping>
         <servlet-name>ProductAdmin</servlet-name>
         <url-pattern>/admin/products</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addService</servlet-name>
+        <url-pattern>/addService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Services</servlet-name>
+        <url-pattern>/Services</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editService</servlet-name>
+        <url-pattern>/editService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchService</servlet-name>
+        <url-pattern>/searchService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteService</servlet-name>
+        <url-pattern>/DeleteService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sortServices</servlet-name>
+        <url-pattern>/sortServices</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

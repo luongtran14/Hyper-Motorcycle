@@ -1,10 +1,8 @@
 package controller.service;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.websocket.Session;
 
 public class SendMail {
 
