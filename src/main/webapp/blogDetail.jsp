@@ -661,17 +661,19 @@
                                         </div>
                                       </div>
                                     </div>
-									<!--<a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>-->
-        
-									<c:if test="${requestScope.user.userID == a.userID}">
-                                      <a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>
-									  
-									   </c:if>
-                                </div>
-                              
-                                <!-- .comment-content-wrapper-->
+                                    <!--<a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>-->
 
-                                <!-- <ul class=" comment-reply-wrapper">
+                                    <c:if test="${requestScope.user.userID == a.userID}">
+                                      <a href="updatecomment?cid=${a.commentID}" title="update"">Update</a>
+                                      <a href=" deletecomment?cid=${a.commentID}" title="delete"
+                                        onclick="return confirm('Are you sure you want to delete this comment')">Remove</a>
+
+                                    </c:if>
+                                  </div>
+
+                                  <!-- .comment-content-wrapper-->
+
+                                  <!-- <ul class=" comment-reply-wrapper">
                                 <li class="comment">
                                   <div class="comment-content-wrapper">
                                     <div class="mv-dp-table">
@@ -785,10 +787,10 @@
                           </div>
                           <!-- .comment-list-->
 
-                          <div class="comment-respond">
-                            <div class="comment-respond-title mv-title-style-12"><span class="main">Leave a reply<span
-                                  class="line"></span></span></div>
-                            <div class="comment-respond-form">
+                          <!-- <div class="comment-respond">-->
+                          <div class="comment-respond-title mv-title-style-12"><span class="main"><a
+                                href="addcomment?bid=${Detail.blogID}">Leave a reply<span class="line"></span></span></div>
+                          <!-- <div class="comment-respond-form">
                               <form method="post" class="form-respond mv-form-horizontal" action="addcomment">
                                 <input type="text" name="blogID" value="${Detail.blogID}" hidden="Hidden" />
                                 <input type="text" name="userID" value="${requestScope.user.userID}" hidden="Hidden">
@@ -800,7 +802,7 @@
                                 </div>
                               </div> -->
 
-                                <div class="mv-form-group">
+                          <!--<div class="mv-form-group">
                                   <div class="col-xs-2 mv-label"> <strong class="text-uppercase">Opinion</strong></div>
                                   <form>
                                     <input type="radio" id="like" name="opinion" value="Like" required>
@@ -832,7 +834,7 @@
                                 </div>
                               </form>
                               <!-- .form-respond-->
-                            </div>
+                          <!-- </div>
                           </div>
                           <!-- .comment-respond-->
                         </div>
@@ -857,7 +859,7 @@
                         </div>
                         <!-- .mv-aside-search-->
 
-                        <!--  <div class="mv-aside mv-aside-category-blog">
+                    <!--  <div class="mv-aside mv-aside-category-blog">
                   <div class="aside-title mv-title-style-11">category blog</div>
                   <div class="aside-body">
                     <nav class="mv-menu-style-2">
@@ -876,7 +878,7 @@
                 </div>
                 <!-- .mv-aside-category-blog-->
 
-                        <!-- <div class="mv-aside mv-aside-recent-posts">
+                    <!-- <div class="mv-aside mv-aside-recent-posts">
                   <div class="aside-title mv-title-style-11">recent posts</div>
                   <div class="aside-body">
                     <div class="recent-posts-list">
@@ -900,7 +902,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!-- <article class="item item-aside-recent-posts post">
+                    <!-- <article class="item item-aside-recent-posts post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-24-thumb">
@@ -918,7 +920,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!-- <article class="item item-aside-recent-posts post">
+                    <!-- <article class="item item-aside-recent-posts post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-24-thumb">
@@ -935,15 +937,15 @@
                             </div>
                           </article>
                           <!-- .post-->
-                        <!--  </div>
+                    <!--  </div>
                       </div>
                       <!-- .mv-block-style-24-->
-                        <!-- </div>
+                    <!-- </div>
                   </div>
                 </div>
                 <!-- .mv-aside-recent-posts-->
 
-                        <!-- <div class="mv-aside mv-aside-tags">
+                    <!-- <div class="mv-aside mv-aside-tags">
                   <div class="aside-title mv-title-style-11">tags</div>
                   <div class="aside-body">
                     <div class="tag-list">
@@ -955,7 +957,7 @@
                 </div>
                 <!-- .mv-aside-tags-->
 
-                        <!-- <div class="mv-aside mv-aside-most-view">
+                    <!-- <div class="mv-aside mv-aside-most-view">
                   <div class="aside-title mv-title-style-11">most view</div>
                   <div class="aside-body">
                     <div class="most-view-list">
@@ -982,7 +984,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!--   <article class="item post">
+                    <!--   <article class="item post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-29-date">
@@ -1003,7 +1005,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!--   <article class="item post">
+                    <!--   <article class="item post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-29-date">
@@ -1023,13 +1025,13 @@
                             </div>
                           </article>
                           <!-- .post-->
-                      </div>
-                    </div>
-                    <!-- .mv-block-style-29-->
                   </div>
                 </div>
+                <!-- .mv-block-style-29-->
               </div>
-              <!-- .mv-aside-most-view-->
+          </div>
+          </div>
+          <!-- .mv-aside-most-view-->
           </div>
           </div>
           <!-- .mv-c-s-sidebar-->
