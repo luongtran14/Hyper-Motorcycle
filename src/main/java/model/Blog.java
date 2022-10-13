@@ -45,6 +45,10 @@ public class Blog {
         this.lastname = lastname;
     }
 
+   
+    
+    
+
     public int getBlogID() {
         return blogID;
     }

@@ -232,8 +232,7 @@ public class BlogDAO extends DBContext {
             ps.setString(1, createdDate);
             rs = ps.executeQuery();
 
-            while (rs.next()) 
-            {
+            while (rs.next()) {
                 return new Blog(rs.getInt(1),
                         rs.getInt(2),
                         rs.getString(3),
@@ -245,7 +244,6 @@ public class BlogDAO extends DBContext {
                         rs.getString(9),
                         rs.getString(10));
             }
-       
 
         } catch (Exception e) {
 
@@ -283,21 +281,120 @@ public class BlogDAO extends DBContext {
         return null;
     }
 
-    public void BC() {
-        System.out.println("11111");
+    //Blog management   
+    public List<Blog> getBlogByUID(String uid) {
+        List<Blog> list = new ArrayList<>();
+        try {
+            String query = "  select a.[blog_id],\n"
+                    + "		a.[user_id]\n"
+                    + "      ,a.[title]\n"
+                    + "      ,a.[blog_content]\n"
+                    + "      ,a.[created_date]\n"
+                    + "      ,a.[comment_id]\n"
+                    + "      ,a.[last_modified]\n"
+                    + "      ,a.[image], \n"
+                    + "		b.first_name, b.last_name from  Blog  a\n"
+                    + "		LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
+                    + "Where a.[user_id] = ? \n"
+                    + " order by blog_id asc";
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, uid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Blog(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getInt(6),
+                        rs.getDate(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10)));
+
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
 
+    public void AddBlog(String uid, String title, String blogContent, String image) {
+        String query = "INSERT INTO [dbo].[Blog]\n"
+                + "           ([user_id]\n"
+                + "           ,[title]\n"
+                + "           ,[blog_content]\n"
+                + "           ,[created_date]\n"
+                + "           ,[image])\n"
+                + "     VALUES\n"
+                + "           ( ? \n"
+                + "           , ? \n"
+                + "           , ? \n"
+                + "           ,GETDATE()\n"
+                + "           , ? )";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, uid);
+            ps.setString(2, title);
+            ps.setString(3, blogContent);
+            ps.setString(4, image);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void UpdateComment(String title, String blogContent, String image, String bid) {
+        String query = "UPDATE [dbo].[Blog]\n"
+                + "   SET [title] = ? \n"
+                + "      ,[blog_content] = ? \n"
+                + "      ,[last_modified] = GETDATE()\n"
+                + "      ,[image] = ? \n"
+                + " WHERE blog_id = ? ";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, title);
+            ps.setString(2, blogContent);
+            ps.setString(3, image);
+            ps.setString(4, bid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void deleteComment(String bid) {
+        String query = "DELETE FROM [dbo].[Blog]\n"
+                + "      WHERE blog_id = ? ";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, bid);
+
+            ps.executeUpdate();//cau lenh k tra ve ham result
+        } catch (Exception e) {
+        }
+
+    }
+
+//    public void BC() {
+//        System.out.println("11111");
+//    }
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         BlogDAO dao = new BlogDAO();
-        //   dao.BC();
+        dao.deleteComment("8");
 //
-        List<Blog> list = dao.getAllBlog();
+        List<Blog> list = dao.getBlogByUID("1");
         for (Blog account : list) {
             System.out.println(account);
 
         }
 //         System.out.println(dao.getBlogBefore("2022-02-03").toString());
-   //     dao.getBlogBefore("2022-02-03");
+        //     dao.getBlogBefore("2022-02-03");
 
     }
 }
