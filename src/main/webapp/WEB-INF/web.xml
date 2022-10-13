@@ -73,6 +73,10 @@
         <servlet-name>serviceDetails</servlet-name>
         <servlet-class>controller.service.serviceDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BrandListController</servlet-name>
+        <servlet-class>controller.brand.BrandListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -136,6 +140,10 @@
     <servlet-mapping>
         <servlet-name>serviceDetails</servlet-name>
         <url-pattern>/serviceDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BrandListController</servlet-name>
+        <url-pattern>/brandlist</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
