@@ -29,7 +29,7 @@
         <a href="admin.jsp" style="margin: 2rem;">Back to home admin</a>
         <h1>Brand List Admin</h1>
         
-        
+         <h3><a href="AddBrand.jsp" style="margin: 2rem;">Add new brand </a></h3>
       
         
             <table class="table table-responsive table-bordered table-striped">
@@ -45,8 +45,8 @@
                             <td>${brand.brand_name}</td>
                             
                             <td>
-                                <a href="deletecategory?categoryid=${category.categoryId}" >Delete</a>
-                                 <a href="updatecategory?categoryid=${category.categoryId}" >Update</a>
+                                <a href="deletebrand?brandid=${brand.brand_id}" >Delete</a>
+                                 <a href="updatebrand?brandid=${brand.brand_id}" >Update</a>
                             </td>
                         </tr>
                     </c:forEach>

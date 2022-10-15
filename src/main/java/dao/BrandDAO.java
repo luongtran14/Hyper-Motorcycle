@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.interfaces.PBEKey;
 import model.Brand;
 import model.Category;
@@ -42,6 +44,88 @@ public class BrandDAO extends DBContext {
         }
         return allBrand;
     }
+
+    public void DeleteBrand(int brand_id) {
+        try {
+            String query = "DELETE FROM [dbo].[Brand]\n"
+                    + "      WHERE brand_id = ?";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setInt(1, brand_id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void CreateBrand(String nameBrand) {
+        try {
+
+            String query = "INSERT INTO [dbo].[Brand]\n"
+                    + "           ([brand_name])\n"
+                    + "     VALUES\n"
+                    + "          (?)";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setString(1, nameBrand);
+            stm.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    public boolean CheckBrandByName(String brandname) {
+        try {
+            String query = "SELECT "
+                    + "      [brand_name]\n"
+                    + "  FROM [dbo].[Brand]\n"
+                    + "  where [brand_name]=?";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setString(1, brandname);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                if (rs.getString(1).toUpperCase().equals(brandname.toUpperCase())) {
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }
+
+    public Brand GetBrandByID(String brandid) {
+        Brand brand = new Brand();
+        try {
+            String query = "SELECT [brand_id]\n"
+                    + "      ,[brand_name]\n"
+                    + "  FROM [dbo].[Brand]\n"
+                    + "  where [brand_id] = ?";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setString(1, brandid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+
+                brand.setBrand_id(rs.getInt(1));
+                brand.setBrand_name(rs.getString(2));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return brand;
+    }
+
+    public void UpdateBrand(String brandid, String brandname) {
+        try {
+            String query = "UPDATE [dbo].[Brand]\n"
+                    + "   SET [brand_name] = ?\n"
+                    + "	where [brand_id] = ?";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setString(1, brandname);
+            stm.setString(2, brandid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         BrandDAO dao = new BrandDAO();
         System.out.println(dao.GetAllBrand().toString());

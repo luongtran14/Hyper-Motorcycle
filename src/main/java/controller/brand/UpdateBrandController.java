@@ -9,7 +9,6 @@ import dao.BrandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,8 +22,8 @@ import model.Brand;
  *
  * @author nguye
  */
-@WebServlet(name="BrandListController", urlPatterns={"/brandlist"})
-public class BrandListController extends HttpServlet {
+@WebServlet(name="UpdateBrandController", urlPatterns={"/updatebrand"})
+public class UpdateBrandController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,16 +36,16 @@ public class BrandListController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            try {
-                BrandDAO dao = new BrandDAO();
-                ArrayList<Brand> listallbrand = dao.GetAllBrand();
-                request.setAttribute("listbrand", listallbrand);
-                request.getRequestDispatcher("BrandAdmin.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(BrandListController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(BrandListController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateBrandController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateBrandController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     } 
 
@@ -61,7 +60,18 @@ public class BrandListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String brandid = request.getParameter("brandid");
+            BrandDAO dao = new BrandDAO();
+            Brand brand = dao.GetBrandByID(brandid);
+            request.setAttribute("brand", brand);
+            request.getRequestDispatcher("UpdateBrand.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateBrandController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UpdateBrandController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     } 
 
     /** 
@@ -74,7 +84,22 @@ public class BrandListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String brandid = request.getParameter("brandid");
+            String brandname = request.getParameter("brandname");
+            BrandDAO dao = new BrandDAO();
+            if(dao.CheckBrandByName(brandname) == false){
+                request.setAttribute("mess", brandname+" Already exist!!!");
+                doGet(request, response);
+            }else{
+            dao.UpdateBrand(brandid, brandname);
+            response.sendRedirect("brandlist");}
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateBrandController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UpdateBrandController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /** 

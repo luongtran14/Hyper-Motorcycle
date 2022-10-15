@@ -40,5 +40,9 @@ public class Brand {
     public String toString() {
         return "Brand{" + "brand_id=" + brand_id + ", brand_name=" + brand_name + '}';
     }
+
+    public void setBrand_name(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
