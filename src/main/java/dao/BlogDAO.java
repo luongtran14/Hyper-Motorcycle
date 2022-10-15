@@ -348,7 +348,7 @@ public class BlogDAO extends DBContext {
 
     }
 
-    public void UpdateComment(String title, String blogContent, String image, String bid) {
+    public void UpdateBlog(String title, String blogContent, String image, String bid) {
         String query = "UPDATE [dbo].[Blog]\n"
                 + "   SET [title] = ? \n"
                 + "      ,[blog_content] = ? \n"
@@ -367,7 +367,7 @@ public class BlogDAO extends DBContext {
         }
     }
 
-    public void deleteComment(String bid) {
+    public void deleteBlog(String bid) {
         String query = "DELETE FROM [dbo].[Blog]\n"
                 + "      WHERE blog_id = ? ";
         try {
@@ -386,8 +386,7 @@ public class BlogDAO extends DBContext {
 //    }
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         BlogDAO dao = new BlogDAO();
-        dao.deleteComment("8");
-//
+        dao.UpdateBlog("123", "1", " ", "61");
         List<Blog> list = dao.getBlogByUID("1");
         for (Blog account : list) {
             System.out.println(account);
@@ -398,3 +397,5 @@ public class BlogDAO extends DBContext {
 
     }
 }
+
+  

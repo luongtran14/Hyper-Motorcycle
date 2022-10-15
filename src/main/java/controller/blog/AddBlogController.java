@@ -37,15 +37,17 @@ public class AddBlogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-             request.getRequestDispatcher("blogmanagement").forward(request, response);
-//            HttpServletRequest req = (HttpServletRequest) request;
-//            User u = (User) req.getSession().getAttribute("acc");
+        try (PrintWriter out = response.getWriter()) { 
+            HttpServletRequest req = (HttpServletRequest) request;
+            User u = (User) req.getSession().getAttribute("acc");
+            request.setAttribute("user", u);
+             request.getRequestDispatcher("addblog.jsp").forward(request, response);
+
 //            int uid_raw = u.getUserID();
 //            String uid = Integer.toString(uid_raw);
 //            String last = u.getLastname();
 //            String first = u.getFirstname();
-           // request.setAttribute("user", u);
+           
         }
     }
 
@@ -88,7 +90,7 @@ public class AddBlogController extends HttpServlet {
               
               BlogDAO dao = new BlogDAO();
               dao.AddBlog(uid, title, blogContent, image);
-              request.getRequestDispatcher("blogmanagement").forward(request, response);
+              request.getRequestDispatcher("addblog.jsp").forward(request, response);
             
             
        } catch (SQLException ex) {

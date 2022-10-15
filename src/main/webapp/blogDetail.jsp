@@ -665,7 +665,7 @@
 
                                     <c:if test="${requestScope.user.userID == a.userID}">
                                       <a href="updatecomment?cid=${a.commentID}" title="update"">Update</a>
-                                      <a href=" deletecomment?cid=${a.commentID}" title="delete"
+                                      <a href="deletecomment?cid=${a.commentID}" title="delete"
                                         onclick="return confirm('Are you sure you want to delete this comment')">Remove</a>
 
                                     </c:if>
