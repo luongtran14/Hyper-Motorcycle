@@ -329,16 +329,16 @@
 								<div class="table-title">
 									<div class="row">
 										<div class="col-sm-6">
-											<h2>Manage <b>Employees</b></h2>
+											<h2>Manage <b>Blog</b></h2>
 											<input name="uid" value="${id}" hidden>
 
 										</div>
 										<div class="col-sm-6">
-											<a href="addblog" class="btn btn-success" data-toggle="modal"><i
-													class="material-icons">&#xE147;</i> <span>Add Blog</span></a>
+											<!-- <a href="addblog" class="btn btn-success" data-toggle="modal"><i
+													class="material-icons">&#xE147;</i> <span>Add Blog</span></a> -->
 											<!-- <a href="deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i
 													class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
-													<a href="addblog" >
+													<a href="addblog" class="btn btn-success">
 														Create
 													</a>
 													
@@ -368,7 +368,7 @@
 										<c:forEach items="${Blog}" var="b">
 											<tr>
 												<td>
-													<span class="custom-checkbox">
+													<span class="custom-checkbox" hidden="Hidden">
 														<input type="checkbox" id="checkbox1" name="options[]"
 															value="1">
 														<label for="checkbox1"></label>

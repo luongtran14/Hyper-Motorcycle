@@ -31,10 +31,10 @@
           <link rel="stylesheet" type="text/css" href="Assets/libs/magnific-popup/dist/magnific-popup.min.css">
 
           <!-- Theme CSS-->
-          <link rel="stylesheet" type="text/css" href="CSS/main.css">
-          <link rel="stylesheet" type="text/css" href="CSS/shortcodes.css">
-          <link rel="stylesheet" type="text/css" href="CSS/style-selector.css">
-          <link id="style-main-color" rel="stylesheet" type="text/css" href="CSS/color/color1.css">
+          <link rel="stylesheet" type="text/css" href="css/main.css">
+          <link rel="stylesheet" type="text/css" href="css/shortcodes.css">
+          <link rel="stylesheet" type="text/css" href="css/style-selector.css">
+          <link id="style-main-color" rel="stylesheet" type="text/css" href="css/color/color1.css">
 
           <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
           <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
@@ -603,7 +603,7 @@
                                 <div class="block-31-title"><a href="blogdetail?bid=${Before.blogID}"
                                     title="${Before.title}">${Before.title}</a>
                                 </div>
-                                <div class="block-31-author">>${Before.firstName}
+                                <div class="block-31-author">${Before.firstName}
                                   ${Before.lastname}</div>
                               </div><a href="blogdetail?bid=${Before.blogID}"
                                 title="${Before.title}"

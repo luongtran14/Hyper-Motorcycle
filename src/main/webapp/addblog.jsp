@@ -15,7 +15,7 @@
             <fieldset>
             
             <!-- Form Name -->
-            <legend>PRODUCTS</legend>
+            <legend>BLOG</legend>
             
             <!-- Text input-->
             <!-- <div class="form-group">
@@ -174,19 +174,19 @@
               <input id="approuved_by" name="approuved_by" placeholder="APPROUVED BY" class="form-control input-md" required="" type="text"> -->
                 
              <!-- File Button --> 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="col-md-4 control-label" for="filebutton">main_image</label>
               <div class="col-md-4">
                 <input id="filebutton" name="filebutton" class="input-file" type="file">
               </div>
-            </div>
+            </div> -->
             <!-- File Button --> 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="col-md-4 control-label" for="filebutton">auxiliary_images</label>
               <div class="col-md-4">
                 <input id="filebutton" name="filebutton" class="input-file" type="file">
               </div>
-            </div>
+            </div> -->
             
             <!-- Button -->
             <div class="form-group">
