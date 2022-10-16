@@ -5,7 +5,7 @@
  */
 package controller.admin;
 
-import dao.UserDao;
+import dao.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -63,41 +63,41 @@ private static final String VIEW = "user_list.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int pageSize = 2;
-        String keyword = request.getParameter("keyword");
-        String pageIndexRaw = request.getParameter("page");
-        
-        String status = request.getParameter("status");
-        
-        String gender = request.getParameter("gender");
-        
-        
-        int pageIndex = 1;
         try{
-            pageIndex = Integer.parseInt(pageIndexRaw);
-        }catch(Exception e){
+            int pageSize = 2;
+            String keyword = request.getParameter("keyword");
+            String pageIndexRaw = request.getParameter("page");
             
-        }
-        UserDao dao;
-        List<User> data;
-        int total;
-        try {
-            dao = new UserDao();
-            data = dao.getUserList(pageIndex, pageSize, keyword, status, gender);
-            total = dao.countUser(keyword, gender, status);
+            String status = request.getParameter("status");
+            
+            String gender = request.getParameter("gender");
+            
+            
+            int pageIndex = 1;
+            try{
+                pageIndex = Integer.parseInt(pageIndexRaw);
+            }catch(Exception e){
+                
+            }
+            UsersDAO dao = new UsersDAO();
+            List<User> data = dao.getUserList(pageIndex, pageSize, keyword,status,gender);
+            
+            int total = dao.countUser(keyword, gender, status);
             
             request.setAttribute("status", status);
+            
             request.setAttribute("gender", gender);
             request.setAttribute("totalPage", getPages(total, pageSize));
             request.setAttribute("keyword", keyword);
             request.setAttribute("page", pageIndex);
             request.setAttribute("data", data);
             request.getRequestDispatcher("../"+ VIEW).forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserListController.class.getName()).log(Level.SEVERE, null, ex);
+        }catch(SQLException ex){
+        Logger.getLogger(UserListController.class.getName()).log(Level.SEVERE, null, ex);
+            
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UserListController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Logger.getLogger(UserListController.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
     
     private List<Integer> getPages(int total, int pageSize){

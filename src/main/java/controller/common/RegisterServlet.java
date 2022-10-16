@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.User;
 
-
 /**
  *
  * @author huyen
@@ -52,12 +51,12 @@ public class RegisterServlet extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
                 UsersDAO dao = new UsersDAO();
-                User a = dao.checkAccountExist(email);
-                if (a == null) {
+                User  user = dao.checkAccountExist(email);
+                if ( user == null) {
                     dao.register(fname, lname, phone, email, gender, pass);
-//                a = (User) dao.login(email, pass);//phân login cua Phuong
-//                HttpSession session = request.getSession();
-//                session.setAttribute("acc", a);
+                    user = dao.login(email, pass);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("acc",  user);
                     request.getRequestDispatcher("index.html").forward(request, response);
                 } else {
                     request.setAttribute("mess2", "Email already exists, please use another email!");
@@ -81,6 +80,13 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         request.getRequestDispatcher("register.jsp").forward(request, response);
     }
 

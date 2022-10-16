@@ -85,6 +85,10 @@ public class User {
     public boolean isIsAdmin() {
         return isAdmin;
     }
+    
+    public boolean getIsAdmin(){
+        return isAdmin;
+    }
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
@@ -122,6 +126,14 @@ public class User {
         this.isActive = isActive;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    
     public String getPassword() {
         return password;
     }
@@ -130,21 +142,8 @@ public class User {
         this.password = password;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     @Override
     public String toString() {
         return "User{" + "userID=" + userID + ", firstname=" + firstname + ", lastname=" + lastname + ", phone=" + phone + ", email=" + email + ", isAdmin=" + isAdmin + ", intro=" + intro + ", dob=" + dob + ", gender=" + gender + ", isActive=" + isActive + ", password=" + password + ", avatar=" + avatar + '}';
     }
-    
-    
-    
-    
-    
 }
