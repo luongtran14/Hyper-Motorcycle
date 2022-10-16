@@ -322,6 +322,7 @@
 				</head>
 
 				<body>
+					<a href="admin.jsp" style="margin: 2rem;">Back to home admin</a>
 					<div class="container-xl">
 						<div class="table-responsive">
 							<div class="table-wrapper">
@@ -329,7 +330,7 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<h2>Manage <b>Employees</b></h2>
-											<input name="uid" value="${id}">
+											<input name="uid" value="${id}" hidden>
 
 										</div>
 										<div class="col-sm-6">

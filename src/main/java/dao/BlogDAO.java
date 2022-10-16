@@ -224,7 +224,7 @@ public class BlogDAO extends DBContext {
     public Blog getBlogBefore(String createdDate) {
 
         String query = "select Blog.*, [User].first_name, [User].last_name from Blog\n"
-                + "LEFT JOIN [User] ON ([Blog].user_id= [User].user_id) where created_date < ? ";
+                + "LEFT JOIN [User] ON ([Blog].user_id = [User].user_id) where created_date < ? ";
 
         try {
             conn = new DBContext().connection;
@@ -255,7 +255,7 @@ public class BlogDAO extends DBContext {
     public Blog getBlogAfter(String createdDate) {
 
         String query = "select Blog.*, [User].first_name, [User].last_name from Blog\n"
-                + "LEFT JOIN [User] ON ([Blog].user_id= [User].user_id) where created_date > ?";
+                + "LEFT JOIN [User] ON ([Blog].user_id = [User].user_id) where created_date > ?";
         try {
             conn = new DBContext().connection;
             ps = conn.prepareStatement(query);
@@ -386,7 +386,7 @@ public class BlogDAO extends DBContext {
 //    }
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         BlogDAO dao = new BlogDAO();
-        dao.UpdateBlog("123", "1", " ", "61");
+        dao.getBlogAfter("2022-01-01");
         List<Blog> list = dao.getBlogByUID("1");
         for (Blog account : list) {
             System.out.println(account);

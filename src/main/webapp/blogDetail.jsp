@@ -599,25 +599,26 @@
                           <div class="mv-dp-table align-middle">
                             <div class="mv-dp-table-cell block-31-left">
                               <div class="block-31-title-wrapper">
-                                <input name="crd" value="${Detail.createdDate}" hidden="Hidden">
+        
                                 <div class="block-31-title"><a href="blogdetail?bid=${Before.blogID}"
-                                    title="Donec tincidunt tincidunt neque, ut venenatis nibh pulvinar a">${Before.title}</a>
+                                    title="${Before.title}">${Before.title}</a>
                                 </div>
-                                <div class="block-31-author">David bulrton</div>
+                                <div class="block-31-author">>${Before.firstName}
+                                  ${Before.lastname}</div>
                               </div><a href="blogdetail?bid=${Before.blogID}"
-                                title="Donec tincidunt tincidunt neque, ut venenatis nibh pulvinar a"
+                                title="${Before.title}"
                                 class="mv-btn mv-btn-style-9 block-31-button"><span class="btn-inner"><span
                                     class="btn-behind">prev</span><span
                                     class="btn-icon fa fa-angle-double-left"></span></span></a>
                             </div>
                             <div class="mv-dp-table-cell block-31-right">
                               <div class="block-31-title-wrapper">
-                                <div class="block-31-title"><a href="blog-detail.html"
-                                    title="Claritas est etiam processus dynamicus, qui sequitur mutationem">Claritas est
-                                    etiam processus dynamicus, qui sequitur mutationem</a></div>
-                                <div class="block-31-author">Andree Wasson</div>
-                              </div><a href="blog-detail.html"
-                                title="Claritas est etiam processus dynamicus, qui sequitur mutationem"
+                                <div class="block-31-title"><a href="blogdetail?bid=${After.blogID}"
+                                    title="${After.title}">${After.title}</a></div>
+                                <div class="block-31-author">${After.firstName}
+                                  ${After.lastname}</div>
+                              </div><a href="blogdetail?bid=${After.blogID}"
+                                title="${After.title}"
                                 class="mv-btn mv-btn-style-9 block-31-button"><span class="btn-inner"><span
                                     class="btn-behind">next</span><span
                                     class="btn-icon fa fa-angle-double-right"></span></span></a>
