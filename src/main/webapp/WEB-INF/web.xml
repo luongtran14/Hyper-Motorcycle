@@ -74,6 +74,10 @@
         <servlet-class>controller.service.serviceDetails</servlet-class>
     </servlet>
     <servlet>
+
+        <servlet-name>BrandListController</servlet-name>
+        <servlet-class>controller.brand.BrandListController</servlet-class>
+
         <servlet-name>UserAddressController</servlet-name>
         <servlet-class>controller.user.UserAddressController</servlet-class>
     </servlet>
@@ -92,6 +96,7 @@
     <servlet>
         <servlet-name>AdminChangeUserStatus</servlet-name>
         <servlet-class>controller.admin.AdminChangeUserStatus</servlet-class>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -158,6 +163,10 @@
         <url-pattern>/serviceDetails</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
+        <servlet-name>BrandListController</servlet-name>
+        <url-pattern>/brandlist</url-pattern>
+
         <servlet-name>UserAddressController</servlet-name>
         <url-pattern>/user/address</url-pattern>
     </servlet-mapping>
@@ -176,6 +185,7 @@
     <servlet-mapping>
         <servlet-name>AdminChangeUserStatus</servlet-name>
         <url-pattern>/admin/user/changestatus</url-pattern>
+
     </servlet-mapping>
     <session-config>
         <session-timeout>
