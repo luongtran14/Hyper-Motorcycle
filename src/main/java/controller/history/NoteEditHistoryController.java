@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.brand;
+package controller.history;
 
-import dao.BrandDAO;
-import dao.ProductDAO;
+import dao.HistoryPriceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -17,13 +16,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.HistoryPrice;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name="DeleteBrandController", urlPatterns={"/deletebrand"})
-public class DeleteBrandController extends HttpServlet {
+@WebServlet(name="NoteEditHistoryController", urlPatterns={"/noteedit"})
+public class NoteEditHistoryController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,10 +40,10 @@ public class DeleteBrandController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteBrandController</title>");  
+            out.println("<title>Servlet NoteEditHistoryController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteBrandController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet NoteEditHistoryController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,25 +60,19 @@ public class DeleteBrandController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        
         try {
-            int brandid;
-            String brandid_raw = request.getParameter("brandid");
-            brandid = Integer.parseInt(brandid_raw);
-            BrandDAO dao = new BrandDAO();
-            ProductDAO dao1 = new ProductDAO();
-            if(dao1.checkProductByBrand(brandid_raw) == false){
-                request.setAttribute("mess", "Brand has product can't delete !!!");
-                request.getRequestDispatcher("brandlist").forward(request, response);
-            }else{
-            dao.DeleteBrand(brandid);
-            response.sendRedirect("brandlist");
-            }
-            
+            String historyid = request.getParameter("historyid");
+            HistoryPriceDAO dao = new HistoryPriceDAO();
+            HistoryPrice history = dao.getHistoryPriceByID(historyid);
+            request.setAttribute("history", history);
+            request.getRequestDispatcher("EditNoteHistory.jsp").forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(DeleteBrandController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NoteEditHistoryController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DeleteBrandController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NoteEditHistoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     } 
 
     /** 
@@ -91,7 +85,18 @@ public class DeleteBrandController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String historyid = request.getParameter("historyid");
+            String note = request.getParameter("note");
+            HistoryPriceDAO dao = new HistoryPriceDAO();
+            dao.UpdateNote(note, historyid);
+            response.sendRedirect("historyprice");
+        } catch (SQLException ex) {
+            Logger.getLogger(NoteEditHistoryController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NoteEditHistoryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /** 

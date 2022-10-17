@@ -30,7 +30,7 @@
         <h1>Brand List Admin</h1>
         
          <h3><a href="AddBrand.jsp" style="margin: 2rem;">Add new brand </a></h3>
-      
+         <h3 style="color: red">${requestScope.mess}</h3>
         
             <table class="table table-responsive table-bordered table-striped">
                 <thead>

@@ -39,6 +39,10 @@
                         <a href="brandlist" style="text-decoration: none; color: white; ">BrandList</a>
                   
                     </div> 
+                     <div style="border-bottom: 1px lightgray solid; width: 100%; text-align: center;padding: 5px;" >
+                        <a href="historyprice" style="text-decoration: none; color: white; ">History Price</a>
+                  
+                    </div> 
                 </div>
                 
                 <!-- Page content-->

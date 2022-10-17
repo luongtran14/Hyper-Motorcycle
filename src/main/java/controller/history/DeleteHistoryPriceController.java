@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.brand;
+package controller.history;
 
-import dao.BrandDAO;
-import dao.ProductDAO;
+import dao.HistoryPriceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-@WebServlet(name="DeleteBrandController", urlPatterns={"/deletebrand"})
-public class DeleteBrandController extends HttpServlet {
+@WebServlet(name="DeleteHistoryPriceController", urlPatterns={"/deletehistory"})
+public class DeleteHistoryPriceController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,16 +35,14 @@ public class DeleteBrandController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteBrandController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteBrandController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+          String historyid = request.getParameter("historyid");
+          HistoryPriceDAO dao = new HistoryPriceDAO();
+          dao.DeleteHistoryPrice(historyid);
+          response.sendRedirect("historyprice");
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteHistoryPriceController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeleteHistoryPriceController.class.getName()).log(Level.SEVERE, null, ex);
         }
     } 
 
@@ -60,25 +57,7 @@ public class DeleteBrandController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        try {
-            int brandid;
-            String brandid_raw = request.getParameter("brandid");
-            brandid = Integer.parseInt(brandid_raw);
-            BrandDAO dao = new BrandDAO();
-            ProductDAO dao1 = new ProductDAO();
-            if(dao1.checkProductByBrand(brandid_raw) == false){
-                request.setAttribute("mess", "Brand has product can't delete !!!");
-                request.getRequestDispatcher("brandlist").forward(request, response);
-            }else{
-            dao.DeleteBrand(brandid);
-            response.sendRedirect("brandlist");
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(DeleteBrandController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DeleteBrandController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     } 
 
     /** 
