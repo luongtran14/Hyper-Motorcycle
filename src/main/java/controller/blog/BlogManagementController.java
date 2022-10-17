@@ -1,12 +1,15 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package controller.common;
+package controller.blog;
 
-import dao.AccoutDao;
+import dao.BlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -14,15 +17,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import model.Blog;
 import model.User;
 
 /**
  *
- * @author nguye
+ * @author huyen
  */
-@WebServlet(name="LoginController", urlPatterns={"/login"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "BlogManagementController", urlPatterns = {"/blogmanagement"})
+public class BlogManagementController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +39,24 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        try (PrintWriter out = response.getWriter()) {
+            BlogDAO dao = new BlogDAO();
+            HttpServletRequest req = (HttpServletRequest) request;
+            User u = (User) req.getSession().getAttribute("acc");
+//            request.setAttribute("user", u);
+            int id_raw = u.getUserID();
+            String id = Integer.toString(id_raw);
+            request.setAttribute("id", id);
+           // String uid =  String.valueOf(request.getParameter("uid")) ;
+            List<Blog> list = dao.getBlogByUID(id);
+           //out.print(list);
+            request.setAttribute("Blog", list);
+            request.getRequestDispatcher("blogmanagement.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,7 +71,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -65,29 +85,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            AccoutDao acc = new AccoutDao();
-            User user = acc.login(email, password);
-            if (user == null) {
-                request.setAttribute("mess", "Wrong email or password");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-
-            } else if(user.isIsActive() == false){
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }else{
-                session.setAttribute("acc", user);
-                if (user.isIsAdmin()) {
-                    response.sendRedirect("admin.jsp");
-                } else {
-                    response.sendRedirect("index.html");
-                }
-            }
-        } catch(Exception e) {
-            Logger.getLogger("").log(Level.SEVERE, null, e);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -99,4 +97,5 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

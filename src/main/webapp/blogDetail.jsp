@@ -31,10 +31,10 @@
           <link rel="stylesheet" type="text/css" href="Assets/libs/magnific-popup/dist/magnific-popup.min.css">
 
           <!-- Theme CSS-->
-          <link rel="stylesheet" type="text/css" href="CSS/main.css">
-          <link rel="stylesheet" type="text/css" href="CSS/shortcodes.css">
-          <link rel="stylesheet" type="text/css" href="CSS/style-selector.css">
-          <link id="style-main-color" rel="stylesheet" type="text/css" href="CSS/color/color1.css">
+          <link rel="stylesheet" type="text/css" href="css/main.css">
+          <link rel="stylesheet" type="text/css" href="css/shortcodes.css">
+          <link rel="stylesheet" type="text/css" href="css/style-selector.css">
+          <link id="style-main-color" rel="stylesheet" type="text/css" href="css/color/color1.css">
 
           <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
           <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
@@ -599,25 +599,26 @@
                           <div class="mv-dp-table align-middle">
                             <div class="mv-dp-table-cell block-31-left">
                               <div class="block-31-title-wrapper">
-                                <input name="crd" value="${Detail.createdDate}" hidden="Hidden">
+        
                                 <div class="block-31-title"><a href="blogdetail?bid=${Before.blogID}"
-                                    title="Donec tincidunt tincidunt neque, ut venenatis nibh pulvinar a">${Before.title}</a>
+                                    title="${Before.title}">${Before.title}</a>
                                 </div>
-                                <div class="block-31-author">David bulrton</div>
+                                <div class="block-31-author">${Before.firstName}
+                                  ${Before.lastname}</div>
                               </div><a href="blogdetail?bid=${Before.blogID}"
-                                title="Donec tincidunt tincidunt neque, ut venenatis nibh pulvinar a"
+                                title="${Before.title}"
                                 class="mv-btn mv-btn-style-9 block-31-button"><span class="btn-inner"><span
                                     class="btn-behind">prev</span><span
                                     class="btn-icon fa fa-angle-double-left"></span></span></a>
                             </div>
                             <div class="mv-dp-table-cell block-31-right">
                               <div class="block-31-title-wrapper">
-                                <div class="block-31-title"><a href="blog-detail.html"
-                                    title="Claritas est etiam processus dynamicus, qui sequitur mutationem">Claritas est
-                                    etiam processus dynamicus, qui sequitur mutationem</a></div>
-                                <div class="block-31-author">Andree Wasson</div>
-                              </div><a href="blog-detail.html"
-                                title="Claritas est etiam processus dynamicus, qui sequitur mutationem"
+                                <div class="block-31-title"><a href="blogdetail?bid=${After.blogID}"
+                                    title="${After.title}">${After.title}</a></div>
+                                <div class="block-31-author">${After.firstName}
+                                  ${After.lastname}</div>
+                              </div><a href="blogdetail?bid=${After.blogID}"
+                                title="${After.title}"
                                 class="mv-btn mv-btn-style-9 block-31-button"><span class="btn-inner"><span
                                     class="btn-behind">next</span><span
                                     class="btn-icon fa fa-angle-double-right"></span></span></a>
@@ -661,17 +662,19 @@
                                         </div>
                                       </div>
                                     </div>
-									<!--<a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>-->
-        
-									<c:if test="${requestScope.user.userID == a.userID}">
-                                      <a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>
-									  
-									   </c:if>
-                                </div>
-                              
-                                <!-- .comment-content-wrapper-->
+                                    <!--<a href="deletecomment?cid=${a.commentID}" title="delete" onclick="return confirm('Are you sure you want to delete this comment)">Remove</a>-->
 
-                                <!-- <ul class=" comment-reply-wrapper">
+                                    <c:if test="${requestScope.user.userID == a.userID}">
+                                      <a href="updatecomment?cid=${a.commentID}" title="update"">Update</a>
+                                      <a href="deletecomment?cid=${a.commentID}" title="delete"
+                                        onclick="return confirm('Are you sure you want to delete this comment')">Remove</a>
+
+                                    </c:if>
+                                  </div>
+
+                                  <!-- .comment-content-wrapper-->
+
+                                  <!-- <ul class=" comment-reply-wrapper">
                                 <li class="comment">
                                   <div class="comment-content-wrapper">
                                     <div class="mv-dp-table">
@@ -785,10 +788,10 @@
                           </div>
                           <!-- .comment-list-->
 
-                          <div class="comment-respond">
-                            <div class="comment-respond-title mv-title-style-12"><span class="main">Leave a reply<span
-                                  class="line"></span></span></div>
-                            <div class="comment-respond-form">
+                          <!-- <div class="comment-respond">-->
+                          <div class="comment-respond-title mv-title-style-12"><span class="main"><a
+                                href="addcomment?bid=${Detail.blogID}">Leave a reply<span class="line"></span></span></div>
+                          <!-- <div class="comment-respond-form">
                               <form method="post" class="form-respond mv-form-horizontal" action="addcomment">
                                 <input type="text" name="blogID" value="${Detail.blogID}" hidden="Hidden" />
                                 <input type="text" name="userID" value="${requestScope.user.userID}" hidden="Hidden">
@@ -800,7 +803,7 @@
                                 </div>
                               </div> -->
 
-                                <div class="mv-form-group">
+                          <!--<div class="mv-form-group">
                                   <div class="col-xs-2 mv-label"> <strong class="text-uppercase">Opinion</strong></div>
                                   <form>
                                     <input type="radio" id="like" name="opinion" value="Like" required>
@@ -832,7 +835,7 @@
                                 </div>
                               </form>
                               <!-- .form-respond-->
-                            </div>
+                          <!-- </div>
                           </div>
                           <!-- .comment-respond-->
                         </div>
@@ -857,7 +860,7 @@
                         </div>
                         <!-- .mv-aside-search-->
 
-                        <!--  <div class="mv-aside mv-aside-category-blog">
+                    <!--  <div class="mv-aside mv-aside-category-blog">
                   <div class="aside-title mv-title-style-11">category blog</div>
                   <div class="aside-body">
                     <nav class="mv-menu-style-2">
@@ -876,7 +879,7 @@
                 </div>
                 <!-- .mv-aside-category-blog-->
 
-                        <!-- <div class="mv-aside mv-aside-recent-posts">
+                    <!-- <div class="mv-aside mv-aside-recent-posts">
                   <div class="aside-title mv-title-style-11">recent posts</div>
                   <div class="aside-body">
                     <div class="recent-posts-list">
@@ -900,7 +903,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!-- <article class="item item-aside-recent-posts post">
+                    <!-- <article class="item item-aside-recent-posts post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-24-thumb">
@@ -918,7 +921,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!-- <article class="item item-aside-recent-posts post">
+                    <!-- <article class="item item-aside-recent-posts post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-24-thumb">
@@ -935,15 +938,15 @@
                             </div>
                           </article>
                           <!-- .post-->
-                        <!--  </div>
+                    <!--  </div>
                       </div>
                       <!-- .mv-block-style-24-->
-                        <!-- </div>
+                    <!-- </div>
                   </div>
                 </div>
                 <!-- .mv-aside-recent-posts-->
 
-                        <!-- <div class="mv-aside mv-aside-tags">
+                    <!-- <div class="mv-aside mv-aside-tags">
                   <div class="aside-title mv-title-style-11">tags</div>
                   <div class="aside-body">
                     <div class="tag-list">
@@ -955,7 +958,7 @@
                 </div>
                 <!-- .mv-aside-tags-->
 
-                        <!-- <div class="mv-aside mv-aside-most-view">
+                    <!-- <div class="mv-aside mv-aside-most-view">
                   <div class="aside-title mv-title-style-11">most view</div>
                   <div class="aside-body">
                     <div class="most-view-list">
@@ -982,7 +985,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!--   <article class="item post">
+                    <!--   <article class="item post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-29-date">
@@ -1003,7 +1006,7 @@
                           </article>
                           <!-- .post-->
 
-                        <!--   <article class="item post">
+                    <!--   <article class="item post">
                             <div class="item-inner">
                               <div class="mv-dp-table">
                                 <div class="mv-dp-table-cell block-29-date">
@@ -1023,13 +1026,13 @@
                             </div>
                           </article>
                           <!-- .post-->
-                      </div>
-                    </div>
-                    <!-- .mv-block-style-29-->
                   </div>
                 </div>
+                <!-- .mv-block-style-29-->
               </div>
-              <!-- .mv-aside-most-view-->
+          </div>
+          </div>
+          <!-- .mv-aside-most-view-->
           </div>
           </div>
           <!-- .mv-c-s-sidebar-->

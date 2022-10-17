@@ -10,7 +10,6 @@ import dao.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -26,8 +25,8 @@ import model.User;
  *
  * @author huyen
  */
-@WebServlet(name = "AddCommentController", urlPatterns = {"/addcomment"})
-public class AddCommentController extends HttpServlet {
+@WebServlet(name = "UpdateCommentController", urlPatterns = {"/updatecomment"})
+public class UpdateCommentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,61 +39,21 @@ public class AddCommentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         try {
             response.setContentType("text/html;charset=UTF-8");
-            String id = request.getParameter("bid");
+            String id = request.getParameter("cid");
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
-            BlogDAO d = new BlogDAO();
-            Blog b = d.getBlogByID(id);
+            CommentDAO d = new CommentDAO();
+            Comment b = d.getCommentByID(id);
             request.setAttribute("user", u);
-            request.setAttribute("Detail", b);
+            request.setAttribute("Comment", b);
 //            PrintWriter out = response.getWriter();
 //            out.print(id);
-//           out.println(u);
-           request.getRequestDispatcher("addcommentblog.jsp").forward(request, response);
-//        try (PrintWriter out = response.getWriter()) {
-//           String id = request.getParameter("bid");
-//          String userID = request.getParameter("userID");
-//          String opinion = request.getParameter("opinion");
-//          String commentContent = request.getParameter("commentContent");
-//          BlogDAO d = new BlogDAO();
-//            Blog b = d.getBlogByID(id);
-//            List<Comment> list = d.getCommentByBID(id);
-//          
-//          int likeNum, dislikeNum;
-//          if(opinion.valueOf(opinion).equals("Like")){
-//              likeNum = 1;
-//              dislikeNum = 0; 
-//          }else{
-//              likeNum = 0;
-//              dislikeNum = 1;
-//          }
-//           CommentDAO dao = new CommentDAO();
-////           out.print(blogID);
-////           out.println(userID);
-////           out.print(opinion);
-////           out.print(commentContent);
-//           dao.AddComment(id, userID, commentContent, likeNum, dislikeNum);
-//           
-//            HttpServletRequest req = (HttpServletRequest) request;
-//            User u = (User) req.getSession().getAttribute("acc");
-//
-//            if (u == null) {
-//              //  response.sendRedirect("login");
-//            }
-// 
-//            request.setAttribute("user", u);
-//            request.setAttribute("Detail", b);
-//           // request.setAttribute("Comment", list);
-//           
-//           request.getRequestDispatcher("addcommentblog.jsp").forward(request, response);
-//           
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+//           out.println(b);
+           request.getRequestDispatcher("updatecommentblog.jsp").forward(request, response);
+
         } catch (SQLException ex) {
             Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -115,7 +74,6 @@ public class AddCommentController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
@@ -130,32 +88,19 @@ public class AddCommentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
-            String id = request.getParameter("bid");
-            String userID = request.getParameter("userID");
+            String cid = request.getParameter("cid"); 
             String commentContent = request.getParameter("commentContent");
-//            BlogDAO d = new BlogDAO();
-//            Blog b = d.getBlogByID(id);
-            //   List<Comment> list = d.getCommentByBID(id);
-
-           
             CommentDAO dao = new CommentDAO();
-//           out.print(blogID);
-//           out.println(userID);
-//           out.print(opinion);
-//           out.print(commentContent);
-            dao.AddComment(id, userID, commentContent);
+            dao.UpdateComment(cid, commentContent);
 
 //            HttpServletRequest req = (HttpServletRequest) request;
 //            User u = (User) req.getSession().getAttribute("acc");
-
 //            if (u == null) {
 //                //  response.sendRedirect("login");
 //            }
-
-           // request.setAttribute("user", u);
+            // request.setAttribute("user", u);
 //            request.setAttribute("Detail", b);
             // request.setAttribute("Comment", list);
-
             request.getRequestDispatcher("blog").forward(request, response);
 
         } catch (SQLException ex) {

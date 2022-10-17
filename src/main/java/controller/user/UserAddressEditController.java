@@ -3,23 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.service;
+package controller.user;
 
-import dao.ServiceDAO;
+import dao.UserAddressDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.UserAddress;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "addService", urlPatterns = {"/addService"})
-public class addService extends HttpServlet {
+public class UserAddressEditController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +40,10 @@ public class addService extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addService</title>");            
+            out.println("<title>Servlet UserAddressEditController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addService at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserAddressEditController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,18 +61,15 @@ public class addService extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String idRaw = request.getParameter("id");
         try {
-            ServiceDAO sdao = new ServiceDAO();
-            int userID = Integer.parseInt(request.getParameter("userID"));
-            String serviceName = request.getParameter("serviceName");
-            String desc = request.getParameter("desc");
-            float price = Float.parseFloat(request.getParameter("price"));
-            String time = request.getParameter("time");
-            sdao.addService(userID, serviceName, desc, price, time);
-            
-            request.getRequestDispatcher("Services").forward(request, response);
-            response.sendRedirect("services.jsp");
+            int id = Integer.parseInt(idRaw);
+            UserAddress ua =  new UserAddressDAO().getById(id);
+            request.setAttribute("data", ua);
+            request.getRequestDispatcher("/UserAddressEdit.jsp").forward(request, response);
+           
         } catch (Exception e) {
+            response.sendRedirect("../address");
         }
     }
 
@@ -85,7 +84,30 @@ public class addService extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       String province = request.getParameter("province");
+       String city = request.getParameter("city");
+       String district = request.getParameter("district");
+       String fullAddress = request.getParameter("fullAddress");
+       String isMain = request.getParameter("isMain");
+       String idRaw = request.getParameter("id");
+       UserAddress ua = new UserAddress();
+       ua.setProvince(province);
+       ua.setDistrict(district);
+       ua.setCity(city);
+       ua.setId(Integer.parseInt(idRaw));
+       ua.setIsMain(isMain == null ? 0 : 1);
+       ua.setFullAddress(fullAddress);
+       
+        try {
+            new UserAddressDAO().edit(ua);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserAddressEditController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserAddressEditController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        request.setAttribute("data", ua);
+        request.getRequestDispatcher("/UserAddressEdit.jsp").forward(request, response);
     }
 
     /**

@@ -23,7 +23,9 @@ public class DBConnection {
      String sqlInstanceName = "ADMIN";
      String database = "motobike";
      String userName = "sa";
-     String password = "sa";
+
+     String password = "123";
+
 
      return getSQLServerConnection(hostName, sqlInstanceName,
              database, userName, password);
