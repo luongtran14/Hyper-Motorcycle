@@ -352,6 +352,13 @@
                               <div class="content-desc hidden-xs hidden-sm">- Phone:  ${item.getPhone()}</div>
                              <div class="content-desc hidden-xs hidden-sm">- Email:  ${item.getEmail()}</div>
                              <div class="content-desc hidden-xs hidden-sm" >- Account Status <span style="color: ${item.isIsActive()? 'green' : 'red'}"> ${item.isIsActive()? 'Active' : 'Deactive'}</span></div>
+                             <c:if test="${item.isIsActive()}">
+                                 <button class="btn btn-danger" onclick="changeUserStatus('${item.getUserID()}', '${item.isIsActive()}')">Deactive</button>
+                             </c:if>
+                              <c:if test="${!item.isIsActive()}">
+                                  <button class="btn btn-primary"onclick="changeUserStatus('${item.getUserID()}', '${isIsActive}')">Active</button>
+                             </c:if>
+
                             </div>
 <!--                            <div class="content-button mv-btn-group text-center">
                               <div class="group-inner">
@@ -955,5 +962,14 @@
     <!-- Theme Script-->
     <script type="text/javascript" src="JS/style.selector.js"></script>
     <script type="text/javascript" src="JS/main.js"></script>
+    <script type="text/javascript">
+        function changeUserStatus(id,status){
+            var text = (status === 'true' ? 'Deactive' : 'Active');
+            if (confirm("Are you sure you want to "+text+" this Address?")) {
+                    window.location.href='http://localhost:8080${pageContext.request.contextPath}/admin/user/changestatus?id=' + id+'&status='+status;
+                }
+            
+        }
+    </script>
   </body>
 </html>

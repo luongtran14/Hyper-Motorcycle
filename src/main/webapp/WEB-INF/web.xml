@@ -73,6 +73,26 @@
         <servlet-name>serviceDetails</servlet-name>
         <servlet-class>controller.service.serviceDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserAddressController</servlet-name>
+        <servlet-class>controller.user.UserAddressController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserAddressEditController</servlet-name>
+        <servlet-class>controller.user.UserAddressEditController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserAddressDeleteController</servlet-name>
+        <servlet-class>controller.user.UserAddressDeleteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserAddressAddController</servlet-name>
+        <servlet-class>controller.user.UserAddressAddController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminChangeUserStatus</servlet-name>
+        <servlet-class>controller.admin.AdminChangeUserStatus</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -136,6 +156,26 @@
     <servlet-mapping>
         <servlet-name>serviceDetails</servlet-name>
         <url-pattern>/serviceDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserAddressController</servlet-name>
+        <url-pattern>/user/address</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserAddressEditController</servlet-name>
+        <url-pattern>/user/address/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserAddressDeleteController</servlet-name>
+        <url-pattern>/user/address/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserAddressAddController</servlet-name>
+        <url-pattern>/user/address/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminChangeUserStatus</servlet-name>
+        <url-pattern>/admin/user/changestatus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

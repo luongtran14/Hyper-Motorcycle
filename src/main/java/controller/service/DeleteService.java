@@ -64,12 +64,10 @@ public class DeleteService extends HttpServlet {
         HttpSession session = request.getSession();
         try {
             ServiceDAO sdao = new ServiceDAO();
-            // check role
+            
             User user = (User) session.getAttribute("acc");
             int serviceId = Integer.parseInt(request.getParameter("id"));
-
-            //DETELE 
-            // if user is Admin => can delete 
+             
             if (user.getIsAdmin()) {
                 sdao.deleteService(serviceId);
                 request.getRequestDispatcher("Services").forward(request, response);
