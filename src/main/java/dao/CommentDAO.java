@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Blog;
 import model.Comment;
+import model.HistoryPrice;
+import model.ReplyComment;
 
 /**
  *
@@ -40,6 +42,7 @@ public class CommentDAO extends DBContext {
             ps.setString(1, blogID);
             rs = ps.executeQuery();
             while (rs.next()) {
+              
                 list.add(new Comment(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
@@ -67,12 +70,12 @@ public class CommentDAO extends DBContext {
         }
         return list;
     }
-    
+
     public Comment getCommentByID(String cid) {
 
         String query = " select a.*, b.first_name, b.last_name, b.avatar from  Comment  a\n"
-                    + "LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
-                    + "where a.comment_id = ?";
+                + "LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
+                + "where a.comment_id = ?";
         try {
             conn = new DBContext().connection;
             ps = conn.prepareStatement(query);
@@ -99,9 +102,17 @@ public class CommentDAO extends DBContext {
         return null;
     }
 
-
     public void AddComment(String blogID, String userID, String commentContent) {
-        String query = "insert into  dbo.Comment values (?, ?, ?, GETDATE(), '',0,0);";
+        String query = "INSERT INTO [dbo].[Comment]\n"
+                + "           ([blog_id]\n"
+                + "           ,[user_id]\n"
+                + "           ,[comment_content]\n"
+                + "           ,[created_date])\n"
+                + "     VALUES\n"
+                + "           ( ? \n"
+                + "           , ? \n"
+                + "           , ? \n"
+                + "           ,GETDATE())";
         try {
             conn = new DBContext().connection;
             ps = conn.prepareStatement(query);
@@ -115,7 +126,7 @@ public class CommentDAO extends DBContext {
         }
 
     }
-    
+
     public void UpdateComment(String commentID, String commentContent) {
         String query = "update  dbo.Comment set comment_content = ?, updated_date = GETDATE() where comment_id = ?";
         try {
@@ -127,8 +138,8 @@ public class CommentDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-    
-     public void deleteComment(String cid) {
+
+    public void deleteComment(String cid) {
         String query = "delete  from dbo.Comment where comment_id = ?";
         try {
             conn = new DBContext().connection;
@@ -141,18 +152,157 @@ public class CommentDAO extends DBContext {
 
     }
 
+//----------------------------------------------------------------------------------------------------
+//Reply comment
+    public List<ReplyComment> getReplyCommentByCID(String cid) {
+        List<ReplyComment> list = new ArrayList<>();
+        try {
+            String query = "SELECT a.[reply_comment_id]\n"
+                    + "      ,a.[comment_id]\n"
+                    + "      ,a.[user_id]\n"
+                    + "      ,a.[blog_id]\n"
+                    + "      ,a.[comment_content]\n"
+                    + "      ,a.[created_date]\n"
+                    + "      ,a.[updated_date]\n"
+                    + "      ,a.[like_number]\n"
+                    + "      ,a.[dislike_number]\n"
+                    + "	   ,b.first_name, b.last_name, b.avatar\n"
+                    + "  FROM [dbo].[ReplyComment] a\n"
+                    + "  JOIN [User] b ON (a.user_id=b.user_id)\n"
+                    + "   WHERE [comment_id] = ? ";
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, cid);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+//                 
+//     HistoryPrice history = new HistoryPrice();
+//                history.setHistory_id(rs.getInt(1));
+//                history.setProduct_category(rs.getString(2));
+//                history.setProduct_brand(rs.getString(3));
+//                history.setProduct_name(rs.getString(4));
+//                history.setUnit_price((float) rs.getDouble(5));
+//                history.setUpdateprice_date(rs.getDate(6));
+//                history.setNote(rs.getString(7));
+//                historylist.add(history);
+//               System.out.println("456");
+                ReplyComment q = new ReplyComment();
+                q.setReplyCommentID(rs.getInt(1));
+                q.setCommentID(rs.getInt(2));
+                q.setUserID( rs.getInt(3));
+                q.setBlogID( rs.getInt(4));
+                q.setCommentContent(rs.getString(5));
+                q.setCreatedDate(rs.getDate(6));
+                q.setUpdatedDate(rs.getDate(7));
+                q.setLikeNum(rs.getInt(8));
+                q.setDislikeNum(rs.getInt(9));
+                q.setFirstName( rs.getString(10));
+                q.setLastName( rs.getString(11));
+                q.setAvatar( rs.getString(12));
+                list.add(q);
+// System.out.println("3456");
+//                int blog_id = rs.getInt("blogID");
+//                int user_id = rs.getInt("userID");
+//                String comment = rs.getString("commentContent");
+//            
+//                q.setBlogID(blog_id);
+//                q.setUserID(user_id);
+//                q.setCommentContent(comment);
+//                list.add(q);
+               
+//                list.add(new ReplyComment(
+//                        rs.getInt(1),
+//                        rs.getInt(2),
+//                        rs.getInt(3),
+//                        rs.getInt(4),
+//                        rs.getString(5),
+//                        rs.getDate(6),
+//                        rs.getDate(7),
+//                        rs.getInt(8),
+//                        rs.getInt(9), 
+//                        rs.getString(10),
+//                        rs.getString(11),
+//                        rs.getString(12)));
+
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public void AddReplyComment(String blogID, String userID, String commentContent, String commentID) {
+        String query = "INSERT INTO [dbo].[ReplyComment]\n"
+                + "           ([comment_id]\n"
+                + "           ,[user_id]\n"
+                + "           ,[blog_id]\n"
+                + "           ,[comment_content]\n"
+                + "           ,[created_date]\n"
+                + "           )\n"
+                + "     VALUES\n"
+                + "           ( ? \n"
+                + "           , ? \n"
+                + "           , ? \n"
+                + "           , ? \n"
+                + "           ,GETDATE()\n"
+                + "           )";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, commentID);
+            ps.setString(2, userID);
+            ps.setString(3, blogID);
+            ps.setString(4, commentContent);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void UpdateReplyComment(String replyCommentID, String commentContent) {
+        String query = "UPDATE [dbo].[ReplyComment]\n"
+                + "   SET [comment_content] = ? \n"
+                + "      ,[updated_date] = GETDATE()\n"
+                + "	WHERE\n"
+                + "	[reply_comment_id] = ? ";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, commentContent);
+            ps.setString(2, replyCommentID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void deleteReplyComment(String rcid) {
+        String query = "DELETE FROM [dbo].[ReplyComment]\n"
+                + "      WHERE reply_comment_id = ? ";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, rcid);
+
+            ps.executeUpdate();//cau lenh k tra ve ham result
+        } catch (Exception e) {
+        }
+
+    }
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         CommentDAO dao = new CommentDAO();
-       // dao.AddComment("1", "3", "ffsfsdfds", 1, 0);
-       dao.UpdateComment("1015", "12345679sdfyygfgyhhjb");
-      //  System.out.println(dao.getCommentByID("2005").toString());
-               
-        List<Comment> list = dao.getCommentByBID("1");
-        for (Comment account : list) {
-            System.out.println(account);
+        // dao.AddComment("1", "3", "ffsfsdfds", 1, 0);
+        // dao.deleteReplyComment("3");
+        //  System.out.println(dao.getCommentByID("2005").toString());
 
+        List<ReplyComment> list = dao.getReplyCommentByCID("9");
+        for (ReplyComment account : list) {
+            System.out.println(account);
         }
+     //   System.out.println(dao.getCommentByBID("9").toString());
 
     }
 }

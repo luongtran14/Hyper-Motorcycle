@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Blog;
 import model.Comment;
+import model.ReplyComment;
 import model.User;
 
 /**
@@ -51,6 +52,13 @@ public class BlogDetailController extends HttpServlet {
             BlogDAO dao = new BlogDAO();
             Blog b = dao.getBlogByID(id);
             List<Comment> list = dao.getCommentByBID(id);
+//            CommentDAO d = new CommentDAO();
+//            for (Comment a : list) {
+//                String c = Integer.toString(a.getCommentID());
+//            List<ReplyComment> lr = d.getReplyCommentByCID(c);
+//            request.setAttribute("Reply", lr);
+//        }
+            
            
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
@@ -77,6 +85,7 @@ public class BlogDetailController extends HttpServlet {
             request.setAttribute("user", u);
             request.setAttribute("Detail", b);
             request.setAttribute("Comment", list);
+            
             request.setAttribute("Before", bb);
             request.setAttribute("After", ba);
 //            request.setAttribute("Products", list);

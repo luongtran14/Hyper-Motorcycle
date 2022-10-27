@@ -644,7 +644,7 @@
                                   <div class="comment-content-wrapper">
                                     <div class="mv-dp-table">
                                       <div class="mv-dp-table-cell content-thumb"><a href="#"><span
-                                            style="background-image: url(${o.avatar});"
+                                            style="background-image: url(${a.avatar});"
                                             class="content-thumb-img"></span></a></div>
                                       <div class="mv-dp-table-cell content-main">
                                         <div class="content-meta">
@@ -656,8 +656,43 @@
                                         <div class="content">${a.commentContent}</div>
                                         <div class="content-button">
                                           <div class="mv-btn-group text-left">
-                                            <div class="group-inner"><a href="#"
+                                            <!-- <c:forEach items="${Reply}" var="r">
+                                              <li id="comment_01" class="comment">
+                                                <div class="comment-content-wrapper">
+                                                  <div class="mv-dp-table">
+                                                    <div class="mv-dp-table-cell content-thumb"><a href="#"><span
+                                                          style="background-image: url(${r.avatar});"
+                                                          class="content-thumb-img"></span></a></div>
+                                                    <div class="mv-dp-table-cell content-main">
+                                                      <div class="content-meta">
+                                                        <ul>
+                                                          <li class="comment-author"><a href="#">${r.lastName} ${r.firstName}</a></li>
+                                                          <li class="comment-date mv-icon-left-style-6">${r.updatedDate}</li>
+                                                        </ul>
+                                                      </div>
+                                                      <div class="content">${a.commentContent}</div>
+                                                      <div class="content-button">
+                                                        <div class="mv-btn-group text-left">
+                                                          <c:forEach items="${ReplyComment}" var="r">
+                                                          </li>
+                                                          </c:forEach> -->
+                                                        
+            
+                                                      <!-- </div>
+                                                          <div class="group-inner"><a href="addreplycomment?cid=${a.commentID}"
+                                                              class="mv-btn mv-btn-style-5 btn-5-h-22 btn-reply">Reply</a></div>
+              
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                            </li>
+                                            </c:forEach> -->
+                                            <div class="group-inner"><a href="replycommentlist?cid=${a.commentID}"
+                                              class="mv-btn mv-btn-style-5 btn-5-h-22 btn-reply">Reply Comment</a></div>
+                                            <div class="group-inner"><a href="addreplycomment?cid=${a.commentID}"
                                                 class="mv-btn mv-btn-style-5 btn-5-h-22 btn-reply">Reply</a></div>
+
                                           </div>
                                         </div>
                                       </div>
