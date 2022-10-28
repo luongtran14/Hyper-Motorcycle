@@ -33,8 +33,16 @@
 
                                     <h4 class="media-heading user_name">${r.lastName} ${r.firstName}</h4>
                                     ${r.commentContent}
+                                   
+                                    <p> 
+                                        <c:if test="${requestScope.user.userID == r.userID}">
+                                      <a href="updatereplycomment?rcid=${r.replyCommentID}" title="update"">Update</a>
+                                      <a href="deletereplycomment?rcid=${r.replyCommentID}" title="delete"
+                                        onclick="return confirm('Are you sure you want to delete this comment')">Remove</a>
 
-                                    <p><small><a href="">Like</a></small></p>
+                                    </c:if>
+                                        <small><a href="">Like</a></small>
+                                    </p>
                                 </div>
                             </div>
                            

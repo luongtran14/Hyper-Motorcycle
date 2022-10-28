@@ -42,7 +42,7 @@ public class CommentDAO extends DBContext {
             ps.setString(1, blogID);
             rs = ps.executeQuery();
             while (rs.next()) {
-              
+
                 list.add(new Comment(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
@@ -174,7 +174,7 @@ public class CommentDAO extends DBContext {
             ps = conn.prepareStatement(query);
             ps.setString(1, cid);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
 //                 
 //     HistoryPrice history = new HistoryPrice();
@@ -190,16 +190,16 @@ public class CommentDAO extends DBContext {
                 ReplyComment q = new ReplyComment();
                 q.setReplyCommentID(rs.getInt(1));
                 q.setCommentID(rs.getInt(2));
-                q.setUserID( rs.getInt(3));
-                q.setBlogID( rs.getInt(4));
+                q.setUserID(rs.getInt(3));
+                q.setBlogID(rs.getInt(4));
                 q.setCommentContent(rs.getString(5));
                 q.setCreatedDate(rs.getDate(6));
                 q.setUpdatedDate(rs.getDate(7));
                 q.setLikeNum(rs.getInt(8));
                 q.setDislikeNum(rs.getInt(9));
-                q.setFirstName( rs.getString(10));
-                q.setLastName( rs.getString(11));
-                q.setAvatar( rs.getString(12));
+                q.setFirstName(rs.getString(10));
+                q.setLastName(rs.getString(11));
+                q.setAvatar(rs.getString(12));
                 list.add(q);
 // System.out.println("3456");
 //                int blog_id = rs.getInt("blogID");
@@ -210,7 +210,7 @@ public class CommentDAO extends DBContext {
 //                q.setUserID(user_id);
 //                q.setCommentContent(comment);
 //                list.add(q);
-               
+
 //                list.add(new ReplyComment(
 //                        rs.getInt(1),
 //                        rs.getInt(2),
@@ -224,11 +224,48 @@ public class CommentDAO extends DBContext {
 //                        rs.getString(10),
 //                        rs.getString(11),
 //                        rs.getString(12)));
-
             }
         } catch (Exception e) {
         }
         return list;
+    }
+
+    public ReplyComment getReplyCommentByID(String rcid) {
+
+        String query = "SELECT [reply_comment_id]\n"
+                + "      ,[comment_id]\n"
+                + "      ,[user_id]\n"
+                + "      ,[blog_id]\n"
+                + "      ,[comment_content]\n"
+                + "      ,[created_date]\n"
+                + "      ,[updated_date]\n"
+                + "      ,[like_number]\n"
+                + "      ,[dislike_number]\n"
+                + "  FROM [dbo].[ReplyComment]\n"
+                + "  WHERE [reply_comment_id] = ? ";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, rcid);
+            rs = ps.executeQuery(); 
+
+            while (rs.next()) {
+             //   System.out.println("sdf");
+                return new ReplyComment(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getDate(6),
+                        rs.getDate(7),
+                        rs.getInt(8),
+                        rs.getInt(9));
+            }
+            
+        } catch (Exception e) {
+        }
+       
+        return null;
     }
 
     public void AddReplyComment(String blogID, String userID, String commentContent, String commentID) {
@@ -294,15 +331,15 @@ public class CommentDAO extends DBContext {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         CommentDAO dao = new CommentDAO();
-        // dao.AddComment("1", "3", "ffsfsdfds", 1, 0);
+        dao.getReplyCommentByID("1");
         // dao.deleteReplyComment("3");
         //  System.out.println(dao.getCommentByID("2005").toString());
-
-        List<ReplyComment> list = dao.getReplyCommentByCID("9");
-        for (ReplyComment account : list) {
-            System.out.println(account);
-        }
-     //   System.out.println(dao.getCommentByBID("9").toString());
+//
+//        List<ReplyComment> list = dao.getReplyCommentByCID("9");
+//        for (ReplyComment account : list) {
+//            System.out.println(account);
+//        }
+        //   System.out.println(dao.getCommentByBID("9").toString());
 
     }
 }
