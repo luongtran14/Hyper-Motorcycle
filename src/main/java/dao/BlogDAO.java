@@ -398,7 +398,7 @@ public class BlogDAO extends DBContext {
             System.out.println(account);
 
         }
-//         System.out.println(dao.getBlogBefore("2022-02-03").toString());
+     // System.out.println(dao.getBlogByID("3").toString());
         //     dao.getBlogBefore("2022-02-03");
 
     }

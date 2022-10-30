@@ -1,5 +1,5 @@
 <%-- Document : blogDetail Created on : Sep 28, 2022, 1:12:16 PM Author : huyen --%>
-
+<%@page import="model.Rate" %>
   <%@page import="model.Comment" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       <%@page contentType="text/html" pageEncoding="UTF-8" %>
@@ -35,6 +35,9 @@
           <link rel="stylesheet" type="text/css" href="css/shortcodes.css">
           <link rel="stylesheet" type="text/css" href="css/style-selector.css">
           <link id="style-main-color" rel="stylesheet" type="text/css" href="css/color/color1.css">
+
+          <!--Star rate CSS-->
+          <link rel="stylesheet" type="text/css" href="src/css/star-rating-svg.css">
 
           <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
           <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
@@ -564,10 +567,48 @@
                                   <div class="mv-btn-group">
                                     <div class="group-inner block-30-tag-list"><span
                                         class="mv-btn block-30-footer-title"><i class="fa fa-share-alt"></i>&nbsp;
+                                        <span class="rate-total" data-rating="${avgRate}" id="starrate"></span>
+                                        <button type="button" class="btn btn-link" data-toggle="modal"
+                                            data-target="#rateSystem">
+                                            Rate the blog
+                                          </button>
+                                      
                                         <!--  Tags:</span><a href="#" class="mv-btn mv-btn-style-22">Helmet</a><a href="#"
                                         class="mv-btn mv-btn-style-22">Clothing</a><a href="#"
                                         class="mv-btn mv-btn-style-22">Gloves</a></div>-->
+                                        <!--Change average rating-->
 
+                                        <!--User rate-->
+                                         <form action="addrate" method="post">
+                                          <div class="modal fade" id="rateSystem" tabindex="-1" role="dialog"
+                                            aria-labelledby="rateSystemLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="rateSystemLabel">Rate the blog</h5>
+                                                  <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                  <input type="hidden" name="rateStar" id="rateStar" value="">
+                                                  <span class="my-rating-2"></span>
+                                                  <span name="rate" id="live-rating" class="live-rating"></span>
+                                                </div>
+                                                <input name="bid" value="${Detail.blogID}" hidden>
+                                                <div style="color: red">${requestScope.mess}</div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </form>
+                                        <!--End User rate-->
+                                   
                                     </div>
                                   </div>
                                   <div class="mv-dp-table-cell block-30-social text-right">
@@ -599,14 +640,13 @@
                           <div class="mv-dp-table align-middle">
                             <div class="mv-dp-table-cell block-31-left">
                               <div class="block-31-title-wrapper">
-        
+
                                 <div class="block-31-title"><a href="blogdetail?bid=${Before.blogID}"
                                     title="${Before.title}">${Before.title}</a>
                                 </div>
                                 <div class="block-31-author">${Before.firstName}
                                   ${Before.lastname}</div>
-                              </div><a href="blogdetail?bid=${Before.blogID}"
-                                title="${Before.title}"
+                              </div><a href="blogdetail?bid=${Before.blogID}" title="${Before.title}"
                                 class="mv-btn mv-btn-style-9 block-31-button"><span class="btn-inner"><span
                                     class="btn-behind">prev</span><span
                                     class="btn-icon fa fa-angle-double-left"></span></span></a>
@@ -617,8 +657,7 @@
                                     title="${After.title}">${After.title}</a></div>
                                 <div class="block-31-author">${After.firstName}
                                   ${After.lastname}</div>
-                              </div><a href="blogdetail?bid=${After.blogID}"
-                                title="${After.title}"
+                              </div><a href="blogdetail?bid=${After.blogID}" title="${After.title}"
                                 class="mv-btn mv-btn-style-9 block-31-button"><span class="btn-inner"><span
                                     class="btn-behind">next</span><span
                                     class="btn-icon fa fa-angle-double-right"></span></span></a>
@@ -644,7 +683,7 @@
                                   <div class="comment-content-wrapper">
                                     <div class="mv-dp-table">
                                       <div class="mv-dp-table-cell content-thumb"><a href="#"><span
-                                            style="background-image: url(${a.avatar});"
+                                            style="background-image: url(${o.avatar});"
                                             class="content-thumb-img"></span></a></div>
                                       <div class="mv-dp-table-cell content-main">
                                         <div class="content-meta">
@@ -656,44 +695,16 @@
                                         <div class="content">${a.commentContent}</div>
                                         <div class="content-button">
                                           <div class="mv-btn-group text-left">
-                                            <!-- <c:forEach items="${Reply}" var="r">
-                                              <li id="comment_01" class="comment">
-                                                <div class="comment-content-wrapper">
-                                                  <div class="mv-dp-table">
-                                                    <div class="mv-dp-table-cell content-thumb"><a href="#"><span
-                                                          style="background-image: url(${r.avatar});"
-                                                          class="content-thumb-img"></span></a></div>
-                                                    <div class="mv-dp-table-cell content-main">
-                                                      <div class="content-meta">
-                                                        <ul>
-                                                          <li class="comment-author"><a href="#">${r.lastName} ${r.firstName}</a></li>
-                                                          <li class="comment-date mv-icon-left-style-6">${r.updatedDate}</li>
-                                                        </ul>
-                                                      </div>
-                                                      <div class="content">${a.commentContent}</div>
-                                                      <div class="content-button">
-                                                        <div class="mv-btn-group text-left">
-                                                          <c:forEach items="${ReplyComment}" var="r">
-                                                          </li>
-                                                          </c:forEach> -->
-                                                        
-            
-                                                      <!-- </div>
-                                                          <div class="group-inner"><a href="addreplycomment?cid=${a.commentID}"
-                                                              class="mv-btn mv-btn-style-5 btn-5-h-22 btn-reply">Reply</a></div>
-              
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                            </li>
-                                            </c:forEach> -->
+
                                             <div class="group-inner"><a href="replycommentlist?cid=${a.commentID}"
-                                              class="mv-btn mv-btn-style-5 btn-5-h-22 btn-reply">Reply Comment</a></div>
+                                                class="mv-btn mv-btn-style-5 btn-5-h-22 btn-reply">Reply Comment</a>
+                                            </div>
+                                            <!-- <c:if test="${requestScope.user.userID != null}"> -->
                                             <div class="group-inner"><a href="addreplycomment?cid=${a.commentID}"
                                                 class="mv-btn mv-btn-style-5 btn-5-h-22 btn-reply">Reply</a></div>
-
+                                            <!-- </c:if> -->
                                           </div>
+
                                         </div>
                                       </div>
                                     </div>
@@ -701,7 +712,7 @@
 
                                     <c:if test="${requestScope.user.userID == a.userID}">
                                       <a href="updatecomment?cid=${a.commentID}" title="update"">Update</a>
-                                      <a href="deletecomment?cid=${a.commentID}" title="delete"
+                                      <a href=" deletecomment?cid=${a.commentID}" title="delete"
                                         onclick="return confirm('Are you sure you want to delete this comment')">Remove</a>
 
                                     </c:if>
@@ -825,7 +836,8 @@
 
                           <!-- <div class="comment-respond">-->
                           <div class="comment-respond-title mv-title-style-12"><span class="main"><a
-                                href="addcomment?bid=${Detail.blogID}">Leave a reply<span class="line"></span></span></div>
+                                href="addcomment?bid=${Detail.blogID}">Leave a reply<span class="line"></span></span>
+                          </div>
                           <!-- <div class="comment-respond-form">
                               <form method="post" class="form-respond mv-form-horizontal" action="addcomment">
                                 <input type="text" name="blogID" value="${Detail.blogID}" hidden="Hidden" />
@@ -1668,10 +1680,33 @@
           <script type="text/javascript" src="Assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
           <script type="text/javascript" src="Assets/libs/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>
           <script type="text/javascript" src="Assets/libs/jquery-cookie/jquery.cookie.min.js"></script>
+          <!-- Star rate script-->
+          <script type="text/javascript" src="Assets/js/jquery.star-rating-svg.js"></script>
 
           <!-- Theme Script-->
           <script type="text/javascript" src="JS/style.selector.js"></script>
           <script type="text/javascript" src="JS/main.js"></script>
+          <script>
+            $(".my-rating-2").starRating({
+              disableAfterRate: false,
+              totalStars: 5,
+              useFullStars: true,
+              activeColor: 'rgb(242, 208, 73)',
+              useGradient: false,
+              callback: function (currentRating, $el) {
+                document.getElementById("rateStar").value = currentRating;
+              }
+            });
+            $(function () {
+              $(".rate-total").starRating({
+                totalStars: 5,
+                starSize: 20,
+                activeColor: 'rgb(242, 208, 73)',
+                useGradient: false,
+                readOnly: true
+              });
+            });
+          </script>
         </body>
 
         </html>

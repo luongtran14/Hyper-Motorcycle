@@ -247,10 +247,10 @@ public class CommentDAO extends DBContext {
             conn = new DBContext().connection;
             ps = conn.prepareStatement(query);
             ps.setString(1, rcid);
-            rs = ps.executeQuery(); 
+            rs = ps.executeQuery();
 
             while (rs.next()) {
-             //   System.out.println("sdf");
+                //   System.out.println("sdf");
                 return new ReplyComment(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
@@ -261,10 +261,10 @@ public class CommentDAO extends DBContext {
                         rs.getInt(8),
                         rs.getInt(9));
             }
-            
+
         } catch (Exception e) {
         }
-       
+
         return null;
     }
 
@@ -328,10 +328,44 @@ public class CommentDAO extends DBContext {
 
     }
 
+    public int countComment(int blogID) {
+//        List<Quiz> list = new ArrayList<>();
+        try {
+            String query = "select count(comment_id) from Comment where blog_id = ?";
+            PreparedStatement pd = connection.prepareStatement(query);
+            pd.setInt(1, blogID);
+            ResultSet rs = pd.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int countReplyComment(int commentID) {
+//        List<Quiz> list = new ArrayList<>();
+        try {
+            String query = "select count(reply_comment_id) from ReplyComment where comment_id = ?";
+            PreparedStatement pd = connection.prepareStatement(query);
+            pd.setInt(1, commentID);
+            ResultSet rs = pd.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         CommentDAO dao = new CommentDAO();
-        dao.getReplyCommentByID("1");
+        //    dao.countComment(3);
         // dao.deleteReplyComment("3");
         //  System.out.println(dao.getCommentByID("2005").toString());
 //
@@ -339,7 +373,8 @@ public class CommentDAO extends DBContext {
 //        for (ReplyComment account : list) {
 //            System.out.println(account);
 //        }
-        //   System.out.println(dao.getCommentByBID("9").toString());
+        String s = Integer.toString(dao.countReplyComment(9));
+        System.out.println(s);
 
     }
 }

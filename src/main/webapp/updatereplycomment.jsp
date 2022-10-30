@@ -173,9 +173,9 @@
                             <div class="status-upload">
                             
                                 <form method="post" class="form-respond mv-form-horizontal" action="updatereplycomment">
-                                    <input type="text" name="rcid" value="${Reply.replyCommentID}" />
-                                    <input  name="commentContent" value="${Reply.commentContent}"/>
-                                    <!-- <textarea  name="commentContent" value="${Reply.commentContent}"></textarea> -->
+                                    <input type="text" name="rcid" value="${Reply.replyCommentID}" hidden="Hidden"/>
+                                    <input  name="commentContent" value="${Reply.commentContent}" type="text"/>
+                                    <!-- <textarea  name="commentContent" value="${Reply.commentContent}" type="text"></textarea>  -->
                                     <ul>
                                         <li><a title="" data-toggle="tooltip" data-placement="bottom"
                                                 data-original-title="Audio"><i class="fa fa-music"></i></a></li>

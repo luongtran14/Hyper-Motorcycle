@@ -5,36 +5,30 @@
  */
 package controller.blog;
 
+import dao.BlogDAO;
+import dao.RateDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BlogDAO;
-import dao.CommentDAO;
-import dao.RateDAO;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Blog;
 import model.Comment;
-import model.Rate;
-import model.ReplyComment;
 import model.User;
 
 /**
  *
  * @author huyen
  */
-@WebServlet(name = "BlogDetailController", urlPatterns = {"/blogdetail"})
-public class BlogDetailController extends HttpServlet {
+@WebServlet(name = "AddRate", urlPatterns = {"/addrate"})
+public class AddRate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,9 +54,7 @@ public class BlogDetailController extends HttpServlet {
 //            List<ReplyComment> lr = d.getReplyCommentByCID(c);
 //            request.setAttribute("Reply", lr);
 //        }
-            RateDAO r = new RateDAO();
-            float avgRate = r.avgRate(id);
-            Rate rate = r.getRateByBID(id);
+
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
             //Blog da = (Blog) req.getSession().getAttribute("da");
@@ -84,8 +76,7 @@ public class BlogDetailController extends HttpServlet {
 //            String x = String.valueOf(b.getCategoryID());
 //            List<Products> list = dao.getProductByCID(x);
             // Products last = dao.getLast();
-            request.setAttribute("Rate", rate);
-           request.setAttribute("avgRate", avgRate);
+
             request.setAttribute("user", u);
             request.setAttribute("Detail", b);
             request.setAttribute("Comment", list);
@@ -94,8 +85,8 @@ public class BlogDetailController extends HttpServlet {
             request.setAttribute("After", ba);
 //            request.setAttribute("Products", list);
 //              request.setAttribute("last", last);
-            request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
-       //     out.println(ba);
+            //request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
+            out.println(ba);
             //      out.print(dat);
         } catch (SQLException ex) {
             Logger.getLogger(BlogDetailController.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,21 +107,7 @@ public class BlogDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-//         try (PrintWriter out = response.getWriter()) {
-//            String id = request.getParameter("bid");
-//            BlogDAO dao = new BlogDAO();
-//
-//            List<Comment> list = dao.getCommentByBID(id);
-//
-//            request.setAttribute("Comment", list);
-//            out.print(list);
-//            //request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        //  processRequest(request, response);
     }
 
     /**
@@ -144,34 +121,34 @@ public class BlogDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-//        try (PrintWriter out = response.getWriter()) {
-//            String blogID = request.getParameter("blogID");
-//            String userID = request.getParameter("userID");
-//            String opinion = request.getParameter("opinion");
-//            String commentContent = request.getParameter("commentContent");
-//
-//            int likeNum, dislikeNum;
-//            if (opinion.valueOf(opinion).equals("Like")) {
-//                likeNum = 1;
-//                dislikeNum = 0;
-//            } else {
-//                likeNum = 0;
-//                dislikeNum = 1;
-//            }
-//            CommentDAO dao = new CommentDAO();
-//            out.print(blogID);
-//            out.println(userID);
-//            out.print(opinion);
-//            out.print(commentContent);
-//            //dao.AddComment(blogID, userID, commentContent, likeNum, dislikeNum);
-//
-//            //request.getRequestDispatcher("blogdetail").forward(request, response);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(AddCommentController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        HttpServletRequest req = (HttpServletRequest) request;
+        try (PrintWriter out = response.getWriter()) {
+            User u = (User) req.getSession().getAttribute("acc");
+            String id = request.getParameter("bid");
+            String uid = Integer.toString(u.getUserID());
+            String rate = request.getParameter("rateStar");
+
+            RateDAO r = new RateDAO();
+            if (!rate.equals("")) {
+                if (r.checkRateExist(id, uid)) {
+                    if (r.checkUpdateRateExist(id, uid)) {
+                        request.setAttribute("mess", "You cann't rate three time");
+                        request.getRequestDispatcher("blogdetail").forward(request, response);
+                    } else {
+                        r.updateRate(id, uid, rate);
+
+                    }
+                } else {
+                    r.addRate(id, uid, rate);
+                }
+            }
+
+            request.getRequestDispatcher("blog").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddRate.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AddRate.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

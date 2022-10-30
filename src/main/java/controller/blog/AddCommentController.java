@@ -7,6 +7,7 @@ package controller.blog;
 
 import dao.BlogDAO;
 import dao.CommentDAO;
+import dao.RateDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -130,7 +131,7 @@ public class AddCommentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
-            String id = request.getParameter("bid");
+             String id = request.getParameter("bid");
             String userID = request.getParameter("userID");
             String commentContent = request.getParameter("commentContent");
 //            BlogDAO d = new BlogDAO();

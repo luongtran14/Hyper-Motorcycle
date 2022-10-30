@@ -47,6 +47,9 @@ public class Blog {
         this.lastname = lastname;
     }
 
+ 
+
+
     
     
 
@@ -123,6 +126,8 @@ public class Blog {
         this.dislikeNum = dislikeNum;
     }
 
+  
+
     public String getFirstName() {
         return firstName;
     }
@@ -144,6 +149,8 @@ public class Blog {
         return "Blog{" + "blogID=" + blogID + ", userID=" + userID + ", title=" + title + ", blogContent=" + blogContent + ", createdDate=" + createdDate + ", lastModified=" + lastModified + ", image=" + image + ", likeNum=" + likeNum + ", dislikeNum=" + dislikeNum + ", firstName=" + firstName + ", lastname=" + lastname + '}';
     }
 
+   
+  
    
 
    

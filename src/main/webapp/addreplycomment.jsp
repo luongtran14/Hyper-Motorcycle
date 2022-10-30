@@ -421,9 +421,9 @@
                     class="line"></span></span></div>
               <div class="comment-respond-form">
                 <form method="post" class="form-respond mv-form-horizontal" action="addreplycomment">
-                  <input type="text" name="bid" value="${Comment.blogID}" />
-                  <input type="text" name="cid" value="${Comment.commentID}" />
-                  <input type="text" name="userID" value="${requestScope.user.userID}">
+                  <input type="text" name="bid" value="${Comment.blogID}" hidden="Hidden"/>
+                  <input type="text" name="cid" value="${Comment.commentID}" hidden="Hidden"/>
+                  <input type="text" name="userID" value="${requestScope.user.userID}" hidden="Hidden"/>
                   
                   <!-- <div class="mv-form-group">
                                 <div class="col-xs-2 mv-label"> <strong class="text-uppercase">Email</strong></div>
