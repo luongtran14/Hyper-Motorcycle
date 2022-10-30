@@ -22,14 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Blog;
 import model.Comment;
+import model.Rate;
 import model.User;
 
 /**
  *
  * @author huyen
  */
-@WebServlet(name = "AddRate", urlPatterns = {"/addrate"})
-public class AddRate extends HttpServlet {
+@WebServlet(name = "SearchCommentController", urlPatterns = {"/searchcomment"})
+public class SearchCommentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,20 +45,22 @@ public class AddRate extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String id = request.getParameter("bid");
+             String id = request.getParameter("bid");
             //String date = request.getParameter("crd");
             BlogDAO dao = new BlogDAO();
             Blog b = dao.getBlogByID(id);
-            List<Comment> list = dao.getCommentByBID(id);
-             CommentDAO d = new CommentDAO();
+            
+            
+           CommentDAO d = new CommentDAO();
            int total = d.countCommentByBID(id);
-//            CommentDAO d = new CommentDAO();
 //            for (Comment a : list) {
 //                String c = Integer.toString(a.getCommentID());
 //            List<ReplyComment> lr = d.getReplyCommentByCID(c);
 //            request.setAttribute("Reply", lr);
 //        }
-
+            RateDAO r = new RateDAO();
+            float avgRate = r.avgRate(id);
+            Rate rate = r.getRateByBID(id);
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
             //Blog da = (Blog) req.getSession().getAttribute("da");
@@ -76,25 +79,26 @@ public class AddRate extends HttpServlet {
             if (bb == null) {
                 bb = dao.getBlogByID(id);
             }
-//            String x = String.valueOf(b.getCategoryID());
-//            List<Products> list = dao.getProductByCID(x);
-            // Products last = dao.getLast();
+           
+            String txtSearch = request.getParameter("txt");
+            List<Comment> list = d.searchComment(txtSearch, id);
 
+            request.setAttribute("Comment", list);
+            request.setAttribute("txtS", txtSearch);
+            //  out.println(list);
+            request.setAttribute("Total", total);
+            request.setAttribute("Rate", rate);
+            request.setAttribute("avgRate", avgRate);
             request.setAttribute("user", u);
             request.setAttribute("Detail", b);
-            request.setAttribute("Comment", list);
 
             request.setAttribute("Before", bb);
             request.setAttribute("After", ba);
-//            request.setAttribute("Products", list);
-//              request.setAttribute("last", last);
-            //request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
-            out.println(ba);
-            //      out.print(dat);
+            request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(BlogDetailController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBlogController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BlogDetailController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -110,7 +114,7 @@ public class AddRate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //  processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -124,34 +128,7 @@ public class AddRate extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        try (PrintWriter out = response.getWriter()) {
-            User u = (User) req.getSession().getAttribute("acc");
-            String id = request.getParameter("bid");
-            String uid = Integer.toString(u.getUserID());
-            String rate = request.getParameter("rateStar");
-
-            RateDAO r = new RateDAO();
-            if (!rate.equals("")) {
-                if (r.checkRateExist(id, uid)) {
-                    if (r.checkUpdateRateExist(id, uid)) {
-                        request.setAttribute("mess", "You cann't rate three time");
-                        request.getRequestDispatcher("blogdetail").forward(request, response);
-                    } else {
-                        r.updateRate(id, uid, rate);
-
-                    }
-                } else {
-                    r.addRate(id, uid, rate);
-                }
-            }
-
-            request.getRequestDispatcher("blog").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(AddRate.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddRate.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

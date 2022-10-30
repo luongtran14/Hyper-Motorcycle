@@ -24,8 +24,8 @@ import model.User;
  *
  * @author huyen
  */
-@WebServlet(name = "BlogManagementController", urlPatterns = {"/blogmanagement"})
-public class BlogManagementController extends HttpServlet {
+@WebServlet(name = "SearchBlogManagement", urlPatterns = {"/searchblogmanagement"})
+public class SearchBlogManagement extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +39,7 @@ public class BlogManagementController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+       try (PrintWriter out = response.getWriter()) {
             BlogDAO dao = new BlogDAO();
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
@@ -48,11 +48,11 @@ public class BlogManagementController extends HttpServlet {
             String id = Integer.toString(id_raw);
             request.setAttribute("id", id);
            // String uid =  String.valueOf(request.getParameter("uid")) ;
-            List<Blog> list = dao.getBlogByUID(id);
+   //         List<Blog> list = dao.search;
             int total = dao.countBlogByUID(id);
            //out.print(list);
             request.setAttribute("Total", total);
-            request.setAttribute("Blog", list);
+     //       request.setAttribute("Blog", list);
             request.getRequestDispatcher("blogmanagement.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);

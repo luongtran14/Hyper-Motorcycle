@@ -465,7 +465,7 @@
                                   <!-- <li class="meta-item mv-icon-left-style-3"><a href="#"><span class="text"> <span class="icon"><i class="fa fa-comments-o"></i></span>150 Likes</span></a></li>-->
                                   <li class="meta-item mv-icon-left-style-3 hidden-sm hidden-md hidden-lg"><a
                                       href="#"><span class="text"><span class="icon"><i
-                                            class="fa fa-calendar"></i></span>Sep 29, 2016</span></a></li>
+                                            class="fa fa-calendar"></i></span>${Detail.createdDate}</span></a></li>
                                 </ul>
                               </div>
                             </div>
@@ -671,8 +671,18 @@
                       <div class="blog-detail-block block-comment">
                         <div class="mv-comment-block-style-1 mv-box-shadow-gray-1">
                           <div class="comment-header">
-                            <div class="comment-title mv-title-style-12"><span class="main">There are comments<span
+                            <div class="comment-title mv-title-style-12"><span class="main">There are ${Total} comments<span
                                   class="line"></span></span></div>
+                                  <div class="aside-body">
+                                    <form method="get" class="form-aside-search" action="searchcomment">
+                                      <div class="mv-inputbox-icon right">
+                                        <input value="${Detail.blogID}" name="bid" type="text" hidden/>
+                                        <input value="${txtS}" name="txt" type="text" class="mv-inputbox mv-inputbox-style-2" />
+                                        <button type="submit" class="icon mv-btn mv-btn-style-4 fa fa-search"></button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                  
                           </div>
                           <!-- .comment-header-->
 

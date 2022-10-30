@@ -33,6 +33,19 @@ public class Blog {
     public Blog() {
     }
 
+    public Blog(int blogID, int userID, String title, String blogContent, Date createdDate, Date lastModified, String image, String firstName, String lastname) {
+        this.blogID = blogID;
+        this.userID = userID;
+        this.title = title;
+        this.blogContent = blogContent;
+        this.createdDate = createdDate;
+        this.lastModified = lastModified;
+        this.image = image;
+        this.firstName = firstName;
+        this.lastname = lastname;
+    }
+
+    
     public Blog(int blogID, int userID, String title, String blogContent, Date createdDate, Date lastModified, String image, int likeNum, int dislikeNum, String firstName, String lastname) {
         this.blogID = blogID;
         this.userID = userID;

@@ -20,7 +20,16 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="page-header">
-                            <h1><small class="pull-right">45 comments</small> Comments </h1>
+                            <h1><small class="pull-right">${Total} comments</small> Comments </h1>
+                            <div class="aside-body">
+                                <form method="get" class="form-aside-search" action="searchreplycomment">
+                                  <div class="mv-inputbox-icon right">
+                                    <!-- <input value="${Detail.blogID}" name="cid" type="text" /> -->
+                                    <input value="${txtS}" name="txt" type="text" class="mv-inputbox mv-inputbox-style-2" />
+                                    <button type="submit" class="icon mv-btn mv-btn-style-4 fa fa-search"></button>
+                                  </div>
+                                </form>
+                              </div>
                         </div>
                         <div class="comments-list">
                             <c:forEach items="${Reply}" var="r">

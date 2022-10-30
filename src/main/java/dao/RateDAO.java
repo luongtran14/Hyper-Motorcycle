@@ -138,60 +138,60 @@ public class RateDAO extends DBContext {
         return 0;
     }
 
-    public int countUserRate(String blogID) {
-//        List<Quiz> list = new ArrayList<>();
-        try {
-            String query = "select count(rate) from Rate\n"
-                    + "where blog_id=?";
-            PreparedStatement pd = connection.prepareStatement(query);
-            pd.setString(1, blogID);
-            ResultSet rs = pd.executeQuery();
-
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
-
-    public int countRateStars(int star, String quizID) {
-//        List<Quiz> list = new ArrayList<>();
-        try {
-            String query = "select count(rate)  from Rate \n"
-                    + "where rate = ? and blog_id =?";
-            PreparedStatement pd = connection.prepareStatement(query);
-            pd.setInt(1, star);
-            pd.setString(2, quizID);
-            ResultSet rs = pd.executeQuery();
-
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
-
-    public int countFeedback(String quizID) {
-//        List<Quiz> list = new ArrayList<>();
-        try {
-            String query = "select count(feedback_id) from Feedback\n"
-                    + "  where quiz_id = ? and comment !='' ";
-            PreparedStatement pd = connection.prepareStatement(query);
-            pd.setString(1, quizID);
-            ResultSet rs = pd.executeQuery();
-
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
+//    public int countUserRate(String blogID) {
+////        List<Quiz> list = new ArrayList<>();
+//        try {
+//            String query = "select count(rate) from Rate\n"
+//                    + "where blog_id=?";
+//            PreparedStatement pd = connection.prepareStatement(query);
+//            pd.setString(1, blogID);
+//            ResultSet rs = pd.executeQuery();
+//
+//            while (rs.next()) {
+//                return rs.getInt(1);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return 0;
+//    }
+//
+//    public int countRateStars(int star, String quizID) {
+////        List<Quiz> list = new ArrayList<>();
+//        try {
+//            String query = "select count(rate)  from Rate \n"
+//                    + "where rate = ? and blog_id =?";
+//            PreparedStatement pd = connection.prepareStatement(query);
+//            pd.setInt(1, star);
+//            pd.setString(2, quizID);
+//            ResultSet rs = pd.executeQuery();
+//
+//            while (rs.next()) {
+//                return rs.getInt(1);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return 0;
+//    }
+//
+//    public int countFeedback(String quizID) {
+////        List<Quiz> list = new ArrayList<>();
+//        try {
+//            String query = "select count(feedback_id) from Feedback\n"
+//                    + "  where quiz_id = ? and comment !='' ";
+//            PreparedStatement pd = connection.prepareStatement(query);
+//            pd.setString(1, quizID);
+//            ResultSet rs = pd.executeQuery();
+//
+//            while (rs.next()) {
+//                return rs.getInt(1);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return 0;
+//    }
 
     public void addRate(String blogID, String userID, String rate) {
         String query = "INSERT INTO [dbo].[Rate]\n"
@@ -277,6 +277,24 @@ public class RateDAO extends DBContext {
         }
         return false;
     }
+    
+//        public float avgRate(String blogID) {
+////        List<Quiz> list = new ArrayList<>();
+//        try {
+//            String query = "select  avg(rate)\n"
+//                    + "from Rate where blog_id = ?";
+//            PreparedStatement pd = connection.prepareStatement(query);
+//            pd.setString(1, blogID);
+//            ResultSet rs = pd.executeQuery();
+//
+//            while (rs.next()) {
+//                return rs.getFloat(1);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return 0;
+//    }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         RateDAO dao = new RateDAO();

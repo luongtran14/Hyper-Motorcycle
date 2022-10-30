@@ -54,7 +54,9 @@ public class BlogDetailController extends HttpServlet {
             BlogDAO dao = new BlogDAO();
             Blog b = dao.getBlogByID(id);
             List<Comment> list = dao.getCommentByBID(id);
-//            CommentDAO d = new CommentDAO();
+            
+           CommentDAO d = new CommentDAO();
+           int total = d.countCommentByBID(id);
 //            for (Comment a : list) {
 //                String c = Integer.toString(a.getCommentID());
 //            List<ReplyComment> lr = d.getReplyCommentByCID(c);
@@ -84,6 +86,7 @@ public class BlogDetailController extends HttpServlet {
 //            String x = String.valueOf(b.getCategoryID());
 //            List<Products> list = dao.getProductByCID(x);
             // Products last = dao.getLast();
+            request.setAttribute("Total", total);
             request.setAttribute("Rate", rate);
            request.setAttribute("avgRate", avgRate);
             request.setAttribute("user", u);

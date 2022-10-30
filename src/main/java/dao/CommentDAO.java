@@ -152,6 +152,37 @@ public class CommentDAO extends DBContext {
 
     }
 
+    public List<Comment> searchComment(String txtSearch, String blogID) {
+        List<Comment> list = new ArrayList<>();
+        try {
+            String query = "select [Comment].[comment_id],[Comment].[blog_id], [Comment].[user_id], [Comment].[comment_content]\n"
+                    + ", [User].first_name, [User].last_name from Comment\n"
+                    + "                   LEFT JOIN [User] ON ([Comment].user_id= [User].user_id)\n"
+                    + "                    where [Comment].[blog_id] = ? and ([Comment].[comment_content] like ?              \n"
+                    + "                   or [User].first_name like ? \n"
+                    + "                    or [User].[last_name] like ? ) ";
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, blogID);
+            ps.setString(2, "%" + txtSearch + "%");
+            ps.setString(3, "%" + txtSearch + "%");
+            ps.setString(4, "%" + txtSearch + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Comment(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
 //----------------------------------------------------------------------------------------------------
 //Reply comment
     public List<ReplyComment> getReplyCommentByCID(String cid) {
@@ -328,12 +359,12 @@ public class CommentDAO extends DBContext {
 
     }
 
-    public int countComment(int blogID) {
+    public int countCommentByBID(String blogID) {
 //        List<Quiz> list = new ArrayList<>();
         try {
             String query = "select count(comment_id) from Comment where blog_id = ?";
             PreparedStatement pd = connection.prepareStatement(query);
-            pd.setInt(1, blogID);
+            pd.setString(1, blogID);
             ResultSet rs = pd.executeQuery();
 
             while (rs.next()) {
@@ -345,12 +376,12 @@ public class CommentDAO extends DBContext {
         return 0;
     }
 
-    public int countReplyComment(int commentID) {
+    public int countReplyComment(String commentID) {
 //        List<Quiz> list = new ArrayList<>();
         try {
             String query = "select count(reply_comment_id) from ReplyComment where comment_id = ?";
             PreparedStatement pd = connection.prepareStatement(query);
-            pd.setInt(1, commentID);
+            pd.setString(1, commentID);
             ResultSet rs = pd.executeQuery();
 
             while (rs.next()) {
@@ -360,6 +391,43 @@ public class CommentDAO extends DBContext {
             System.out.println(e);
         }
         return 0;
+    }
+
+    public List<ReplyComment> searchReplyComment(String txtSearch, String cid) {
+        List<ReplyComment> list = new ArrayList<>();
+        try {
+            String query = "  select [ReplyComment].[comment_id],[ReplyComment].[blog_id], [ReplyComment].[user_id],[ReplyComment].[reply_comment_id],\n"
+                    + " [ReplyComment].[comment_content]\n"
+                    + ", [User].first_name, [User].last_name, [User].avatar from [ReplyComment]\n"
+                    + "                   LEFT JOIN [User] ON ([ReplyComment].user_id= [User].user_id)\n"
+                    + "                    where [ReplyComment].[comment_id] = ? and "
+                    + "([ReplyComment].[comment_content] like ?              \n"
+                    + "                   or [User].first_name like ? \n"
+                    + "                    or [User].[last_name] like ? ) ";
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, cid);
+            ps.setString(2, "%" + txtSearch + "%");
+            ps.setString(3, "%" + txtSearch + "%");
+            ps.setString(4, "%" + txtSearch + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ReplyComment q = new ReplyComment();
+                q.setReplyCommentID(rs.getInt(1));
+                q.setCommentID(rs.getInt(2));
+                q.setUserID(rs.getInt(3));
+                q.setBlogID(rs.getInt(4));
+                q.setCommentContent(rs.getString(5));
+                q.setFirstName(rs.getString(6));
+                q.setLastName(rs.getString(7));
+                q.setAvatar(rs.getString(8));
+                list.add(q);
+
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
@@ -369,12 +437,15 @@ public class CommentDAO extends DBContext {
         // dao.deleteReplyComment("3");
         //  System.out.println(dao.getCommentByID("2005").toString());
 //
-//        List<ReplyComment> list = dao.getReplyCommentByCID("9");
-//        for (ReplyComment account : list) {
-//            System.out.println(account);
+        List<ReplyComment> list = dao.searchReplyComment("f", "11");
+        for (ReplyComment account : list) {
+            System.out.println(account);
 //        }
-        String s = Integer.toString(dao.countReplyComment(9));
-        System.out.println(s);
-
+//        String s = Integer.toString(dao.countCommentByBID("3"));
+//        System.out.println(s);
+        }
     }
+
+  
+
 }

@@ -5,7 +5,7 @@
  */
 package controller.blog;
 
-import dao.BlogDAO;
+import dao.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -17,15 +17,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Blog;
+import model.ReplyComment;
 import model.User;
+import model.Comment;
+
 
 /**
  *
  * @author huyen
  */
-@WebServlet(name = "BlogManagementController", urlPatterns = {"/blogmanagement"})
-public class BlogManagementController extends HttpServlet {
+@WebServlet(name = "SearchReplyCommentController", urlPatterns = {"/searchreplycomment"})
+public class SearchReplyCommentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,25 +41,25 @@ public class BlogManagementController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            BlogDAO dao = new BlogDAO();
+              try (PrintWriter out = response.getWriter()) {
+            String id = request.getParameter("cid");
+            String txtSearch = request.getParameter("txt");
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
-//            request.setAttribute("user", u);
-            int id_raw = u.getUserID();
-            String id = Integer.toString(id_raw);
-            request.setAttribute("id", id);
-           // String uid =  String.valueOf(request.getParameter("uid")) ;
-            List<Blog> list = dao.getBlogByUID(id);
-            int total = dao.countBlogByUID(id);
-           //out.print(list);
-            request.setAttribute("Total", total);
-            request.setAttribute("Blog", list);
-            request.getRequestDispatcher("blogmanagement.jsp").forward(request, response);
+            CommentDAO d = new CommentDAO();
+            int total = d.countReplyComment(id);
+             request.setAttribute("txtS", txtSearch);
+             request.setAttribute("Total", total);
+            request.setAttribute("user", u);
+         //   request.setAttribute("Reply", lr);
+           // out.println(u);
+//            out.println(lr);
+//            out.println(id);
+           request.getRequestDispatcher("replycommentlist.jsp").forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReplyCommentListController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReplyCommentListController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

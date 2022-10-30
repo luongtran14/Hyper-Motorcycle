@@ -28,6 +28,16 @@ public class Comment {
     public Comment() {
     }
 
+    public Comment(int commentID, int blogID, int userID, String commentContent, String firstName, String lastName) {
+        this.commentID = commentID;
+        this.blogID = blogID;
+        this.userID = userID;
+        this.commentContent = commentContent;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    
     public Comment(int commentID, int blogID, int userID, String commentContent, Date createdDate, Date updatedDate, int likeNumber, int dislikeNumber) {
         this.commentID = commentID;
         this.blogID = blogID;
