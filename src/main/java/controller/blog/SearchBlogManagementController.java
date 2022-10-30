@@ -24,8 +24,8 @@ import model.User;
  *
  * @author huyen
  */
-@WebServlet(name = "SearchBlogManagement", urlPatterns = {"/searchblogmanagement"})
-public class SearchBlogManagement extends HttpServlet {
+@WebServlet(name = "SearchBlogManagementController", urlPatterns = {"/searchblogmanagement"})
+public class SearchBlogManagementController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,13 +46,15 @@ public class SearchBlogManagement extends HttpServlet {
 //            request.setAttribute("user", u);
             int id_raw = u.getUserID();
             String id = Integer.toString(id_raw);
+             String txtSearch = request.getParameter("txt");
             request.setAttribute("id", id);
            // String uid =  String.valueOf(request.getParameter("uid")) ;
-   //         List<Blog> list = dao.search;
+            List<Blog> list = dao.searchBlogManagement(txtSearch);
             int total = dao.countBlogByUID(id);
            //out.print(list);
+             request.setAttribute("txtS", txtSearch);
             request.setAttribute("Total", total);
-     //       request.setAttribute("Blog", list);
+            request.setAttribute("Blog", list);
             request.getRequestDispatcher("blogmanagement.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);

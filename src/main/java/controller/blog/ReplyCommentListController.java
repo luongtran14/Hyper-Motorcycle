@@ -45,6 +45,8 @@ public class ReplyCommentListController extends HttpServlet {
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
             CommentDAO d = new CommentDAO();
+            Comment c = d.getCommentByID(id);
+            request.setAttribute("Comment", c);
             List<ReplyComment> lr = d.getReplyCommentByCID(id);
             int total = d.countReplyComment(id);
              request.setAttribute("Total", total);

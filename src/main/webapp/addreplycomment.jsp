@@ -417,7 +417,7 @@
 
 
             <div class="comment-respond">
-              <div class="comment-respond-title mv-title-style-12"><span class="main">Leave a reply<span
+              <div class="comment-respond-title mv-title-style-12"><span class="main">Leave a reply comment<span
                     class="line"></span></span></div>
               <div class="comment-respond-form">
                 <form method="post" class="form-respond mv-form-horizontal" action="addreplycomment">

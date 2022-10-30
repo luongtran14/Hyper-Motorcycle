@@ -21,7 +21,6 @@ import model.ReplyComment;
 import model.User;
 import model.Comment;
 
-
 /**
  *
  * @author huyen
@@ -41,21 +40,29 @@ public class SearchReplyCommentController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-              try (PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             String id = request.getParameter("cid");
-            String txtSearch = request.getParameter("txt");
+     //       request.setAttribute("id", id);
+
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
             CommentDAO d = new CommentDAO();
+            Comment c = d.getCommentByID(id);
+            request.setAttribute("Comment", c);
+            String txtSearch = request.getParameter("txt");
+            String cid = request.getParameter("id");
+//            String i = Integer.toString(c.getCommentID());
+            List<ReplyComment> lr = d.searchReplyComment(txtSearch, cid);
             int total = d.countReplyComment(id);
-             request.setAttribute("txtS", txtSearch);
-             request.setAttribute("Total", total);
+            request.setAttribute("txtS", txtSearch);
+            request.setAttribute("Total", total);
             request.setAttribute("user", u);
-         //   request.setAttribute("Reply", lr);
-           // out.println(u);
+
+            request.setAttribute("Reply", lr);
+            // out.println(u);
 //            out.println(lr);
 //            out.println(id);
-           request.getRequestDispatcher("replycommentlist.jsp").forward(request, response);
+            request.getRequestDispatcher("replycommentlist.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ReplyCommentListController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

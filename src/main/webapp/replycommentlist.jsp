@@ -23,13 +23,16 @@
                             <h1><small class="pull-right">${Total} comments</small> Comments </h1>
                             <div class="aside-body">
                                 <form method="get" class="form-aside-search" action="searchreplycomment">
-                                  <div class="mv-inputbox-icon right">
-                                    <!-- <input value="${Detail.blogID}" name="cid" type="text" /> -->
-                                    <input value="${txtS}" name="txt" type="text" class="mv-inputbox mv-inputbox-style-2" />
-                                    <button type="submit" class="icon mv-btn mv-btn-style-4 fa fa-search"></button>
-                                  </div>
+                                    <div class="mv-inputbox-icon right">
+                                        <input value="${Comment.commentID}" name="id" type="text"
+                                        class="mv-inputbox mv-inputbox-style-2" hidden/>
+                                        <input value="${txtS}" name="txt" type="text"
+                                            class="mv-inputbox mv-inputbox-style-2" placeholder="Search"/>
+                                        <button type="submit"
+                                            class="icon mv-btn mv-btn-style-4 fa fa-search"></button>
+                                    </div>
                                 </form>
-                              </div>
+                            </div>
                         </div>
                         <div class="comments-list">
                             <c:forEach items="${Reply}" var="r">
@@ -50,7 +53,7 @@
                                         onclick="return confirm('Are you sure you want to delete this comment')">Remove</a>
 
                                     </c:if>
-                                        <small><a href="">Like</a></small>
+                                        <!-- <small><a href="">Like</a></small> -->
                                     </p>
                                 </div>
                             </div>

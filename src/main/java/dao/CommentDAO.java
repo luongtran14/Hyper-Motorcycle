@@ -446,6 +446,4 @@ public class CommentDAO extends DBContext {
         }
     }
 
-  
-
 }
