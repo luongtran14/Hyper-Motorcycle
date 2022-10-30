@@ -14,7 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        
+
         <!-- Vendor CSS-->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/font-awesome/css/font-awesome.min.css">
@@ -35,8 +35,8 @@
                 <button 
                     class="btn btn-primary">
                     <a 
-                       style='color: white' 
-                       href="${pageContext.request.contextPath}/user/address/add">
+                        style='color: white' 
+                        href="${pageContext.request.contextPath}/user/address/add">
                         Add New
                     </a>
                 </button>
@@ -44,59 +44,61 @@
         </div>
 
         <!--<form id="formProduct" action="${pageContext.request.contextPath}/admin/products" method="POST">-->
-            <table
-                class="table table-responsive table-bordered table-striped">
-                <thead>
-                    <th>No.</th>
-                    <th>Province</th>
-                    <th>City</th>
-                    <th>District</th>
-                    <th>Full Address</th>
-                    <th>IS MAIN</th>
-                     <th></th>
-                </thead>
-                <tbody>
-                    <c:set var="count" value="1"/>
-                    <c:forEach items="${data}" var="item" varStatus="loop">
-                        <tr>
-                            <td>${count}</td>
-                            <td>${item.province}</td>
-                             <td>${item.city}</td>
-                             <td>${item.district}</td>
-                             <td>${item.fullAddress}</td>
-                             <td style="color: ${item.isMain != 0 ? "green" :"black"}">${item.isMain != 0 ? "YES" :"NO"}</td>                            <td>
-                                <button 
-                                    onclick="Edit(${item.id})"
-                                    class="btn btn-primary mx-2">
-                                    Edit
-                                </button>
-                                    <c:if test="${item.isMain != 1}">
+        <table
+            class="table table-responsive table-bordered table-striped">
+            <thead>
+            <th>No.</th>
+            <th>Province</th>
+            <th>City</th>
+            <th>District</th>
+            <th>Full Address</th>
+            <th>IS MAIN</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <c:set var="count" value="1"/>
+            <c:forEach items="${data}" var="item" varStatus="loop">
+                <tr>
+                    <td>${count}</td>
+                    <td>${item.province}</td>
+                    <td>${item.city}</td>
+                    <td>${item.district}</td>
+                    <td>${item.fullAddress}</td>
+                    <td style="color: ${item.isMain != 0 ? "green" :"black"}">${item.isMain != 0 ? "YES" :"NO"}</td>                            <td>
+                        <c:if test="${data.size() >= 2}">
+                            <button 
+                                onclick="Edit(${item.id})"
+                                class="btn btn-primary mx-2">
+                                Edit
+                            </button>
+                            <c:if test="${item.isMain != 1}">
                                 <button 
                                     id="delete{item.id}"
                                     onclick="Delete(${item.id})"
                                     class="btn btn-danger mx-2">
                                     Delete
                                 </button>
-                                    </c:if>
-                            </td>
-                        </tr>
-                        <c:set var="count" value="${count + 1}"/>
-                    </c:forEach>
-                </tbody>
-            </table>
-        <!--</form>-->
-        <script>
-            
-            function Edit(id) {
-                window.location.href='http://localhost:8080${pageContext.request.contextPath}/user/address/edit?id='+ id;
+                            </c:if>
+                        </c:if>
+                    </td>
+                </tr>
+                <c:set var="count" value="${count + 1}"/>
+            </c:forEach>
+        </tbody>
+    </table>
+    <!--</form>-->
+    <script>
+
+        function Edit(id) {
+            window.location.href = 'http://localhost:8080${pageContext.request.contextPath}/user/address/edit?id=' + id;
+        }
+
+        function Delete(id) {
+            if (confirm("Are you sure you want to Delete this Address?")) {
+                window.location.href = 'http://localhost:8080${pageContext.request.contextPath}/user/address/delete?id=' + id;
             }
-            
-            function Delete(id) {
-                if (confirm("Are you sure you want to Delete this Address?")) {
-                    window.location.href='http://localhost:8080${pageContext.request.contextPath}/user/address/delete?id=' + id;
-                }
-            }
-           
-        </script>
-    </body>
+        }
+
+    </script>
+</body>
 </html>

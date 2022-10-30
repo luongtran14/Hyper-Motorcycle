@@ -5,6 +5,7 @@
  */
 package model;
 
+import dao.ProductDAO;
 import java.util.List;
 
 /**
@@ -13,10 +14,30 @@ import java.util.List;
  */
 public class Cart {
 
+    public static String CART_SESSION_VAR = "cart";
     private int id;
     private int userId;
     private float totalPrice;
     private List<CartItem> items;
+    private List<ProductCartItem> products;
+    private String shipAddress;
+    private String phoneNumber;
+
+    public String getShipAddress() {
+        return shipAddress;
+    }
+
+    public void setShipAddress(String shipAddress) {
+        this.shipAddress = shipAddress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public Cart() {
     }
@@ -29,6 +50,14 @@ public class Cart {
 
     public Cart(List<CartItem> items) {
         this.items = items;
+    }
+
+    public List<ProductCartItem> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductCartItem> products) {
+        this.products = products;
     }
 
     public List<CartItem> getItems() {
@@ -94,14 +123,41 @@ public class Cart {
     public void editQuantity(int id, int newQuantity) {
         if (newQuantity == 0) {
             removeItem(id);
-        }else{
-        for (CartItem item : items) {
-            if (item.getProduct().getProductId() == id) {
-                item.setQuantity(newQuantity);
+        } else {
+            for (CartItem item : items) {
+                if (item.getProduct().getProductId() == id) {
+                    item.setQuantity(newQuantity);
+                }
             }
         }
+
+    }
+
+    public void updateProductCartItem(int productId, int quantity) throws Exception {
+        if (quantity <= -1) {
+            return;
         }
-        
+        ProductDAO dao = new ProductDAO();
+        dao.changeProductCategory(productId, userId);
+        ProductCartItem updateItem = null;
+        for (ProductCartItem x : this.products) {
+            if (x.getProduct().getProductId() == productId) {
+                updateItem = x;
+                this.setTotalPrice(this.totalPrice - (x.getProduct().getUnitPrice() * x.getQuantity()));
+                x.setQuantity(quantity);
+                this.setTotalPrice(x.getProduct().getUnitPrice() * quantity + this.totalPrice);
+                break;
+            }
+        }
+        Product newProduct = dao.getSpecificProductById(productId);
+        if (quantity == 0 && updateItem != null) {
+            this.products.remove(updateItem);
+            newProduct.setUnitInStock(newProduct.getUnitInStock() + updateItem.getQuantity());
+
+        } else {
+            newProduct.setUnitInStock(newProduct.getUnitInStock() - updateItem.getQuantity());
+        }
+        dao.updateQuantity(newProduct);
     }
 
     public void removeItem(int id) {
