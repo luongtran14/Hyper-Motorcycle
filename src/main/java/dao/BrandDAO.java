@@ -126,8 +126,29 @@ public class BrandDAO extends DBContext {
         }
     }
 
+    public Brand getBrandById(int BrandID) {
+        Brand brand = new Brand();
+        try {
+            String query = "SELECT  [brand_id]\n"
+                    + "      ,[brand_name]\n"
+                    + "  FROM [motobike].[dbo].[Brand]\n"
+                    + "  where [brand_id]=?";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setInt(1, BrandID);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                brand.setBrand_id(rs.getInt(1));
+                brand.setBrand_name(rs.getString(2));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return brand;
+    }
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         BrandDAO dao = new BrandDAO();
-        System.out.println(dao.GetAllBrand().toString());
+        System.out.println(dao.GetBrandByID("18").toString());
     }
 }

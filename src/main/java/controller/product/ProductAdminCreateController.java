@@ -4,6 +4,7 @@
  */
 package controller.product;
 
+import dao.BrandDAO;
 import dao.CategoryDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
@@ -23,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Brand;
 import model.Category;
 import model.Color;
 import model.Product;
@@ -65,12 +67,15 @@ public class ProductAdminCreateController extends HttpServlet {
         
         ColorDAO colorDao = new ColorDAO();
         CategoryDAO cDao = new CategoryDAO();
+        BrandDAO bDAO = new BrandDAO();
         
         ArrayList<Category> allCategories = cDao.getAllCategories();
         ArrayList<Color> allColors = colorDao.getAllColors();
+        ArrayList<Brand> allBrand = bDAO.GetAllBrand();
         
         request.setAttribute("allCategories", allCategories);
         request.setAttribute("allColors", allColors);
+        request.setAttribute("allBrand", allBrand);
         request.getRequestDispatcher("/ProductAdminCreate.jsp").forward(request, response);
     }
     
@@ -78,7 +83,7 @@ public class ProductAdminCreateController extends HttpServlet {
             throws ServletException, IOException, SQLException, ClassNotFoundException, NullPointerException, ParseException {
         
         String name = !request.getParameter("name").isEmpty() ? request.getParameter("name") : "";
-        String brand = !request.getParameter("brand").isEmpty() ? request.getParameter("brand") : "";
+        String brandId = !request.getParameter("brand").isEmpty() ? request.getParameter("brand") : "";
         String description = !request.getParameter("description").isEmpty() ? request.getParameter("description") : "";
         String image = !request.getParameter("image").isEmpty() ? request.getParameter("image") : "";
         String categoryId = !request.getParameter("category").isEmpty() ? request.getParameter("category") : "";
@@ -93,7 +98,9 @@ public class ProductAdminCreateController extends HttpServlet {
         ColorDAO colorDao = new ColorDAO();
         CategoryDAO cDao = new CategoryDAO();
         ProductDAO pDao = new ProductDAO();
+        BrandDAO bDao = new BrandDAO();
         Category category = cDao.getCategoryById(Integer.parseInt(categoryId));
+        Brand brand = bDao.GetBrandByID(brandId);
         ArrayList<Color> colors = new ArrayList<>();
         for (int i = 0; i < color.length; i++) {
             colors.add(colorDao.getColorByColorId(Integer.parseInt(color[i])));

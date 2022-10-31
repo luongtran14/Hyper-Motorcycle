@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Brand;
 import model.Category;
 import model.Color;
 import model.Motor;
@@ -25,7 +26,7 @@ public class ProductDAO extends DBContext {
     final String PRODUCT_TABLE = "dbo.Product";
     final String id = "product_id";
     final String name = "product_name";
-    final String brand = "product_brand";
+    final String brand_id = "brand_id";
     final String serial_number = "motor_serial_number";
     final String image = "image";
     final String description = "description";
@@ -52,11 +53,13 @@ public class ProductDAO extends DBContext {
             while (rs.next()) {
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
+                BrandDAO brandDAO = new BrandDAO();
 
                 Product product = new Motor();
                 product.setProductId(rs.getInt(id));
                 product.setProductName(rs.getString(name));
-                product.setBrand(rs.getString(brand));
+                Brand brand = brandDAO.getBrandById(rs.getInt(brand_id));
+                product.setBrand(brand);
                 product.setImageUrl(rs.getString(image));
                 product.setDescription(rs.getString(description));
                 Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
@@ -90,11 +93,13 @@ public class ProductDAO extends DBContext {
             while (rs.next()) {
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
+                BrandDAO brandDAO = new BrandDAO();
 
                 Motor motor = new Motor();
                 motor.setProductId(rs.getInt(id));
                 motor.setProductName(rs.getString(name));
-                motor.setBrand(rs.getString(brand));
+                Brand brand = brandDAO.getBrandById(rs.getInt(brand_id));
+                motor.setBrand(brand);
                 motor.setSerialNumber(rs.getString(serial_number));
                 motor.setImageUrl(rs.getString(image));
                 motor.setDescription(rs.getString(description));
@@ -128,10 +133,12 @@ public class ProductDAO extends DBContext {
             while (rs.next()) {
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
+                BrandDAO brandDAO = new BrandDAO();
 
                 motor.setProductId(rs.getInt(id));
                 motor.setProductName(rs.getString(name));
-                motor.setBrand(rs.getString(brand));
+                Brand brand = brandDAO.getBrandById(rs.getInt(brand_id));
+                motor.setBrand(brand);
                 motor.setSerialNumber(rs.getString(serial_number));
                 motor.setImageUrl(rs.getString(image));
                 motor.setDescription(rs.getString(description));
@@ -167,10 +174,12 @@ public class ProductDAO extends DBContext {
             while (rs.next()) {
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
+                BrandDAO brandDAO = new BrandDAO();
 
                 product.setProductId(rs.getInt(this.id));
                 product.setProductName(rs.getString(name));
-                product.setBrand(rs.getString(brand));
+                Brand brand = brandDAO.getBrandById(rs.getInt(brand_id));
+                product.setBrand(brand);
                 product.setImageUrl(rs.getString(image));
                 product.setDescription(rs.getString(description));
                 Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
@@ -202,11 +211,13 @@ public class ProductDAO extends DBContext {
             while (rs.next()) {
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
+                BrandDAO brandDAO = new BrandDAO();
 
                 Product product = new Product();
                 product.setProductId(rs.getInt(this.id));
                 product.setProductName(rs.getString(name));
-                product.setBrand(rs.getString(brand));
+                Brand brand = brandDAO.getBrandById(rs.getInt(brand_id));
+                product.setBrand(brand);
                 product.setImageUrl(rs.getString(image));
                 product.setDescription(rs.getString(description));
                 Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
@@ -239,10 +250,12 @@ public class ProductDAO extends DBContext {
             while (rs.next()) {
                 CategoryDAO categoryDAO = new CategoryDAO();
                 ColorDAO colorDAO = new ColorDAO();
+                 BrandDAO brandDAO = new BrandDAO();
 
                 product.setProductId(rs.getInt(this.id));
                 product.setProductName(rs.getString(name));
-                product.setBrand(rs.getString(brand));
+                Brand brand = brandDAO.getBrandById(rs.getInt(brand_id));
+                product.setBrand(brand);
                 product.setImageUrl(rs.getString(image));
                 product.setDescription(rs.getString(description));
                 Category category = categoryDAO.getCategoryById(rs.getInt(category_id));
@@ -291,7 +304,7 @@ public class ProductDAO extends DBContext {
         try {
             String query
                     = "UPDATE " + PRODUCT_TABLE
-                    + " SET " + name + "=?," + brand + "=?," + image + "=?," + description + "=?," + category_id + "=?,"
+                    + " SET " + name + "=?," + brand_id + "=?," + image + "=?," + description + "=?," + category_id + "=?,"
                     + unit_price + "=?," + unit_in_stock + "=?," + date_in + "=?," + is_deleted + "=?," + date_out + "=? "
                     + "WHERE " + this.id + " =?";
             PreparedStatement stm = connection.prepareStatement(query);
@@ -299,7 +312,7 @@ public class ProductDAO extends DBContext {
             java.sql.Date date = new java.sql.Date(0);
 
             stm.setString(1, product.getProductName());
-            stm.setString(2, product.getBrand());
+            stm.setInt(2, product.getBrand().getBrand_id());
             stm.setString(3, product.getImageUrl());
             stm.setString(4, product.getDescription());
             stm.setInt(5, product.getCategory().getCategoryId());
@@ -321,7 +334,7 @@ public class ProductDAO extends DBContext {
         try {
             String query
                     = "INSERT INTO " + PRODUCT_TABLE
-                    + "(" + name + "," + brand + "," + image + "," + description + "," + category_id + ","
+                    + "(" + name + "," + brand_id + "," + image + "," + description + "," + category_id + ","
                     + unit_price + "," + unit_in_stock + "," + date_in + "," + is_deleted + "," + date_out + ") "
                     + "VALUES (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement stm = connection.prepareStatement(query);
@@ -329,7 +342,7 @@ public class ProductDAO extends DBContext {
             java.sql.Date date = new java.sql.Date(0);
 
             stm.setString(1, product.getProductName());
-            stm.setString(2, product.getBrand());
+            stm.setInt(2, product.getBrand().getBrand_id());
             stm.setString(3, product.getImageUrl());
             stm.setString(4, product.getDescription());
             stm.setInt(5, product.getCategory().getCategoryId());
@@ -345,7 +358,7 @@ public class ProductDAO extends DBContext {
         }
     }
 
-    //update by phuongnguyen
+   
     public double countAllProduct() {
         double count = 0;
         try {
@@ -387,10 +400,10 @@ public class ProductDAO extends DBContext {
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setString(1, brandid);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String id = rs.getString(1);
-                if(id != null){
-                return false;
+                if (id != null) {
+                    return false;
                 }
             }
         } catch (SQLException ex) {
@@ -398,9 +411,9 @@ public class ProductDAO extends DBContext {
         }
         return true;
     }
-    // end update by phuongnguyen
+  
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        System.out.println(new ProductDAO().checkProductByBrand("18"));
+        System.out.println(new ProductDAO().getAllProducts());
     }
 }

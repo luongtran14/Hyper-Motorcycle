@@ -48,6 +48,10 @@
 
                         <a href="blogmanagement" style="text-decoration: none; color: white; ">BlogManagement</a>
                     </div>
+                    <div style="border-bottom: 1px lightgray solid; width: 100%; text-align: center;padding: 5px;" >
+
+                        <a href="/Hyper-Motorcycle/admin/products?categoryId=0" style="text-decoration: none; color: white; ">ProductManagement</a>
+                    </div>
                     
                         
                     </div>  

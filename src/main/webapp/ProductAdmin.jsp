@@ -26,7 +26,7 @@
         <link rel="stylesheet" type="text/css" href="libs/magnific-popup/dist/magnific-popup.min.css">
     </head>
     <body>
-        <a href="../index.html" style="margin: 2rem;">Back to home page</a>
+        <a href="/Hyper-Motorcycle/admin.jsp" style="margin: 2rem;">Back to home page</a>
         <div style='display: flex; align-items: center; justify-content: space-between'>
             <h1 class='col-6 col-sm-6 col-md-5 col-lg-3 col-xl-3'>Product List Admin</h1>
             <div
@@ -83,13 +83,13 @@
                         <tr>
                             <td>${motor.productId}</td>
                             <td>${motor.productName}</td>
-                            <td>${motor.brand}</td>
+                            <td>${motor.brand.brand_name}</td>
                             <td>${motor.imageUrl}</td>
                             <td>${motor.description}</td>
                             <td>${motor.category.categoryName}</td>
-                            <td>${motor.unitPrice}</td>
+                            <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${motor.unitPrice}"/></td>
                             <td>${motor.unitInStock}</td>
-                            <td>${motor.dateIn}</td>
+                            <td><fmt:formatDate value="${motor.dateIn}"/></td>
                             <td>${motor.isDeleted}</td>
                             <td>
                                 <button 

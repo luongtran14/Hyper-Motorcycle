@@ -14,7 +14,7 @@ import java.util.Date;
 public class Product {
     private int productId;
     private String productName;
-    private String brand;
+    private Brand brand;
     private String imageUrl;
     private String description;
     private Category category;
@@ -23,21 +23,11 @@ public class Product {
     private int unitInStock;
     private Date dateIn;
     private boolean isDeleted;
-    
-    public Product() {}
 
-    public Product(
-            int productId, 
-            String productName, 
-            String brand, 
-            String imageUrl, 
-            String description, 
-            Category category, 
-            ArrayList<Color> colors, 
-            float unitPrice, 
-            int unitInStock, 
-            Date dateIn, 
-            boolean isDeleted) {
+    public Product() {
+    }
+
+    public Product(int productId, String productName, Brand brand, String imageUrl, String description, Category category, ArrayList<Color> colors, float unitPrice, int unitInStock, Date dateIn, boolean isDeleted) {
         this.productId = productId;
         this.productName = productName;
         this.brand = brand;
@@ -51,6 +41,14 @@ public class Product {
         this.isDeleted = isDeleted;
     }
 
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
     public String getProductName() {
         return productName;
     }
@@ -59,11 +57,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
@@ -91,6 +89,14 @@ public class Product {
         this.category = category;
     }
 
+    public ArrayList<Color> getColors() {
+        return colors;
+    }
+
+    public void setColors(ArrayList<Color> colors) {
+        this.colors = colors;
+    }
+
     public float getUnitPrice() {
         return unitPrice;
     }
@@ -115,29 +121,20 @@ public class Product {
         this.dateIn = dateIn;
     }
 
-    public int getProductId() {
-        return productId;
-    }
-
     public boolean isIsDeleted() {
         return isDeleted;
-    }
-
-    public ArrayList<Color> getColors() {
-        return colors;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
-    public void setColors(ArrayList<Color> colors) {
-        this.colors = colors;
+    @Override
+    public String toString() {
+        return "Product{" + "productId=" + productId + ", productName=" + productName + ", brand=" + brand + ", imageUrl=" + imageUrl + ", description=" + description + ", category=" + category + ", colors=" + colors + ", unitPrice=" + unitPrice + ", unitInStock=" + unitInStock + ", dateIn=" + dateIn + ", isDeleted=" + isDeleted + '}';
     }
+    
+   
     
     
 }

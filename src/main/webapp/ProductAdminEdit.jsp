@@ -1,8 +1,4 @@
-<%-- 
-    Document   : ProductAdminEdit
-    Created on : Oct 1, 2022, 7:03:28 PM
-    Author     : Admin
---%>
+
 
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,7 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        
+
         <!-- Vendor CSS-->
         <link rel="stylesheet" type="text/css" href="../libs/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../libs/font-awesome/css/font-awesome.min.css">
@@ -39,19 +35,21 @@
                     name="name" 
                     value="${requestScope.product.productName}" 
                     placeholder="Product Name"
-                />
+                    />
             </div>
+
             <div>
                 <label>Brand:</label>
-                <input 
-                    id="productBrand"
-                    class="form-control"
-                    style=""
-                    type="text"
-                    name="brand" 
-                    value="${requestScope.product.brand}" 
-                    placeholder="Brand"
-                />
+                <select 
+                    id='productBrand'
+                    name="brand">
+                    <c:forEach items="${requestScope.allBrand}" var="brand">
+                        <option 
+                            value="${brand.brand_id}">
+                            ${brand.brand_name}
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
             <div>
                 <label>Image:</label>
@@ -62,7 +60,7 @@
                     type="file"
                     name="image" 
                     value="${requestScope.product.imageUrl}" 
-                />
+                    />
             </div>
             <div>
                 <label>Description:</label>
@@ -111,7 +109,7 @@
                     name="unitPrice" 
                     value="${requestScope.product.unitPrice}" 
                     placeholder="Unit Price (VND)"
-                />
+                    />
             </div>
             <div>
                 <label>Unit In Stock:</label>
@@ -123,7 +121,7 @@
                     name="unitInStock" 
                     value="${requestScope.product.unitInStock}" 
                     placeholder="Unit In Stock"
-                />
+                    />
             </div>
             <div>
                 <label>Date In:</label>
@@ -134,7 +132,7 @@
                     type="date"
                     value="${requestScope.product.dateIn}"
                     name="dateIn"
-                />
+                    />
             </div>
             <button
                 id="submitForm"
@@ -146,7 +144,7 @@
                 Edit
             </button>
         </form>
-            
+
         <script>
             (() => {
                 var selectBox = document.getElementById('productCategory');
@@ -160,27 +158,27 @@
                 const arr = ${requestScope.currentColors};
                 console.log(arr);
                 for (var item of colors.options) {
-                    if (arr.includes(item.value*1)) {
+                    if (arr.includes(item.value * 1)) {
                         item.selected = true;
                     }
                 }
             })();
-            
+
             function getMultipleSelectValue(select) {
                 var result = '';
                 var options = select && select.options;
                 var opt;
 
-                for (var i=0, iLen=options.length; i<iLen; i++) {
-                  opt = options[i];
+                for (var i = 0, iLen = options.length; i < iLen; i++) {
+                    opt = options[i];
 
-                  if (opt.selected) {
-                    result.concat(opt.value);
-                  }
+                    if (opt.selected) {
+                        result.concat(opt.value);
+                    }
                 }
                 return result;
             }
-            
+
             function getSelectedValues() {
                 var select = document.getElementById('productColors');
                 select.value = getMultipleSelectValue(select);
