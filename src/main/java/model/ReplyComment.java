@@ -11,56 +11,58 @@ import java.sql.Date;
  *
  * @author huyen
  */
-public class Comment {
-
+public class ReplyComment {
+    private int replyCommentID;
     private int commentID;
-    private int blogID;
     private int userID;
+    private int blogID;
     private String commentContent;
     private Date createdDate;
     private Date updatedDate;
-    private int likeNumber;
-    private int dislikeNumber;
+    private int likeNum;
+    private int dislikeNum;
     private String firstName;
     private String lastName;
     private String avatar;
 
-    public Comment() {
+    public ReplyComment() {
     }
 
-    public Comment(int commentID, int blogID, int userID, String commentContent, String firstName, String lastName) {
+    public ReplyComment(int replyCommentID, int commentID, int userID, int blogID, String commentContent, Date createdDate, Date updatedDate, int likeNum, int dislikeNum) {
+        this.replyCommentID = replyCommentID;
         this.commentID = commentID;
-        this.blogID = blogID;
         this.userID = userID;
-        this.commentContent = commentContent;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    
-    public Comment(int commentID, int blogID, int userID, String commentContent, Date createdDate, Date updatedDate, int likeNumber, int dislikeNumber) {
-        this.commentID = commentID;
         this.blogID = blogID;
-        this.userID = userID;
         this.commentContent = commentContent;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-        this.likeNumber = likeNumber;
-        this.dislikeNumber = dislikeNumber;
+        this.likeNum = likeNum;
+        this.dislikeNum = dislikeNum;
     }
- 
-    public Comment(int commentID, int blogID, int userID, String commentContent, Date createdDate, Date updatedDate, int likeNumber, int dislikeNumber, String firstName, String lastName, String avatar) {
+
+    public ReplyComment(int replyCommentID, int commentID, int userID, int blogID, String commentContent, Date createdDate, Date updatedDate, int likeNum, int dislikeNum, String firstName, String lastName, String avatar) {
+        this.replyCommentID = replyCommentID;
         this.commentID = commentID;
-        this.blogID = blogID;
         this.userID = userID;
+        this.blogID = blogID;
         this.commentContent = commentContent;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-        this.likeNumber = likeNumber;
-        this.dislikeNumber = dislikeNumber;
+        this.likeNum = likeNum;
+        this.dislikeNum = dislikeNum;
         this.firstName = firstName;
         this.lastName = lastName;
         this.avatar = avatar;
+    }
+
+    
+
+    public int getReplyCommentID() {
+        return replyCommentID;
+    }
+
+    public void setReplyCommentID(int replyCommentID) {
+        this.replyCommentID = replyCommentID;
     }
 
     public int getCommentID() {
@@ -71,20 +73,20 @@ public class Comment {
         this.commentID = commentID;
     }
 
-    public int getBlogID() {
-        return blogID;
-    }
-
-    public void setBlogID(int blogID) {
-        this.blogID = blogID;
-    }
-
     public int getUserID() {
         return userID;
     }
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public int getBlogID() {
+        return blogID;
+    }
+
+    public void setBlogID(int blogID) {
+        this.blogID = blogID;
     }
 
     public String getCommentContent() {
@@ -111,20 +113,20 @@ public class Comment {
         this.updatedDate = updatedDate;
     }
 
-    public int getLikeNumber() {
-        return likeNumber;
+    public int getLikeNum() {
+        return likeNum;
     }
 
-    public void setLikeNumber(int likeNumber) {
-        this.likeNumber = likeNumber;
+    public void setLikeNum(int likeNum) {
+        this.likeNum = likeNum;
     }
 
-    public int getDislikeNumber() {
-        return dislikeNumber;
+    public int getDislikeNum() {
+        return dislikeNum;
     }
 
-    public void setDislikeNumber(int dislikeNumber) {
-        this.dislikeNumber = dislikeNumber;
+    public void setDislikeNum(int dislikeNum) {
+        this.dislikeNum = dislikeNum;
     }
 
     public String getFirstName() {
@@ -153,10 +155,10 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" + "commentID=" + commentID + ", blogID=" + blogID + ", userID=" + userID + ", commentContent=" + commentContent + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", likeNumber=" + likeNumber + ", dislikeNumber=" + dislikeNumber + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + '}';
+        return "ReplyComment{" + "replyCommentID=" + replyCommentID + ", commentID=" + commentID + ", userID=" + userID + ", blogID=" + blogID + ", commentContent=" + commentContent + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", likeNum=" + likeNum + ", dislikeNum=" + dislikeNum + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + '}';
     }
 
-  
+   
     
-
+    
 }

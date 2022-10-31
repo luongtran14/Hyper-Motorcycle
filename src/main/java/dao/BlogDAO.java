@@ -33,7 +33,7 @@ public class BlogDAO extends DBContext {
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
         String query = "select a.*, b.first_name, b.last_name from  Blog  a\n"
-                + "LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
+                + "JOIN [User] b ON (a.user_id=b.user_id)\n"
                 + "order by blog_id asc";
         try {
             conn = new DBContext().connection;//mo ket noi vs sql
@@ -55,11 +55,12 @@ public class BlogDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10)));
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +72,7 @@ public class BlogDAO extends DBContext {
         List<Blog> list = new ArrayList<>();
         String query = "SET ROWCOUNT 2\n"
                 + "select a.*, b.first_name, b.last_name from  Blog  a\n"
-                + "LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
+                + "JOIN [User] b ON (a.user_id=b.user_id)\n"
                 + "order by created_date desc ";
         try {
             //System.out.println("1234");
@@ -94,11 +95,12 @@ public class BlogDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10)));
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,7 +111,7 @@ public class BlogDAO extends DBContext {
     public Blog getBlogByID(String blogID) {
 
         String query = "select a.*, b.first_name, b.last_name from  Blog  a\n"
-                + "LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
+                + "JOIN [User] b ON (a.user_id=b.user_id)\n"
                 + "where a.blog_id = ?";
         try {
             conn = new DBContext().connection;
@@ -122,11 +124,12 @@ public class BlogDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10));
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11));
             }
 
         } catch (Exception e) {
@@ -159,11 +162,12 @@ public class BlogDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10)));
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11)));
 //                System.out.println("444444");
 //                Blog q = new Blog();
 //                int blog_id = rs.getInt("blog_id");
@@ -238,11 +242,12 @@ public class BlogDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10));
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11));
             }
 
         } catch (Exception e) {
@@ -267,11 +272,12 @@ public class BlogDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10));
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11));
             }
 
         } catch (Exception e) {
@@ -290,7 +296,6 @@ public class BlogDAO extends DBContext {
                     + "      ,a.[title]\n"
                     + "      ,a.[blog_content]\n"
                     + "      ,a.[created_date]\n"
-                    + "      ,a.[comment_id]\n"
                     + "      ,a.[last_modified]\n"
                     + "      ,a.[image], \n"
                     + "		b.first_name, b.last_name from  Blog  a\n"
@@ -308,12 +313,10 @@ public class BlogDAO extends DBContext {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5),
-                        rs.getInt(6),
-                        rs.getDate(7),
+                        rs.getDate(6),
+                        rs.getString(7),
                         rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10)));
-
+                        rs.getString(9)));
             }
         } catch (Exception e) {
         }
@@ -381,21 +384,85 @@ public class BlogDAO extends DBContext {
 
     }
 
+    public int countBlogByUID(String uid) {
+        try {
+            String query = "select count([blog_id]) from Blog where [user_id] = ? ";
+            PreparedStatement pd = connection.prepareStatement(query);
+            pd.setString(1, uid);
+            ResultSet rs = pd.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public List<Blog> searchBlogManagement(String txtSearch) {
+        List<Blog> list = new ArrayList<>();
+        try {
+            String query = "select Blog.*, [User].first_name, [User].last_name from Blog\n"
+                    + "LEFT JOIN [User] ON ([Blog].user_id= [User].user_id)\n"
+                    + "where (Blog.[blog_id] like ? "
+                    + "or Blog.[Title] like ? "
+                    + "or Blog.Blog_content like ? \n"
+                    + "or [User].first_name like ? \n"
+                    + "or [User].[last_name] like ?) ";
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, "%" + txtSearch + "%");
+            ps.setString(2, "%" + txtSearch + "%");
+            ps.setString(3, "%" + txtSearch + "%");
+            ps.setString(4, "%" + txtSearch + "%");
+            ps.setString(5, "%" + txtSearch + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Blog(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getString(11)));
+//                System.out.println("444444");
+//                Blog q = new Blog();
+//                int blog_id = rs.getInt("blog_id");
+//                int user_id = rs.getInt("user_id");
+//                String title = rs.getString("title");
+//
+//                q.setBlogID(blog_id);
+//                q.setUserID(user_id);
+//                q.setTitle(title);
+//                list.add(q);
+
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
 //    public void BC() {
 //        System.out.println("11111");
 //    }
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         BlogDAO dao = new BlogDAO();
-        dao.getBlogAfter("2022-01-01");
-        List<Blog> list = dao.getBlogByUID("1");
+        //   dao.getBlogAfter("2022-01-01");
+        List<Blog> list = dao.searchBlogManagement("3");
         for (Blog account : list) {
             System.out.println(account);
-
-        }
-//         System.out.println(dao.getBlogBefore("2022-02-03").toString());
-        //     dao.getBlogBefore("2022-02-03");
+//
+     }
+//     // System.out.println(dao.countBlogByUID("1").toString());
+        dao.countBlogByUID("1");
+//         String s = Integer.toString(countBlogByUID("1"));
+//        System.out.println(s);
 
     }
 }
-
-  
