@@ -30,7 +30,6 @@ public class CartDAO extends DBContext {
     }
 
     public Cart insert(Cart cart) {
-
         String sql = "INSERT [Cart](user_id,ship_address,phone,total_price,discount,promo_code) VALUES(?,?,?,?,?,?)";
         try {
             conn = new DBContext().connection;

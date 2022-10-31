@@ -41,7 +41,7 @@ public class UserAddressAddController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserAddressAddController</title>");            
+            out.println("<title>Servlet UserAddressAddController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UserAddressAddController at " + request.getContextPath() + "</h1>");
@@ -90,13 +90,21 @@ public class UserAddressAddController extends HttpServlet {
         User logined = (User) request.getSession(false).getAttribute("acc");
         ua.setUserId(logined.getUserID());
         try {
-            new UserAddressDAO().add(ua);
+            UserAddressDAO dao = new UserAddressDAO();
+            if (ua.getIsMain() == 1) {
+                UserAddress isMainUser = dao.getMainAddress(ua.getUserId());
+                if (isMainUser != null) {
+                    isMainUser.setIsMain(0);
+                    dao.edit(isMainUser);
+                }
+            }
+            dao.add(ua);
         } catch (SQLException ex) {
             Logger.getLogger(UserAddressEditController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserAddressEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         response.sendRedirect("../address");
     }
 
