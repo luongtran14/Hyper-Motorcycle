@@ -3,26 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.user;
+package controller.cart;
 
-import dao.UserAddressDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
-import model.UserAddress;
+import model.Cart;
 
 /**
  *
  * @author Admin
  */
-public class UserAddressEditController extends HttpServlet {
+public class CartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +36,10 @@ public class UserAddressEditController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserAddressEditController</title>");
+            out.println("<title>Servlet CartController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserAddressEditController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,16 +57,8 @@ public class UserAddressEditController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idRaw = request.getParameter("id");
-        try {
-            int id = Integer.parseInt(idRaw);
-            UserAddress ua = new UserAddressDAO().getById(id);
-            request.setAttribute("data", ua);
-            request.getRequestDispatcher("/UserAddressEdit.jsp").forward(request, response);
 
-        } catch (Exception e) {
-            response.sendRedirect("../address");
-        }
+        request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 
     /**
@@ -85,41 +72,7 @@ public class UserAddressEditController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String province = request.getParameter("province");
-        String city = request.getParameter("city");
-        String district = request.getParameter("district");
-        String fullAddress = request.getParameter("fullAddress");
-        String isMain = request.getParameter("isMain");
-        String idRaw = request.getParameter("id");
-        UserAddress ua = new UserAddress();
-        ua.setProvince(province);
-        ua.setDistrict(district);
-        ua.setCity(city);
-        ua.setId(Integer.parseInt(idRaw));
-        ua.setIsMain(isMain == null ? 0 : 1);
-        ua.setFullAddress(fullAddress);
-
-        try {
-            UserAddressDAO dao = new UserAddressDAO();
-            if (ua.getIsMain() == 1) {
-                User user = (User) request.getSession().getAttribute("acc");
-                UserAddress currentMain = dao.getMainAddress(user.getUserID());
-                System.out.println(user.getUserID());
-                if (currentMain != null) {
-                    currentMain.setIsMain(0);
-                    System.out.println(currentMain.getIsMain());
-                    dao.edit(currentMain);
-                }
-            }
-            dao.edit(ua);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserAddressEditController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UserAddressEditController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        request.setAttribute("data", ua);
-        request.getRequestDispatcher("/UserAddressEdit.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

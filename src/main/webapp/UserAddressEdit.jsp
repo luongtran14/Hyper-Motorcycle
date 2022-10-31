@@ -42,6 +42,7 @@
                     name="province" 
                     value="${data.province}" 
                     placeholder="Province"
+                    required
                 />
             </div>
             <div style="margin-top: 20px">
@@ -54,6 +55,7 @@
                     name="city" 
                     value="${data.city}" 
                     placeholder="City"
+                    required
                 />
             </div>
            <div style="margin-top: 20px">
@@ -65,7 +67,8 @@
                     type="text"
                     name="district" 
                     value="${data.district}" 
-                     placeholder="District"
+                    placeholder="District"
+                    required
                 />
             </div>
              <div style="margin-top: 20px">
@@ -76,7 +79,8 @@
                     style=""
                     name="fullAddress"
                     value="${data.fullAddress}"
-                     placeholder="Full Address"
+                    placeholder="Full Address"
+                    required                    
                     >
                 
             </div>

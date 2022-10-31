@@ -56,7 +56,7 @@
                 <div data-image-src="images/background/demo_bg_1920x1680.png" class="mv-banner-style-1 mv-bg-overlay-dark overlay-0-85 mv-parallax">
                     <div class="page-name mv-caption-style-6">
                         <div class="container">
-                            <div class="mv-title-style-9"><span class="main">Your Cart</span><img src="images/icon/icon_line_polygon_line.png" alt="icon" class="line"/></div>
+                            <div class="mv-title-style-9"><span class="main">Checkout Cart</span><img src="images/icon/icon_line_polygon_line.png" alt="icon" class="line"/></div>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="container">
                         <ul class="breadcrumb-1-list">
                             <li><a href="home.html"><i class="fa fa-home"></i></a></li>
-                            <li><a>Your Cart</a></li>
+                            <li><a>Checkout Cart</a></li>
                         </ul>
                     </div>
                 </div>
@@ -80,69 +80,89 @@
                     <div class="row">
                         <div class="col-sm-12 col-login">
                             <div class="mv-form-style-1 mv-box-shadow-gray-1">
-                                <c:if test = "${sessionScope['cart'] == null}">
-                                    <label>Your cart is empty</label>
-                                </c:if>
-                                <c:if test = "${sessionScope['cart'] != null}">
-                                    <form>
+                                <form id="form" onsubmit="return false;" action="${pageContext.request.contextPath}/cart/checkout" method="POST">
+                                    <table class="table ">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Product Image</th>
+                                                <th >Product Name</th>
+                                                <th class="product-price">Price</th>
+                                                <th class="product-quantity">Quantity</th>
+                                                <th class="product-subtotal">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        <table class="table ">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Product Image</th>
-                                                    <th >Product Name</th>
-                                                    <th class="product-price">Price</th>
-                                                    <th class="product-quantity">Quantity</th>
-                                                    <th class="product-subtotal">Total</th>
-                                                    <th class="product-subtotal"></th>
+                                            <c:forEach var="cart" items="${sessionScope['cart'].getProducts()}">
+                                                <tr class="cart_item">
+                                                    <td >
+                                                        ${cart.product.productId}
+                                                    </td>
+                                                    <td> 
+                                                        <figure><img  height="113" src="${cart.getProduct().getImageUrl()}" alt="shipping cart"></figure>
+                                                    </td>
+                                                    <td class="product-thumbnail" data-title="Product Name">
+                                                        ${cart.product.productName}
+                                                    </td>
+
+                                                    <td class="product-price" data-title="Price">
+                                                        $${cart.product.unitPrice}
+                                                    </td>
+                                                    <td class="product-quantity" data-title="Quantity">
+                                                        ${cart.quantity}
+                                                    </td>
+                                                    <td class="product-subtotal" data-title="Total">
+                                                        ${cart.quantity * cart.product.unitPrice}
+                                                    </td>
+
                                                 </tr>
-                                            </thead>
-                                            <tbody>
 
-                                                <c:forEach var="cart" items="${sessionScope['cart'].getProducts()}">
-                                                    <tr class="cart_item">
-                                                        <td >
-                                                            ${cart.product.productId}
-                                                        </td>
-                                                        <td> 
-                                                            <figure><img  height="113" src="${cart.getProduct().getImageUrl()}" alt="shipping cart"></figure>
-                                                        </td>
-                                                        <td class="product-thumbnail" data-title="Product Name">
-                                                            ${cart.product.productName}
-                                                        </td>
-
-                                                        <td class="product-price" data-title="Price">
-                                                            $${cart.product.unitPrice}
-                                                        </td>
-                                                        <td class="product-quantity" data-title="Quantity">
-                                                            <input onchange="onChange(${cart.product.productId}, ${cart.product.unitInStock}, ${cart.quantity})" 
-                                                                   style="width: 60%" type="number" 
-                                                                   id="ID_${cart.product.productId}" 
-                                                                   name="ID_${cart.product.productId}" min="1" max="${cart.product.unitInStock}"
-                                                                   value="${cart.quantity}"/>
-                                                        </td>
-                                                        <td class="product-subtotal" data-title="Total">
-                                                            ${cart.quantity * cart.product.unitPrice}
-                                                        </td>
-                                                        <td class="product-subtotal" data-title="Total">
-                                                            <!--                                                <div class="action">
-                                                                                                                <a href="./DeleteCartItem?pid=${cart.getProduct().getProductId()}"style="color: red; font-size: 20px;" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                                                                            </div>-->
-                                                            <a style="padding: 10px 10px" class="btn btn-danger"
-                                                               onclick="confirmAlert('${cart.product.productId}')">Delete</a>
-                                                        </td>
-                                                    </tr>
-
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    <h3>Total: ${sessionScope['cart'] == null ? '0' : sessionScope['cart'].totalPrice} $</h3>
+                                    <br>
+                                    <div style="border: 1px solid gray;width: 70%">
+                                        <label style="font-size: 30px">Order Information</label>
                                         <br>
-                                        <h3>Total: ${sessionScope['cart'] == null ? '0' : sessionScope['cart'].totalPrice} $</h3>
-                                        <br>
-                                        <a class="btn btn-warning" href="${pageContext.request.contextPath}/cart/checkout">Check Out</a>
-                                    </form>
-                                </c:if>
+                                        <div style="margin-left: 15px">
+                                            <div style="margin-left: 15px">
+                                                <label>Discount: 0%</label>
+                                            </div>
+                                            <div style="margin-left: 15px">
+                                                <label>Promo Code: 0</label>
+                                            </div>
+                                            <div style="margin-left: 15px">
+                                                <label>Ship Adress:</label>
+                                                <select 
+                                                    id='productCategory'
+                                                    name="address">
+                                                    <c:forEach items="${userAddress}" var="item">
+                                                        <option 
+                                                            value="${item.getId()}" ${item.getIsMain() == 1 ? 'selected' :''}>
+                                                            ${item.getFullAddress()}
+                                                 
+                                                        </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div style="margin-left: 15px">
+                                                <label>Phone Number:</label>
+                                                <input 
+                                                    id="phoneNumber"
+                                                    class="form-control"
+                                                    style=""
+                                                    type="text"
+                                                    name="phoneNumber" 
+                                                    value="${sessionScope['acc'].phone}" 
+                                                    placeholder="Phone Number"
+                                                    />
+                                            </div>
+                                            <br>
+                                        </div>
+                                                    <button style="margin-left: 15px;margin-bottom: 10px;" class="btn btn-warning" onclick="isVietnamesePhoneNumberValid()">Finish</button>
+                                </form>
                                 <!-- .form-login-->
                             </div>
                         </div>
@@ -642,25 +662,33 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/JS/style.selector.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/JS/main.js"></script>
         <script>
-                                                                   function updateInput(ish) {
-                                                                       document.getElementById("fieldname").value = ish;
-                                                                   }
+            function updateInput(ish) {
+                document.getElementById("fieldname").value = ish;
+            }
 
-                                                                   function confirmAlert(productId) {
-                                                                       if (confirm("Continue delete this item ?") === true) {
-                                                                           window.location.href = '${pageContext.request.contextPath}/cart/delete?id=' + productId;
-                                                                       }
-                                                                   }
+            function confirmAlert(productId) {
+                if (confirm("Continue delete this item ?") === true) {
+                    window.location.href = '${pageContext.request.contextPath}/cart/delete?id=' + productId;
+                }
+            }
 
-                                                                   function onChange(productId, instock, currentVal) {
-                                                                       var value = document.getElementById('ID_' + productId).value;
-                                                                       if (value <= -1 || value > instock) {
-                                                                           alert('No more instock, please reduce quantity');
-                                                                           document.getElementById('ID_' + productId).value = currentVal;
-                                                                           return;
-                                                                       }
-                                                                       window.location.href = '${pageContext.request.contextPath}/cart/update?id=' + productId + '&quantity=' + value;
-                                                                   }
+            function onChange(productId, instock, currentVal) {
+                var value = document.getElementById('ID_' + productId).value;
+                if (value <= -1 || instock < value) {
+                    alert('No more instock, please reduce quantity');
+                    document.getElementById('ID_' + productId).value = currentVal;
+                    return;
+                }
+                window.location.href = '${pageContext.request.contextPath}/cart/update?id=' + productId + '&quantity=' + value;
+            }
+            function isVietnamesePhoneNumberValid() {
+                var number = document.getElementById('phoneNumber').value;
+                if(!/(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(number)){
+                    alert('your inputted number is wrong format');
+                }else{
+                    document.getElementById('form').submit();
+                }
+            }
         </script>
 
     </body>

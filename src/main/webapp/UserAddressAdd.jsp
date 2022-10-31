@@ -39,7 +39,7 @@
                     style=""
                     type="text"
                     name="province" 
-        
+                    required
                     placeholder="Province"
                 />
             </div>
@@ -51,7 +51,7 @@
                     style=""
                     type="text"
                     name="city" 
-         
+                    required
                     placeholder="City"
                 />
             </div>
@@ -63,7 +63,7 @@
                     style=""
                     type="text"
                     name="district" 
-   
+                    required
                      placeholder="District"
                 />
             </div>
@@ -74,7 +74,7 @@
                     class="form-control"
                     style=""
                     name="fullAddress"
-
+                    required
                      placeholder="Full Address"
                     >
                 

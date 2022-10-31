@@ -288,13 +288,25 @@ public class ProductDAO extends DBContext {
         }
     }
 
+    public void updateQuantity(Product product){
+        try {
+            String query = "UPDATE " + PRODUCT_TABLE + " SET " + unit_in_stock + " = ? " + " WHERE " + id + " = ?";
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setInt(1, product.getUnitInStock());
+            stm.setInt(2, product.getProductId());
+            stm.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     public void changeProductCategory(int productId, int categoryId) {
         try {
             String query = "UPDATE " + PRODUCT_TABLE + " SET " + category_id + " = ? " + " WHERE " + id + " = ?";
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setInt(1, categoryId);
             stm.setInt(2, productId);
-            stm.executeQuery();
+            stm.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }

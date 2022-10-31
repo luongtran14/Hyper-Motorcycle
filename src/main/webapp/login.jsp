@@ -22,20 +22,20 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
 
     <!-- Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/superfish-menu/css/superfish.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/slick-sider/slick-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/swiper-sider/dist/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/magnific-popup/dist/magnific-popup.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/superfish-menu/css/superfish.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/slick-sider/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/slick-sider/slick-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/swiper-sider/dist/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/libs/magnific-popup/dist/magnific-popup.min.css">
 
     <!-- Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/main.css">
-    <link rel="stylesheet" type="text/css" href="CSS/shortcodes.css">
-    <link rel="stylesheet" type="text/css" href="CSS/style-selector.css">
-    <link id="style-main-color" rel="stylesheet" type="text/css" href="CSS/color/color1.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/main.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/shortcodes.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style-selector.css">
+    <link id="style-main-color" rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/color/color1.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!-- WARNING: Respond.js doesn't work if you view the page via file://-->

@@ -96,11 +96,37 @@ public class UserAddressDAO extends DBContext {
         return ua;
     }
 
+    public UserAddress getMainAddress(int userId) {
+        String sql = "SELECT * FROM [Address] "
+                + " WHERE user_id = ? and is_main = 1" ;
+        UserAddress ua = null;
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ua = new UserAddress();
+                ua.setId(rs.getInt("address_id"));
+                ua.setUserId(rs.getInt("user_id"));
+                ua.setFullAddress(rs.getString("address"));
+                ua.setCity(rs.getString("city"));
+                ua.setDistrict(rs.getString("district"));
+                ua.setProvince(rs.getString("province"));
+                ua.setIsMain(rs.getInt("is_main"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserAddressDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ua;
+    }
+
     public void edit(UserAddress ua) {
         String sql = "UPDATE [Address] "
                 + " SET address = ?, city = ?, district = ?, province = ?, is_main = ?"
                 + " WHERE address_id = ?";
-
         try {
             conn = new DBContext().connection;
             ps = conn.prepareStatement(sql);
@@ -110,16 +136,16 @@ public class UserAddressDAO extends DBContext {
             ps.setString(4, ua.getProvince());
             ps.setInt(5, ua.getIsMain());
             ps.setInt(6, ua.getId());
-           ps.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserAddressDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void add(UserAddress ua){
-         String sql = "INSERT INTO [Address](address,city,district,province,is_main,user_id) "
+
+    public void add(UserAddress ua) {
+        String sql = "INSERT INTO [Address](address,city,district,province,is_main,user_id) "
                 + " VALUES(?,?,?,?,?,?)";
 
         try {
@@ -131,7 +157,7 @@ public class UserAddressDAO extends DBContext {
             ps.setString(4, ua.getProvince());
             ps.setInt(5, ua.getIsMain());
             ps.setInt(6, ua.getUserId());
-           ps.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         } catch (ClassNotFoundException ex) {
