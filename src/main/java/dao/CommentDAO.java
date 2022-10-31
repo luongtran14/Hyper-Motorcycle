@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Blog;
 import model.Comment;
 
 /**
@@ -66,23 +67,65 @@ public class CommentDAO extends DBContext {
         }
         return list;
     }
+    
+    public Comment getCommentByID(String cid) {
 
-    public void AddComment(String blogID, String userID, String commentContent, int likeNum, int dislikeNum) {
-        String query = "insert into  dbo.Comment values (?, ?, ?, GETDATE(), '',?,?);";
+        String query = " select a.*, b.first_name, b.last_name, b.avatar from  Comment  a\n"
+                    + "LEFT JOIN [User] b ON (a.user_id=b.user_id)\n"
+                    + "where a.comment_id = ?";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, cid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Comment(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getDate(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11));
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return null;
+    }
+
+
+    public void AddComment(String blogID, String userID, String commentContent) {
+        String query = "insert into  dbo.Comment values (?, ?, ?, GETDATE(), '',0,0);";
         try {
             conn = new DBContext().connection;
             ps = conn.prepareStatement(query);
             ps.setString(1, blogID);
             ps.setString(2, userID);
             ps.setString(3, commentContent);
-            ps.setInt(4, likeNum);
-            ps.setInt(5, dislikeNum);
             ps.executeUpdate();
 
         } catch (Exception e) {
             System.out.println(e);
         }
 
+    }
+    
+    public void UpdateComment(String commentID, String commentContent) {
+        String query = "update  dbo.Comment set comment_content = ?, updated_date = GETDATE() where comment_id = ?";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, commentContent);
+            ps.setString(2, commentID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
     
      public void deleteComment(String cid) {
@@ -102,7 +145,9 @@ public class CommentDAO extends DBContext {
 
         CommentDAO dao = new CommentDAO();
        // dao.AddComment("1", "3", "ffsfsdfds", 1, 0);
-       dao.deleteComment("1005");
+       dao.UpdateComment("1015", "12345679sdfyygfgyhhjb");
+      //  System.out.println(dao.getCommentByID("2005").toString());
+               
         List<Comment> list = dao.getCommentByBID("1");
         for (Comment account : list) {
             System.out.println(account);

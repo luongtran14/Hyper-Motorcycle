@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.common;
+package controller.blog;
 
-import dao.UsersDAO;
+import dao.BlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,14 +16,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
 
 /**
  *
  * @author huyen
  */
-@WebServlet(name = "ProfileServlet", urlPatterns = {"/profile"})
-public class ProfileServlet extends HttpServlet {
+@WebServlet(name = "DeleteBlogController", urlPatterns = {"/deleteblog"})
+public class DeleteBlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +34,18 @@ public class ProfileServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        UsersDAO dao = new UsersDAO();
-        String uid = request.getParameter("uid");
-        User a = dao.getUsertByID(uid);
-//          HttpServletRequest req = (HttpServletRequest) request;
-//            User u = (User) req.getSession().getAttribute("acc");
-//            
-//            
-//        request.setAttribute("user", u);    
-        request.setAttribute("profile", a);
-
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            String bid = request.getParameter("bid");
+            BlogDAO dao = new BlogDAO();
+            dao.deleteBlog(bid);
+            request.getRequestDispatcher("blogmanagement").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteCommentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeleteCommentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,13 +60,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,29 +74,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String email = request.getParameter("email");
-            String password= request.getParameter("password");
-            User login =  new UsersDAO().login(email, password);
-            
-            if(login != null){
-                request.getSession().setAttribute("login_user", login);
-                response.sendRedirect("home.jsp");
-                return;
-            }
-            response.sendRedirect("login");
-        } catch (SQLException ex) {
-            try {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                processRequest(request, response);
-            } catch (SQLException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (ClassNotFoundException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

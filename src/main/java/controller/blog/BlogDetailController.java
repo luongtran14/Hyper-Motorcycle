@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.BlogDAO;
 import dao.CommentDAO;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Blog;
@@ -43,17 +47,28 @@ public class BlogDetailController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String id = request.getParameter("bid");
-            String date = request.getParameter("crd");
+            //String date = request.getParameter("crd");
             BlogDAO dao = new BlogDAO();
             Blog b = dao.getBlogByID(id);
             List<Comment> list = dao.getCommentByBID(id);
-            Blog bb = dao.getBlogBefore(date);
-            Blog ba = dao.getBlogAfter(date);
+           
             HttpServletRequest req = (HttpServletRequest) request;
             User u = (User) req.getSession().getAttribute("acc");
-
-            if (u == null) {
+            //Blog da = (Blog) req.getSession().getAttribute("da");
+           // Date date = da.getCreatedDate();
+            Date date = b.getCreatedDate();
+            String dat = date.toString();
+           // int bb = dao.getBlogBefore(dat).getBlogID();
+            Blog ba = dao.getBlogAfter(dat);
+            Blog bb = dao.getBlogBefore(dat);
+            if ((ba == null)) {
+                ba = dao.getBlogByID(id);
+              
               //  response.sendRedirect("login");
+            }
+            
+            if(bb == null){
+                  bb = dao.getBlogByID(id);
             }
 //            String x = String.valueOf(b.getCategoryID());
 //            List<Products> list = dao.getProductByCID(x);
@@ -66,9 +81,9 @@ public class BlogDetailController extends HttpServlet {
             request.setAttribute("After", ba);
 //            request.setAttribute("Products", list);
 //              request.setAttribute("last", last);
-            request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
-//           out.print(bb);
-//           out.print(ba);
+   request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
+           out.println(ba);
+  //      out.print(dat);
         } catch (SQLException ex) {
             Logger.getLogger(BlogDetailController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.common;
+package controller.blog;
 
-import dao.UsersDAO;
+import dao.BlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,8 +22,8 @@ import model.User;
  *
  * @author huyen
  */
-@WebServlet(name = "ProfileServlet", urlPatterns = {"/profile"})
-public class ProfileServlet extends HttpServlet {
+@WebServlet(name = "AddBlogController", urlPatterns = {"/addblog"})
+public class AddBlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +35,20 @@ public class ProfileServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        UsersDAO dao = new UsersDAO();
-        String uid = request.getParameter("uid");
-        User a = dao.getUsertByID(uid);
-//          HttpServletRequest req = (HttpServletRequest) request;
-//            User u = (User) req.getSession().getAttribute("acc");
-//            
-//            
-//        request.setAttribute("user", u);    
-        request.setAttribute("profile", a);
+        try (PrintWriter out = response.getWriter()) { 
+            HttpServletRequest req = (HttpServletRequest) request;
+            User u = (User) req.getSession().getAttribute("acc");
+            request.setAttribute("user", u);
+             request.getRequestDispatcher("addblog.jsp").forward(request, response);
 
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+//            int uid_raw = u.getUserID();
+//            String uid = Integer.toString(uid_raw);
+//            String last = u.getLastname();
+//            String first = u.getFirstname();
+           
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,13 +63,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,28 +77,26 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String email = request.getParameter("email");
-            String password= request.getParameter("password");
-            User login =  new UsersDAO().login(email, password);
+       try (PrintWriter out = response.getWriter()) {
+          HttpServletRequest req = (HttpServletRequest) request;
+            User u = (User) req.getSession().getAttribute("acc");
+            int uid_raw = u.getUserID();
+            String uid = Integer.toString(uid_raw);
+//            String last = u.getLastname();
+//            String first = u.getFirstname();
+             String title = request.getParameter("title");
+              String image = request.getParameter("image");
+              String blogContent = request.getParameter("blogContent");
+              
+              BlogDAO dao = new BlogDAO();
+              dao.AddBlog(uid, title, blogContent, image);
+              request.getRequestDispatcher("addblog.jsp").forward(request, response);
             
-            if(login != null){
-                request.getSession().setAttribute("login_user", login);
-                response.sendRedirect("home.jsp");
-                return;
-            }
-            response.sendRedirect("login");
-        } catch (SQLException ex) {
-            try {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                processRequest(request, response);
-            } catch (SQLException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (ClassNotFoundException ex1) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            
+       } catch (SQLException ex) {
+            Logger.getLogger(AddBlogController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddBlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
