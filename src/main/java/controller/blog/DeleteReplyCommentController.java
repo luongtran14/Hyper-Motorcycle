@@ -5,11 +5,10 @@
  */
 package controller.blog;
 
-import dao.BlogDAO;
+import dao.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,15 +16,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Blog;
-import model.User;
 
 /**
  *
  * @author huyen
  */
-@WebServlet(name = "BlogManagementController", urlPatterns = {"/blogmanagement"})
-public class BlogManagementController extends HttpServlet {
+@WebServlet(name = "DeleteReplyCommentController", urlPatterns = {"/deletereplycomment"})
+public class DeleteReplyCommentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,24 +37,14 @@ public class BlogManagementController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            BlogDAO dao = new BlogDAO();
-            HttpServletRequest req = (HttpServletRequest) request;
-            User u = (User) req.getSession().getAttribute("acc");
-//            request.setAttribute("user", u);
-            int id_raw = u.getUserID();
-            String id = Integer.toString(id_raw);
-            request.setAttribute("id", id);
-           // String uid =  String.valueOf(request.getParameter("uid")) ;
-            List<Blog> list = dao.getBlogByUID(id);
-            int total = dao.countBlogByUID(id);
-           //out.print(list);
-            request.setAttribute("Total", total);
-            request.setAttribute("Blog", list);
-            request.getRequestDispatcher("blogmanagement.jsp").forward(request, response);
+            String rcid = request.getParameter("rcid");
+            CommentDAO dao = new CommentDAO();
+            dao.deleteReplyComment(rcid);
+            request.getRequestDispatcher("blog").forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteCommentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BlogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteCommentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

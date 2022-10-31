@@ -331,71 +331,81 @@
 										<div class="col-sm-6">
 											<h2>Manage <b>Blog</b></h2>
 											<input name="uid" value="${id}" hidden>
-
-										</div>
-										<div class="col-sm-6">
-											<!-- <a href="addblog" class="btn btn-success" data-toggle="modal"><i
-													class="material-icons">&#xE147;</i> <span>Add Blog</span></a> -->
-											<!-- <a href="deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i
-													class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
-													<a href="addblog" class="btn btn-success">
-														Create
-													</a>
-													
+											<a>The total number of blogs</a>
+											<input name="total" value="${Total}" readonly>
+											<div class="aside-body">
+											<form method="get" class="form-aside-search" action="searchblogmanagement">
+												<div class="mv-inputbox-icon right">
+													<input value="${txtS}" name="txt" type="text"
+														class="mv-inputbox mv-inputbox-style-2" />
+													<button type="submit"
+														class="icon mv-btn mv-btn-style-4 fa fa-search"></button>
+												</div>
+											</form>
 										</div>
 									</div>
-								</div>
-								<table class="table table-striped table-hover">
-									<thead>
-										<tr>
-											<th>
-												<span class="custom-checkbox" hidden="Hidden">
-													<input type="checkbox" id="selectAll">
-													<label for="selectAll"></label>
-												</span>
-											</th>
-											<th>ID</th>
-											<th>Title</th>
-											<!-- <th>Image</th> -->
-											<th>Author</th>
-											<th>Created Date</th>
-											<th>Last Modified</th>
-											<th>Link</th>
+									<div class="col-sm-6">
+										<!-- <a href="addblog" class="btn btn-success" data-toggle="modal"><i
+													class="material-icons">&#xE147;</i> <span>Add Blog</span></a> -->
+										<!-- <a href="deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i
+													class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
+										<a href="addblog" class="btn btn-success">
+											Create
+										</a>
 
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${Blog}" var="b">
-											<tr>
-												<td>
-													<span class="custom-checkbox" hidden="Hidden">
-														<input type="checkbox" id="checkbox1" name="options[]"
-															value="1">
-														<label for="checkbox1"></label>
-													</span>
-												</td>
-												<td>${b.blogID}</td>
-												<td>${b.title}</td>
-												<!-- <td>
+									</div>
+								</div>
+							</div>
+							<table class="table table-striped table-hover">
+								<thead>
+									<tr>
+										<th>
+											<span class="custom-checkbox" hidden="Hidden">
+												<input type="checkbox" id="selectAll">
+												<label for="selectAll"></label>
+											</span>
+										</th>
+										<th>ID</th>
+										<th>Title</th>
+										<!-- <th>Image</th> -->
+										<th>Author</th>
+										<th>Created Date</th>
+										<th>Last Modified</th>
+										<th>Link</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${Blog}" var="b">
+										<tr>
+											<td>
+												<span class="custom-checkbox" hidden="Hidden">
+													<input type="checkbox" id="checkbox1" name="options[]" value="1">
+													<label for="checkbox1"></label>
+												</span>
+											</td>
+											<td>${b.blogID}</td>
+											<td>${b.title}</td>
+											<!-- <td>
 													<img src="${b.image}" alt="image" />
 												</td> -->
-												<td>${b.firstName} ${b.lastname}</td>
-												<td>${b.createdDate}</td>
-												<td>${b.lastModified}</td>
-												<td>
-													<a href="blogdetail?bid=${b.blogID}" title="Link">Link</a>
-												</td>
+											<td>${b.firstName} ${b.lastname}</td>
+											<td>${b.createdDate}</td>
+											<td>${b.lastModified}</td>
+											<td>
+												<a href="blogdetail?bid=${b.blogID}" title="Link">Link</a>
+											</td>
 
-												<td>
-													<a href="updateblog?bid=${b.blogID}" class="edit">Edit</a>
+											<td>
+												<a href="updateblog?bid=${b.blogID}" class="edit">Edit</a>
 
 
-													<a href="deleteblog?bid=${b.blogID}" class="delete">Remove</a>
-												</td>
-											</tr>
-										</c:forEach>
+												<a href="deleteblog?bid=${b.blogID}" class="delete">Remove</a>
+											</td>
+										</tr>
+									</c:forEach>
 
-										<!-- <tr>
+									<!-- <tr>
 									<td>
 										<span class="custom-checkbox">
 											<input type="checkbox" id="checkbox2" name="options[]" value="1">
@@ -475,25 +485,25 @@
 												title="Delete">&#xE872;</i></a>
 									</td>
 								</tr> -->
-									</tbody>
-								</table>
-								<div class="clearfix">
-									<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-									<ul class="pagination">
-										<li class="page-item disabled"><a href="#">Previous</a></li>
-										<li class="page-item"><a href="#" class="page-link">1</a></li>
-										<li class="page-item"><a href="#" class="page-link">2</a></li>
-										<li class="page-item active"><a href="#" class="page-link">3</a></li>
-										<li class="page-item"><a href="#" class="page-link">4</a></li>
-										<li class="page-item"><a href="#" class="page-link">5</a></li>
-										<li class="page-item"><a href="#" class="page-link">Next</a></li>
-									</ul>
-								</div>
+								</tbody>
+							</table>
+							<div class="clearfix">
+								<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+								<ul class="pagination">
+									<li class="page-item disabled"><a href="#">Previous</a></li>
+									<li class="page-item"><a href="#" class="page-link">1</a></li>
+									<li class="page-item"><a href="#" class="page-link">2</a></li>
+									<li class="page-item active"><a href="#" class="page-link">3</a></li>
+									<li class="page-item"><a href="#" class="page-link">4</a></li>
+									<li class="page-item"><a href="#" class="page-link">5</a></li>
+									<li class="page-item"><a href="#" class="page-link">Next</a></li>
+								</ul>
 							</div>
 						</div>
 					</div>
-					
-					
+					</div>
+
+
 				</body>
 
 				</html>

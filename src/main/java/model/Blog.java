@@ -23,29 +23,46 @@ public class Blog {
     private String title;
     private String blogContent;
     private Date  createdDate;
-    private int commentID;
     private Date lastModified; 
     private String image;
+    private int likeNum;
+    private int dislikeNum;
     private String firstName;
     private String lastname;
 
     public Blog() {
     }
 
-    public Blog(int blogID, int userID, String title, String blogContent, Date createdDate, int commentID, Date lastModified, String image, String firstName, String lastname) {
+    public Blog(int blogID, int userID, String title, String blogContent, Date createdDate, Date lastModified, String image, String firstName, String lastname) {
         this.blogID = blogID;
         this.userID = userID;
         this.title = title;
         this.blogContent = blogContent;
         this.createdDate = createdDate;
-        this.commentID = commentID;
         this.lastModified = lastModified;
         this.image = image;
         this.firstName = firstName;
         this.lastname = lastname;
     }
 
-   
+    
+    public Blog(int blogID, int userID, String title, String blogContent, Date createdDate, Date lastModified, String image, int likeNum, int dislikeNum, String firstName, String lastname) {
+        this.blogID = blogID;
+        this.userID = userID;
+        this.title = title;
+        this.blogContent = blogContent;
+        this.createdDate = createdDate;
+        this.lastModified = lastModified;
+        this.image = image;
+        this.likeNum = likeNum;
+        this.dislikeNum = dislikeNum;
+        this.firstName = firstName;
+        this.lastname = lastname;
+    }
+
+ 
+
+
     
     
 
@@ -89,13 +106,6 @@ public class Blog {
         this.createdDate = createdDate;
     }
 
-    public int getCommentID() {
-        return commentID;
-    }
-
-    public void setCommentID(int commentID) {
-        this.commentID = commentID;
-    }
 
     public Date getLastModified() {
         return lastModified;
@@ -112,6 +122,24 @@ public class Blog {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public int getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(int likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public int getDislikeNum() {
+        return dislikeNum;
+    }
+
+    public void setDislikeNum(int dislikeNum) {
+        this.dislikeNum = dislikeNum;
+    }
+
+  
 
     public String getFirstName() {
         return firstName;
@@ -131,8 +159,12 @@ public class Blog {
 
     @Override
     public String toString() {
-        return "Blog{" + "blogID=" + blogID + ", userID=" + userID + ", title=" + title + ", blogContent=" + blogContent + ", createdDate=" + createdDate + ", commentID=" + commentID + ", lastModified=" + lastModified + ", image=" + image + ", firstName=" + firstName + ", lastname=" + lastname + '}';
+        return "Blog{" + "blogID=" + blogID + ", userID=" + userID + ", title=" + title + ", blogContent=" + blogContent + ", createdDate=" + createdDate + ", lastModified=" + lastModified + ", image=" + image + ", likeNum=" + likeNum + ", dislikeNum=" + dislikeNum + ", firstName=" + firstName + ", lastname=" + lastname + '}';
     }
+
+   
+  
+   
 
    
    
