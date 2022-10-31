@@ -143,6 +143,6 @@ public class CategoryDAO extends DBContext {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         CategoryDAO dao = new CategoryDAO();
-        System.out.println(dao.checkNameCategory("gear"));
-    }
+       System.out.println(dao.checkNameCategory("gear"));
+   }
 }

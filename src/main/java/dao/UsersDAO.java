@@ -20,17 +20,17 @@ import model.User;
  *
  * @author huyen
  */
-public class UsersDAO extends DBContext{
-    
+public class UsersDAO extends DBContext {
+
     Connection conn = null; //ket noi sql server
     PreparedStatement ps = null; //nem cau lenh query sang sql server
     ResultSet rs = null;// nhan ket qua tra ve
-    
-    public UsersDAO() throws SQLException, ClassNotFoundException{
+
+    public UsersDAO() throws SQLException, ClassNotFoundException {
         super();
     }
 
-    public void register(String fname, String lname, String phone, String email,String gender, String password) throws ClassNotFoundException {
+    public void register(String fname, String lname, String phone, String email, String gender, String password) throws ClassNotFoundException {
         String query = "insert into [User] "
                 + "values (?, ?, ?, ?, 0, '', '', ?, 1, ?, '')";
         try {
@@ -47,9 +47,9 @@ public class UsersDAO extends DBContext{
             System.out.println(e);
         }
     }
-    
+
     public User checkAccountExist(String email) throws ClassNotFoundException {
-      String query = "select * from [User] where [email] = ?";
+        String query = "select * from [User] where [email] = ?";
         try {
             conn = new DBContext().connection;
             ps = conn.prepareStatement(query);
@@ -74,16 +74,16 @@ public class UsersDAO extends DBContext{
         }
         return null;
     }
-        
-        public List<User> getAllUser() {
-          List<User> list = new ArrayList<>();
+
+    public List<User> getAllUser() {
+        List<User> list = new ArrayList<>();
         String query = "select*from [User]";
         try {
             conn = new DBContext().connection;//mo ket noi vs sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
-             //   System.out.println("1");
+                //   System.out.println("1");
                 list.add(new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -104,7 +104,6 @@ public class UsersDAO extends DBContext{
         return list;
     }
 
-    
     public User login(String email, String password) {
         User result = null;
         try {
@@ -143,9 +142,8 @@ public class UsersDAO extends DBContext{
         }
         return null;
     }
-    
-        
-        public User getUsertByID(String id) {
+
+    public User getUsertByID(String id) {
 
         String query = "select*from [User] where user_id = ?";
         try {
@@ -154,7 +152,7 @@ public class UsersDAO extends DBContext{
             ps.setString(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
-              return new User(rs.getInt(1),
+                return new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -174,12 +172,11 @@ public class UsersDAO extends DBContext{
         return null;
     }
 
-        
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         UsersDAO dao = new UsersDAO();
         //dao.register("rtyuioi", "yirw", "1234567890", "13u3u@", "male", "1232455");
-       //dao.checkAccountExist("huyenphuong628@gmail.com");
-      List<User> list = dao.getAllUser();
+        //dao.checkAccountExist("huyenphuong628@gmail.com");
+        List<User> list = dao.getAllUser();
         for (User account : list) {
             System.out.println(account);
         }
@@ -246,6 +243,7 @@ public class UsersDAO extends DBContext{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(data.size());
         return data;
     }
 
@@ -286,5 +284,25 @@ public class UsersDAO extends DBContext{
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void update(User user) {
+
+        String sql = " UPDATE [User] "
+                + " SET is_active = ? "
+                + " WHERE user_id = ?";
+        Connection con;
+        try {
+            con = DBConnection.getSQLServerConnection();
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setBoolean(1, user.isIsActive());
+            stm.setInt(2, user.getUserID());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

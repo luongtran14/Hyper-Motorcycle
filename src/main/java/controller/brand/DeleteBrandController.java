@@ -1,13 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.service;
 
-import dao.ServiceDAO;
+package controller.brand;
+
+import dao.BrandDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,41 +20,38 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Admin
+ * @author nguye
  */
-@WebServlet(name = "addService", urlPatterns = {"/addService"})
-public class addService extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="DeleteBrandController", urlPatterns={"/deletebrand"})
+public class DeleteBrandController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addService</title>");            
+            out.println("<title>Servlet DeleteBrandController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addService at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteBrandController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -58,25 +59,30 @@ public class addService extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         try {
-            ServiceDAO sdao = new ServiceDAO();
-            int userID = Integer.parseInt(request.getParameter("userID"));
-            String serviceName = request.getParameter("serviceName");
-            String desc = request.getParameter("desc");
-            float price = Float.parseFloat(request.getParameter("price"));
-            String time = request.getParameter("time");
-            sdao.addService(userID, serviceName, desc, price, time);
+            int brandid;
+            String brandid_raw = request.getParameter("brandid");
+            brandid = Integer.parseInt(brandid_raw);
+            BrandDAO dao = new BrandDAO();
+            ProductDAO dao1 = new ProductDAO();
+            if(dao1.checkProductByBrand(brandid_raw) == false){
+                request.setAttribute("mess", "Brand has product can't delete !!!");
+                request.getRequestDispatcher("brandlist").forward(request, response);
+            }else{
+            dao.DeleteBrand(brandid);
+            response.sendRedirect("brandlist");
+            }
             
-            request.getRequestDispatcher("Services").forward(request, response);
-            response.sendRedirect("services.jsp");
-        } catch (Exception e) {
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteBrandController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeleteBrandController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -84,13 +90,12 @@ public class addService extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

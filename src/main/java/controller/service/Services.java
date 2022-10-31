@@ -80,10 +80,8 @@ public class Services extends HttpServlet {
                 role = false;
             }
             ServiceDAO sdao = new ServiceDAO();
-            //element want to display in page 
             int elements = 5;
             ArrayList<Service> list = sdao.getServicesByPage(page, elements);
-            // number of page ( lấy tổng số ser chia cho số ele trong 1 trang nếu hết thì = thương còn không hết thì = phần nguyên + 1 )
             int numOfPage = sdao.getAllServices().size() % elements == 0 ? sdao.getAllServices().size() / elements : sdao.getAllServices().size() / elements + 1;
 
             request.setAttribute("list", list);

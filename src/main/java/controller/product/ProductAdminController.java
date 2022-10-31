@@ -4,6 +4,7 @@
  */
 package controller.product;
 
+import dao.BrandDAO;
 import dao.CategoryDAO;
 import dao.ProductDAO;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Brand;
 import model.Category;
 import model.Motor;
 import model.Product;
@@ -45,8 +47,10 @@ public class ProductAdminController extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         CategoryDAO cDao = new CategoryDAO();
         
+        
         ArrayList<Product> allProducts;
         ArrayList<Category> allCategories = cDao.getAllCategories();
+       
         if (currentCategoryId == 0) {
             allProducts = pDao.getAllProducts();
         } else {
@@ -56,6 +60,7 @@ public class ProductAdminController extends HttpServlet {
         request.setAttribute("currentCategory", currentCategoryId);
         request.setAttribute("allMotors", allProducts);
         request.setAttribute("allCategories", allCategories);
+ 
         request.getRequestDispatcher("/ProductAdmin.jsp").forward(request, response);
     }
 

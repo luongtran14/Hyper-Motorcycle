@@ -4,6 +4,7 @@
  */
 package controller.product;
 
+import dao.BrandDAO;
 import dao.CategoryDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
@@ -23,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Brand;
 import model.Category;
 import model.Color;
 import model.Product;
@@ -51,7 +53,7 @@ public class ProductAdminEditController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductAdminEditController</title>");            
+            out.println("<title>Servlet ProductAdminEditController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ProductAdminEditController at " + request.getContextPath() + "</h1>");
@@ -59,39 +61,42 @@ public class ProductAdminEditController extends HttpServlet {
             out.println("</html>");
         }
     }
-    
+
     protected void processRequestGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException, NullPointerException {
 
         String id = !request.getParameter("id").isEmpty() ? request.getParameter("id") : "3";
-        
+
         ColorDAO colorDao = new ColorDAO();
         ProductDAO pDao = new ProductDAO();
         CategoryDAO cDao = new CategoryDAO();
-        
+        BrandDAO bDao = new BrandDAO();
+
         Product product = pDao.getSpecificProductById(Integer.parseInt(id));
         ArrayList<Category> allCategories = cDao.getAllCategories();
         ArrayList<Color> allColors = colorDao.getAllColors();
         ArrayList<Color> colors = colorDao.getColorByProductId(product.getProductId());
+        ArrayList<Brand> allBrand = bDao.GetAllBrand();
         List<Integer> currentColorIds = new ArrayList<Integer>();
         for (Color c : colors) {
             currentColorIds.add(c.getColorId());
         }
-        
+
         request.setAttribute("product", product);
         request.setAttribute("currentColors", currentColorIds);
         request.setAttribute("allColors", allColors);
         request.setAttribute("allCategories", allCategories);
+        request.setAttribute("allBrand", allBrand);
         request.getRequestDispatcher("/ProductAdminEdit.jsp").forward(request, response);
     }
-    
-    protected void processRequestPost(HttpServletRequest request, HttpServletResponse response) 
+
+    protected void processRequestPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException, NullPointerException, ParseException {
-        
+
         String id = !request.getParameter("id").isEmpty() ? request.getParameter("id") : "";
-        
+
         String name = !request.getParameter("name").isEmpty() ? request.getParameter("name") : "";
-        String brand = !request.getParameter("brand").isEmpty() ? request.getParameter("brand") : "";
+        String brandId = !request.getParameter("brand").isEmpty() ? request.getParameter("brand") : "";
         String description = !request.getParameter("description").isEmpty() ? request.getParameter("description") : "";
         String image = !request.getParameter("image").isEmpty() ? request.getParameter("image") : "";
         String categoryId = !request.getParameter("category").isEmpty() ? request.getParameter("category") : "";
@@ -99,20 +104,23 @@ public class ProductAdminEditController extends HttpServlet {
         String unitInStock = !request.getParameter("unitInStock").isEmpty() ? request.getParameter("unitInStock") : "0";
         String dateIn = !request.getParameter("dateIn").isEmpty() ? request.getParameter("dateIn") : "0";
         String[] color = request.getParameterValues("color");
-        
+
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(dateIn);
 
         ColorDAO colorDao = new ColorDAO();
         CategoryDAO cDao = new CategoryDAO();
         ProductDAO pDao = new ProductDAO();
+        BrandDAO bDao = new BrandDAO();
         Category category = cDao.getCategoryById(Integer.parseInt(categoryId));
+        Brand brand = bDao.GetBrandByID(brandId);
+
         ArrayList<Color> colors = new ArrayList<>();
         for (int i = 0; i < color.length; i++) {
             colors.add(colorDao.getColorByColorId(Integer.parseInt(color[i])));
         }
         Product product = new Product(
-                Integer.parseInt(id), name, brand, image, description, category, colors, 
+                Integer.parseInt(id), name, brand, image, description, category, colors,
                 Float.parseFloat(unitPrice), Integer.parseInt(unitInStock), date, false
         );
         try {
@@ -121,7 +129,7 @@ public class ProductAdminEditController extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         response.sendRedirect("../../admin/products?categoryId=0");
     }
 
