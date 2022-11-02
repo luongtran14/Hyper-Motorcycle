@@ -26,7 +26,7 @@ import model.Product;
  *
  * @author Admin
  */
-@WebServlet(name="ProductAdmin", urlPatterns="{/admin/products}")
+@WebServlet(name = "ProductAdmin", urlPatterns = "{/admin/products}")
 public class ProductAdminController extends HttpServlet {
 
     /**
@@ -38,31 +38,7 @@ public class ProductAdminController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequestGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException, NullPointerException {
-
-        String id = !request.getParameter("categoryId").isEmpty() ? request.getParameter("categoryId") : "1";
-        int currentCategoryId = Integer.parseInt(id);
-        
-        ProductDAO pDao = new ProductDAO();
-        CategoryDAO cDao = new CategoryDAO();
-        
-        
-        ArrayList<Product> allProducts;
-        ArrayList<Category> allCategories = cDao.getAllCategories();
-       
-        if (currentCategoryId == 0) {
-            allProducts = pDao.getAllProducts();
-        } else {
-            allProducts = pDao.getProductsByCategoryId(currentCategoryId);
-        }
-        
-        request.setAttribute("currentCategory", currentCategoryId);
-        request.setAttribute("allMotors", allProducts);
-        request.setAttribute("allCategories", allCategories);
- 
-        request.getRequestDispatcher("/ProductAdmin.jsp").forward(request, response);
-    }
+   
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -77,7 +53,26 @@ public class ProductAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequestGet(request, response);
+            String id = !request.getParameter("categoryId").isEmpty() ? request.getParameter("categoryId") : "1";
+            int currentCategoryId = Integer.parseInt(id);
+
+            ProductDAO pDao = new ProductDAO();
+            CategoryDAO cDao = new CategoryDAO();
+
+            ArrayList<Product> allProducts;
+            ArrayList<Category> allCategories = cDao.getAllCategories();
+
+            if (currentCategoryId == 0) {
+                allProducts = pDao.getAllProducts();
+            } else {
+                allProducts = pDao.getProductsByCategoryId(currentCategoryId);
+            }
+
+            request.setAttribute("currentCategory", currentCategoryId);
+            request.setAttribute("allMotors", allProducts);
+            request.setAttribute("allCategories", allCategories);
+
+            request.getRequestDispatcher("/ProductAdmin.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger("SQL").log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
